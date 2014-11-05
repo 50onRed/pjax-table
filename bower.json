@@ -1,0 +1,15 @@
+{
+  "name": "fifty_pjax_table",
+  "version": "0.0.1",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "components",
+    "bower_components",
+    "tests"
+  ],
+  "devDependencies": {
+    "jquery": "1.11.1",
+    "fifty-widget": "git@bitbucket.org:50onred/fifty-widget.git#0.0.1"
+  }
+}
