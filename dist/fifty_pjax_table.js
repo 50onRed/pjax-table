@@ -22,10 +22,16 @@
   *   @param {boolean} data-paginated whether or not pagination is enabled
   *
   *   Events, triggered on the table container element
-  *     table.load: triggered any time the table has finished loaded, on pjax success for initial load, update, and refresh
-  *     table.select: {object}, triggered when a row is selected, passing the record object
-  *     table.deselect: {object}, triggered when a row is deselected, passing the record object
-  *     table.select_all: triggered when all records are selected using the check all box
+  *     load.table: triggered any time the table has finished loaded, on pjax success for initial load, update, and refresh
+  *     sort.table: {object}, triggered when a column is sorted, includes direction and property
+  *     page.table: {number}, triggered when a specific page has been chosen to jump to
+  *     perpage.table: {number}, triggered when perpage dropdown selection has changed
+  *     nextpage.table: {number}, triggered when next page in pagination clicked
+  *     prevpage.table: {number}, triggered when prev page in pagination clicked
+  *     select.table: {object}, triggered when a row is selected, passing the record object
+  *     deselect.table: {object}, triggered when a row is deselected, passing the record object
+  *     select_all.table: triggered when all records are selected using the check all box
+  *     deselect_all.table: triggered when all records are deselected using the check all box
   */
   function Table (options) {
     var _this = {};
@@ -117,7 +123,7 @@
         // syncQueryState();
         onTableLoaded();
         e.stopPropagation();
-        $el.trigger('table.load');
+        $el.trigger('load.table');
       });
 
       $el.on('pjax:error', function (e, xhr, textStatus, error, options) {
@@ -129,45 +135,46 @@
         var $sortable = $(e.target).closest('th[data-sortable="true"]');
         var property = $sortable.data('property');
         var sort_direction = sortMap[$sortable.data('current-sort-direction')] || $sortable.data('default-sort-direction');
+
+        $el.trigger('sort.table', { direction: sort_direction, property: property });
         $.extend(queryState, createSortQuery(property, sort_direction));
         pjaxForContainer();
-        analytics.track(property, { category: 'Table Sort', label: sort_direction });
       });
 
       // Perpage Selection
       $el.on('click', '.ui-perpage-dropdown a', function (e) {
         var perpage = $(e.target).data('value');
 
+        $el.trigger('perpage.table', { perpage: perpage });
         $.extend(queryState, { perpage: perpage, page: 1 }); // reset the page to 1 when changing per page
         pjaxForContainer();
-        analytics.track('Items Per Page : change', { category: 'Pagination', label: queryState.perpage });
       });
 
       // Page Selection
       $el.on('click', '.ui-page-select-dropdown > li', function (e) {
         var page_index = $(e.target).data('value');
 
+        $el.trigger('page.table', { page: page_index });
         $.extend(queryState, { page: page_index });
         pjaxForContainer();
-        analytics.track('Go to Page : click', { category: 'Pagination', label: queryState.page });
       });
 
       // Prev Page Selection
       $el.on('click', '.ui-prev-page', function (e) {
         var page_index = parseInt($el.find('.fifty-table-wrapper').data('current-page'));
 
+        $el.trigger('prevpage.table', { page: page_index });
         $.extend(queryState, { page: page_index - 1 });
         pjaxForContainer();
-        analytics.track('Previous Page : click', { category: 'Pagination', label: queryState.page });
       });
 
       // Next Page Selection
       $el.on('click', '.ui-next-page', function (e) {
         var page_index = parseInt($el.find('.fifty-table-wrapper').data('current-page'));
 
+        $el.trigger('nextpage.table', { page: page_index });
         $.extend(queryState, { page: page_index + 1 });
         pjaxForContainer();
-        analytics.track('Next Page : click', { category: 'Pagination', label: queryState.page });
       });
 
       // Row Selection via Checkboxes
@@ -178,11 +185,11 @@
         if ($checkbox.prop('checked')) {
           $el.find('td[data-property=' + property + '] input[type="checkbox"]').prop('checked', true);
           $tbody.find('tr').addClass('ui-selected');
-          $el.trigger('table.select_all');
+          $el.trigger('select_all.table');
         } else {
           $el.find('td[data-property=' + property + '] input[type="checkbox"]').prop('checked', false);
           $tbody.find('tr').removeClass('ui-selected');
-          $el.trigger('table.deselect_all');
+          $el.trigger('deselect_all.table');
         }
       });
 
@@ -220,12 +227,12 @@
 
           $el.data('last_selected', record.id);
           $tr.addClass('ui-selected');
-          $el.trigger('table.select', record);
+          $el.trigger('select.table', record);
         } else {
           $el.data('last_selected', null);
           $tr.removeClass('ui-selected');
           $el.find('th[data-select-all-enabled="true"] input[type="checkbox"]').prop('checked', false);
-          $el.trigger('table.deselect', record);
+          $el.trigger('deselect.table', record);
         }
       });
 
