@@ -1,4 +1,4 @@
-(function (Fifty, $) {
+(function ($, Fifty) {
   /**
   *   Table implements script controls for fifty table
   *   * See bottom for table interface
@@ -542,8 +542,8 @@
     return _this;
   }
 
-  $.fn.fiftyTable = Fifty.widget('table', Fifty.util.Mixin(Table, Fifty.mixins.TableQueryMixin));
-})(Fifty, jQuery);
+  $.fn.fiftyTable = Fifty.widget('table', Table);
+})(jQuery, window.Fifty = window.Fifty || {});
 
 // auto-init tables
 $(function(){
