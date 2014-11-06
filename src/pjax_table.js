@@ -164,7 +164,7 @@
       $el.on('click', '.ui-prev-page', function (e) {
         var page_index = parseInt($el.find('.ui-pagination').data('current-page'));
 
-        $el.trigger('prevpage.table', { page: page_index });
+        $el.trigger('prevpage.table', { page: page_index - 1 });
         $.extend(queryState, { page: page_index - 1 });
         pjaxForContainer();
       });
@@ -173,7 +173,7 @@
       $el.on('click', '.ui-next-page', function (e) {
         var page_index = parseInt($el.find('.ui-pagination').data('current-page'));
 
-        $el.trigger('nextpage.table', { page: page_index });
+        $el.trigger('nextpage.table', { page: page_index + 1 });
         $.extend(queryState, { page: page_index + 1 });
         pjaxForContainer();
       });
