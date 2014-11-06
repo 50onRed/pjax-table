@@ -76,10 +76,11 @@
     // Syncs the query state with what's being displayed
     function syncQueryState() {
       var $wrapper = $el.find('#' + id);
+      var $pagination = $el.find('.ui-pagination');
       // Sync Pagination
       if(paginated) {
-        var page = $wrapper.data('current-page');
-        var perpage = $wrapper.data('current-perpage');
+        var page = $pagination.data('current-page');
+        var perpage = $pagination.data('current-perpage');
         $.extend(queryState, { perpage: perpage });
         $.extend(queryState, { page: page });
       }
@@ -161,7 +162,7 @@
 
       // Prev Page Selection
       $el.on('click', '.ui-prev-page', function (e) {
-        var page_index = parseInt($el.find('.fifty-table-wrapper').data('current-page'));
+        var page_index = parseInt($el.find('.ui-pagination').data('current-page'));
 
         $el.trigger('prevpage.table', { page: page_index });
         $.extend(queryState, { page: page_index - 1 });
@@ -170,7 +171,7 @@
 
       // Next Page Selection
       $el.on('click', '.ui-next-page', function (e) {
-        var page_index = parseInt($el.find('.fifty-table-wrapper').data('current-page'));
+        var page_index = parseInt($el.find('.ui-pagination').data('current-page'));
 
         $el.trigger('nextpage.table', { page: page_index });
         $.extend(queryState, { page: page_index + 1 });
