@@ -162,7 +162,7 @@
 
       // Prev Page Selection
       $el.on('click', '.ui-prev-page', function (e) {
-        var page_index = parseInt($el.find('.fifty-table-wrapper').data('current-page'));
+        var page_index = parseInt($el.find('.ui-pagination').data('current-page'));
 
         $el.trigger('prevpage.table', { page: page_index });
         $.extend(queryState, { page: page_index - 1 });
@@ -171,7 +171,7 @@
 
       // Next Page Selection
       $el.on('click', '.ui-next-page', function (e) {
-        var page_index = parseInt($el.find('.fifty-table-wrapper').data('current-page'));
+        var page_index = parseInt($el.find('.ui-pagination').data('current-page'));
 
         $el.trigger('nextpage.table', { page: page_index });
         $.extend(queryState, { page: page_index + 1 });
