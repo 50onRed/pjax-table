@@ -76,10 +76,11 @@
     // Syncs the query state with what's being displayed
     function syncQueryState() {
       var $wrapper = $el.find('#' + id);
+      var $pagination = $el.find('.ui-pagination');
       // Sync Pagination
       if(paginated) {
-        var page = $wrapper.data('current-page');
-        var perpage = $wrapper.data('current-perpage');
+        var page = $pagination.data('current-page');
+        var perpage = $pagination.data('current-perpage');
         $.extend(queryState, { perpage: perpage });
         $.extend(queryState, { page: page });
       }
