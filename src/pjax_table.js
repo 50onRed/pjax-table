@@ -143,8 +143,8 @@
       });
 
       // Perpage Selection
-      $el.on('click', '.ui-perpage-dropdown a', function (e) {
-        var perpage = $(e.target).data('value');
+      $el.on('click', '.ui-perpage-dropdown > li', function (e) {
+        var perpage = $(e.currentTarget).data('value');
 
         $el.trigger('perpage.table', { perpage: perpage });
         $.extend(queryState, { perpage: perpage, page: 1 }); // reset the page to 1 when changing per page
@@ -153,7 +153,7 @@
 
       // Page Selection
       $el.on('click', '.ui-page-select-dropdown > li', function (e) {
-        var page_index = $(e.target).data('value');
+        var page_index = $(e.currentTarget).data('value');
 
         $el.trigger('page.table', { page: page_index });
         $.extend(queryState, { page: page_index });
