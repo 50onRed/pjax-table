@@ -550,7 +550,7 @@
     return _this;
   }
 
-  $.fn.fiftyTable = Fifty.widget('table', Table);
+  Fifty.widget('fiftyTable', Table);
 })(jQuery, window.Fifty = window.Fifty || {});
 
 // auto-init tables

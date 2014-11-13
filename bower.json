@@ -10,6 +10,6 @@
   ],
   "devDependencies": {
     "jquery": "1.11.1",
-    "fifty-widget": "git@bitbucket.org:50onred/fifty-widget.git#0.0.1"
+    "fifty-widget": "git@bitbucket.org:50onred/fifty-widget.git#0.1.0"
   }
 }
