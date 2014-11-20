@@ -226,6 +226,7 @@
 
       // Search clear
       $searchBox.on('click', '.fa-close', function() {
+        $searchFilter.val('');
         $searchFilter.trigger('clear_search.table');
         $.extend(queryState, { q: '', page: 1});
         pjaxForContainer();
