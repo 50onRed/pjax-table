@@ -13,6 +13,7 @@
   *     @param {Array<object>} options.plugins a list of jquery prototype based plugin configurations to be intialized and
   *       re-initialized on table load. Plugins are initialized for each row, being passed the row record and current query state.
   *       config example: [{ target: '[data-plugin-element-selector]', constructorName: 'myPlugin'}]
+  *     @param {string} options.search_id  A selector for a search box to be used with the table
   *
   *   Data Attribute Params, parameters expected to be included on the table container element for initialization
   *   @param {string}  data-fifty-table-id the table id
@@ -32,12 +33,16 @@
   *     deselect.table: {object}, triggered when a row is deselected, passing the record object
   *     select_all.table: triggered when all records are selected using the check all box
   *     deselect_all.table: triggered when all records are deselected using the check all box
+  *     search.table: {object}, triggered when a search query is used to filter the table
+  *     clear_search.table, triggered when a search query is cleared
   */
   function Table (options) {
     var _this = {};
     var options = options || {};
     var $el = $(this);
     var $tbody = null;
+    var $searchBox = $('#' + (options.search_id || $el.data('search_id')));
+    var $searchFilter = $searchBox.find('input[type="search"]')
     var id = $el.data('fifty-table-id');
     var pjax_url = $el.data('pjax-url') || window.location.pathname;
     var pjax_container = $el.data('pjax-container');
@@ -58,6 +63,7 @@
     };
 
     function createSortQuery (property, sort_direction) {
+      sort_direction = sort_direction ? sortMap[sort_direction] : $sortable.data('default-sort-direction');
       return {
         order: property + '__' + sort_direction,
         page: 1
@@ -75,7 +81,6 @@
 
     // Syncs the query state with what's being displayed
     function syncQueryState() {
-      var $wrapper = $el.find('#' + id);
       var $pagination = $el.find('.ui-pagination');
       // Sync Pagination
       if(paginated) {
@@ -86,8 +91,8 @@
       }
 
       // Sync Sorting
-      var sort_property = $wrapper.data('current-sort-property');
-      var sort_direction = $wrapper.data('current-sort-direction');
+      var sort_property = $el.data('current-sort-property');
+      var sort_direction = $el.data('current-sort-direction');
       if(sort_property) {
         $.extend(queryState, createSortQuery(sort_property, sort_direction));
       } else {
@@ -95,14 +100,21 @@
         delete queryState.order;
       }
 
+      //Sync Search
+      var search_query = $el.data('current-search-query');
+      if (search_query) {
+        $.extend(queryState, { q: search_query });
+        $searchFilter.val(search_query);
+      }
+
       // TODO: this may need to be abstracted in the future, unless we bundle the filter builder
       // Sync Custom Filters
-      $.extend(queryState, $wrapper.data('custom-filters'));
+      $.extend(queryState, $el.data('custom-filters'));
     }
 
     function onTableLoaded(){
       // create this shortcut whenever the table loads
-      totalRows = $el.find('#fifty-table').data('total-rows');
+      totalRows = $el.find('#' + id).data('total-rows');
       $tbody = $el.find('tbody');
 
       // Checkboxes
@@ -135,7 +147,7 @@
       $el.on('click', 'th[data-sortable="true"]', function (e) {
         var $sortable = $(e.target).closest('th[data-sortable="true"]');
         var property = $sortable.data('property');
-        var sort_direction = sortMap[$sortable.data('current-sort-direction')] || $sortable.data('default-sort-direction');
+        var sort_direction = $sortable.data('current-sort-direction');
 
         $el.trigger('sort.table', { direction: sort_direction, property: property });
         $.extend(queryState, createSortQuery(property, sort_direction));
@@ -192,6 +204,31 @@
           $tbody.find('tr').removeClass('ui-selected');
           $el.trigger('deselect_all.table');
         }
+      });
+
+      // Search 
+      $searchFilter.keyup(function (e) {
+        // if enter / return
+        if (e.which === 13) {
+          var query = $(this).val();
+          
+          $searchFilter.trigger('search.table', { query: query });
+          $.extend(queryState, { q: query, page: 1 });
+          pjaxForContainer();
+        }
+        // if esc clear search and load full table
+        if (e.keyCode == 27) {
+          $searchFilter.trigger('clear_search.table');
+          $.extend(queryState, { q: '', page: 1 });
+          pjaxForContainer();
+        }
+      });
+
+      // Search clear
+      $searchBox.on('click', '.fa-close', function() {
+        $searchFilter.trigger('clear_search.table');
+        $.extend(queryState, { q: '', page: 1});
+        pjaxForContainer();
       });
 
       function shiftSelectRows($tr, shift_click_id) {
