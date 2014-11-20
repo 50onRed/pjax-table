@@ -81,7 +81,7 @@
 
     // Syncs the query state with what's being displayed
     function syncQueryState() {
-      $wrapper = $('#' + wrapperId);
+      var $wrapper = $('#' + wrapperId);
       var $pagination = $el.find('.ui-pagination');
       // Sync Pagination
       if(paginated) {
