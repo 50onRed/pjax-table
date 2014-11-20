@@ -41,11 +41,11 @@
     var options = options || {};
     var $el = $(this);
     var $tbody = null;
-    var $searchBox = $('#' + (options.search_id || $el.data('search-id')));
+    var $searchBox = $('#' + (options.search_id || $el.data('search_id')));
     var $searchFilter = $searchBox.find('input[type="search"]')
-    var id = $el.data('fifty-table-id');
+    var wrapperId = $el.data('fifty-table-id');
     var pjax_url = $el.data('pjax-url') || window.location.pathname;
-    var pjax_container = $el.data('pjax-container');
+    var pjax_container = $el.data('pjax-container');  //should generally be the same as  $el
     var push_state = $el.data('push-state-enabled');
     var paginated = $el.data('paginated');
     var totalRows = null;
@@ -62,8 +62,8 @@
       }
     };
 
-    function createSortQuery (property, sort_direction) {
-      sort_direction = sort_direction ? sortMap[sort_direction] : $sortable.data('default-sort-direction');
+    function createSortQuery (property, sort_direction, $sortable) {
+      sort_direction = sort_direction ? sortMap[sort_direction] : ($sortable.data('default-sort-direction') || 'desc');
       return {
         order: property + '__' + sort_direction,
         page: 1
@@ -81,6 +81,7 @@
 
     // Syncs the query state with what's being displayed
     function syncQueryState() {
+      $wrapper = $('#' + wrapperId);
       var $pagination = $el.find('.ui-pagination');
       // Sync Pagination
       if(paginated) {
@@ -91,8 +92,8 @@
       }
 
       // Sync Sorting
-      var sort_property = $el.data('current-sort-property');
-      var sort_direction = $el.data('current-sort-direction');
+      var sort_property = $wrapper.data('current-sort-property');
+      var sort_direction = $wrapper.data('current-sort-direction');
       if(sort_property) {
         $.extend(queryState, createSortQuery(sort_property, sort_direction));
       } else {
@@ -101,7 +102,7 @@
       }
 
       //Sync Search
-      var search_query = $el.data('current-search-query');
+      var search_query = $wrapper.data('current-search-query');
       if (search_query) {
         $.extend(queryState, { q: search_query });
         $searchFilter.val(search_query);
@@ -109,12 +110,12 @@
 
       // TODO: this may need to be abstracted in the future, unless we bundle the filter builder
       // Sync Custom Filters
-      $.extend(queryState, $el.data('custom-filters'));
+      $.extend(queryState, $wrapper.data('custom-filters'));
     }
 
     function onTableLoaded(){
       // create this shortcut whenever the table loads
-      totalRows = $el.find('#' + id).data('total-rows');
+      totalRows = $('#' + wrapperId).find('.table').data('total-rows');
       $tbody = $el.find('tbody');
 
       // Checkboxes
@@ -150,7 +151,7 @@
         var sort_direction = $sortable.data('current-sort-direction');
 
         $el.trigger('sort.table', { direction: sort_direction, property: property });
-        $.extend(queryState, createSortQuery(property, sort_direction));
+        $.extend(queryState, createSortQuery(property, sort_direction, $sortable));
         pjaxForContainer();
       });
 
@@ -225,7 +226,7 @@
       });
 
       // Search clear
-      $searchBox.on('click', '.fa-close', function() {
+      $searchBox.on('click', '.ui-close', function() {
         $searchFilter.val('');
         $searchFilter.trigger('clear_search.table');
         $.extend(queryState, { q: '', page: 1});
