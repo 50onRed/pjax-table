@@ -41,7 +41,7 @@
     var options = options || {};
     var $el = $(this);
     var $tbody = null;
-    var $searchBox = $('#' + (options.search_id || $el.data('search_id')));
+    var $searchBox = $('#' + (options.search_id || $el.data('current-search-query')));
     var $searchFilter = $searchBox.find('input[type="search"]')
     var id = $el.data('fifty-table-id');
     var pjax_url = $el.data('pjax-url') || window.location.pathname;
