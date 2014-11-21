@@ -150,7 +150,7 @@
         var sort_direction = sortMap[$sortable.data('current-sort-direction')] || $sortable.data('default-sort-direction');
 
         $el.trigger('sort.table', { direction: sort_direction, property: property });
-        $.extend(queryState, createSortQuery(property, sort_direction, $sortable));
+        $.extend(queryState, createSortQuery(property, sort_direction));
         pjaxForContainer();
       });
 
