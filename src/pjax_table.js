@@ -62,8 +62,7 @@
       }
     };
 
-    function createSortQuery (property, sort_direction, $sortable) {
-      sort_direction = sort_direction ? sortMap[sort_direction] : ($sortable.data('default-sort-direction') || 'desc');
+    function createSortQuery (property, sort_direction) {
       return {
         order: property + '__' + sort_direction,
         page: 1
@@ -148,7 +147,7 @@
       $el.on('click', 'th[data-sortable="true"]', function (e) {
         var $sortable = $(e.target).closest('th[data-sortable="true"]');
         var property = $sortable.data('property');
-        var sort_direction = $sortable.data('current-sort-direction');
+        var sort_direction = sortMap[$sortable.data('current-sort-direction')] || $sortable.data('default-sort-direction');
 
         $el.trigger('sort.table', { direction: sort_direction, property: property });
         $.extend(queryState, createSortQuery(property, sort_direction, $sortable));
