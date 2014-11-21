@@ -114,9 +114,12 @@
 
     function onTableLoaded(){
       // create this shortcut whenever the table loads
-      totalRows = $('#' + wrapperId).find('.table').data('total-rows');
+      totalRows = $('#' + wrapperId).data('total-rows');
       $tbody = $el.find('tbody');
-
+      
+      if (!totalRows) {
+        $tbody.html('<tr><td class="empty-table-content" colspan="4">Whoops! Looks like there\'s nothing in this table!</td></tr>');
+      }
       // Checkboxes
       // $el.find('.shiftClick').shiftClick();
 
