@@ -116,9 +116,11 @@
       // create this shortcut whenever the table loads
       totalRows = $('#' + wrapperId).data('total-rows');
       $tbody = $el.find('tbody');
-      
+      var numColumns = getNumColumns();
+
       if (!totalRows) {
-        $tbody.html('<tr><td class="empty-table-content" colspan="4">Whoops! Looks like there\'s nothing in this table!</td></tr>');
+        $tbody.html('<tr><td class="empty-table-content" colspan="' + numColumns 
+          + '">Whoops! Looks like there\'s nothing in this table!</td></tr>');
       }
       // Checkboxes
       // $el.find('.shiftClick').shiftClick();
@@ -482,6 +484,13 @@
       return $tbody.find('tr').length;
     }
 
+    /**
+    *   @return {number} number of columns
+    */
+    function getNumColumns () {
+      return $el.find('thead tr').children().length;
+    }    
+
 
     /**
     *   @return {boolean} has any selected values
@@ -579,6 +588,7 @@
       removeParameters: removeParameters,
       getParameters: getParameters,
       getNumRecords: getNumRecords,
+      getNumColumns: getNumColumns,
       hasSelected: hasSelected,
       getNumSelected: getNumSelected,
       getSelected: getSelected,
