@@ -486,6 +486,9 @@
 
     /**
     *   @return {number} number of columns
+    *   Note: this is only the number of columns in the header.  If subsequent rows include
+    *   subheaders, split columns, or columns with colspans other than 1, this will NOT return
+    *   the correct number of columsn for those rows.
     */
     function getNumColumns () {
       return $el.find('thead tr').children().length;
