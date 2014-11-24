@@ -116,14 +116,16 @@
       // create this shortcut whenever the table loads
       totalRows = $('#' + wrapperId).data('total-rows');
       $tbody = $el.find('tbody');
-
+      
       var numColumns = getNumColumns();
       if (!totalRows) {
         $tbody.html('<tr><td class="empty-table-content" colspan="' + numColumns 
           + '">Whoops! Looks like there\'s nothing in this table!</td></tr>');
       }
 
-      $el.find('[data-toggle="tooltip"]').tooltip();
+      if ($.fn.tooltip) {
+        $el.find('[data-toggle="tooltip"]').tooltip();
+      }
     }
 
     function init () {

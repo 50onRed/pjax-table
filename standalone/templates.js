@@ -90,16 +90,18 @@ this["Fifty"]["templates"]["pagination_page_item"] = Handlebars.template({"1":fu
     + "</a>\n</li>";
 },"useData":true});
 this["Fifty"]["templates"]["table"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, buffer = "<div>\n  <table class=\"table table-bordered\">\n    <thead>\n      ";
+  var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, buffer = "<div id=\"fifty-table\" \n  data-fifty-table-id=\"wrapper-id\" \n  data-pjax-container=\"#fifty-table\" \n  data-push-state-enabled=\"true\" \n  data-paginated=\"true\">\n  <div id=\"wrapper-id\" class=\"table-wrapper\" data-total-rows=\""
+    + escapeExpression(((helper = (helper = helpers.total_rows || (depth0 != null ? depth0.total_rows : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"total_rows","hash":{},"data":data}) : helper)))
+    + "\">\n    <table class=\"table table-bordered\">\n      <thead>\n        ";
   stack1 = ((helper = (helper = helpers.header_rows || (depth0 != null ? depth0.header_rows : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"header_rows","hash":{},"data":data}) : helper));
   if (stack1 != null) { buffer += stack1; }
-  buffer += "\n    </thead>\n    <tbody>\n      ";
+  buffer += "\n      </thead>\n      <tbody>\n        ";
   stack1 = ((helper = (helper = helpers.body_rows || (depth0 != null ? depth0.body_rows : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"body_rows","hash":{},"data":data}) : helper));
   if (stack1 != null) { buffer += stack1; }
-  buffer += "\n    </tbody>\n    <tfoot>\n      ";
+  buffer += "\n      </tbody>\n      <tfoot>\n        ";
   stack1 = ((helper = (helper = helpers.footer_rows || (depth0 != null ? depth0.footer_rows : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"footer_rows","hash":{},"data":data}) : helper));
   if (stack1 != null) { buffer += stack1; }
-  return buffer + "\n    </tfoot>\n  </table>\n</div>\n<div>\n  "
+  return buffer + "\n      </tfoot>\n    </table>\n  </div>\n  <div>\n    "
     + escapeExpression(((helper = (helper = helpers.pagination || (depth0 != null ? depth0.pagination : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"pagination","hash":{},"data":data}) : helper)))
-    + "\n</div>";
+    + "\n  </div>\n</div>\n";
 },"useData":true});

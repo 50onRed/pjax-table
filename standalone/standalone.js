@@ -62,7 +62,8 @@
       header_rows: header_row_html,
       body_rows: body_row_html,
       footer_rows: '',
-      pagination: ''
+      pagination: '',
+      total_rows: table_data.body.length
     });
 
     return table_html;
@@ -80,6 +81,7 @@
     }
     return 'down';
   });
-  
+
   $('#table-container').html(Fifty.modules.tableGenerator.generate());
+  $('#fifty-table').fiftyTable({});
 })();
