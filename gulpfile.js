@@ -15,6 +15,7 @@ var output_names = {
 var paths = {
   json: ['./bower.json', './package.json'],
   js: ['./src/js/table.js'],
+  templates: './src/templates/*.hbs',
   template_precompile_output: './src/js/'
 };
 
@@ -27,7 +28,7 @@ gulp.task('bump-minor', function(){ return gulp.src(paths.json).pipe(bump({ type
 gulp.task('bump-major', function(){ return gulp.src(paths.json).pipe(bump({ type: 'major' })).pipe(gulp.dest('./')); });
 
 gulp.task('templates', function(){
-  gulp.src('source/templates/*.hbs')
+  gulp.src(paths.templates)
     .pipe(handlebars())
     .pipe(wrap('Handlebars.template(<%= contents %>)'))
     .pipe(declare({
@@ -36,13 +37,6 @@ gulp.task('templates', function(){
     }))
     .pipe(concat('templates.js'))
     .pipe(gulp.dest(paths.template_precompile_output));
-});
-
-gulp.task('standalone', function() {
-  return gulp.src(paths.js)
-    .pipe(concat('dist/fifty_pjax_table.js'))
-    .pipe(uglify({ preserveComments: 'some' }))
-    .pipe(gulp.dest('.'));
 });
 
 gulp.task('js', function() {
@@ -60,5 +54,5 @@ gulp.task('js_min', function() {
 });
 
 gulp.task('default', function(callback){
-  runSequence('clean', ['js', 'js_min'], callback);
+  runSequence('clean', ['js', 'js_min', 'templates'], callback);
 });
