@@ -9,6 +9,7 @@
     "tests"
   ],
   "devDependencies": {
+    "chance": "0.6.1",
     "jquery": "1.11.1",
     "fifty-widget": "git@bitbucket.org:50onred/fifty-widget.git#0.1.0"
   }

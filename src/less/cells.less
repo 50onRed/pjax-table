@@ -1,0 +1,25 @@
+td[data-property="enabled"] {
+  text-align: center;
+}
+
+// Set checkboxes to as small of width as possible
+[data-property="id"] {
+  width: 40px;
+  .fifty-table-cell-wrapper {
+    margin-top: -3px;
+    margin-bottom: -3px;
+  }
+
+  // these need to go in the styleguide?
+  input[type="checkbox"] + label {
+    margin: 0;
+    text-indent: 0;
+  }
+  input[type="checkbox"] + label > span {
+    margin: 0;
+  }
+}
+
+.fifty-table td.numeric {
+  text-align: right;
+}

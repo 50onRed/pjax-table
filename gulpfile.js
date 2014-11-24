@@ -2,6 +2,9 @@ var gulp = require('gulp');
 var bump = require('gulp-bump');
 var concat = require('gulp-concat');
 var rename = require('gulp-rename');
+var handlebars = require('gulp-handlebars');
+var wrap = require('gulp-wrap');
+var declare = require('gulp-declare');
 var uglify = require('gulp-uglify');
 var del = require('del');
 var runSequence = require('run-sequence');
@@ -11,7 +14,8 @@ var output_names = {
 };
 var paths = {
   json: ['./bower.json', './package.json'],
-  js: ['./src/pjax_table.js']
+  js: ['./src/js/table.js'],
+  template_precompile_output: './src/js/'
 };
 
 gulp.task('clean', function(cb) {
@@ -21,6 +25,18 @@ gulp.task('clean', function(cb) {
 gulp.task('bump-patch', function(){ return gulp.src(paths.json).pipe(bump()).pipe(gulp.dest('./')); });
 gulp.task('bump-minor', function(){ return gulp.src(paths.json).pipe(bump({ type: 'minor' })).pipe(gulp.dest('./')); });
 gulp.task('bump-major', function(){ return gulp.src(paths.json).pipe(bump({ type: 'major' })).pipe(gulp.dest('./')); });
+
+gulp.task('templates', function(){
+  gulp.src('source/templates/*.hbs')
+    .pipe(handlebars())
+    .pipe(wrap('Handlebars.template(<%= contents %>)'))
+    .pipe(declare({
+      namespace: 'Fifty.templates',
+      noRedeclare: true, // Avoid duplicate declarations
+    }))
+    .pipe(concat('templates.js'))
+    .pipe(gulp.dest(paths.template_precompile_output));
+});
 
 gulp.task('standalone', function() {
   return gulp.src(paths.js)
