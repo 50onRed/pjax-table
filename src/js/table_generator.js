@@ -16,6 +16,7 @@
       header: [],
       body: []
     };
+    var property;
 
     for (var i = 0; i < num_columns; i++) {
       table_data.header.push({
@@ -27,8 +28,11 @@
     
     for (var x = 0; x < num_rows; x++) {
       table_data.body.push([]);
+      property = chance.string();
       for (var y = 0; y < num_columns; y++) {
         table_data.body[x].push({
+          property: property,
+          display_value: chance.string(),
           value: chance.string()
         });
       }

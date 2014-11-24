@@ -1,7 +1,10 @@
 var gulp = require('gulp');
 var bump = require('gulp-bump');
 var concat = require('gulp-concat');
+var less = require('gulp-less');
+var cssmin = require('gulp-cssmin');
 var rename = require('gulp-rename');
+var header = require('gulp-header');
 var handlebars = require('gulp-handlebars');
 var wrap = require('gulp-wrap');
 var declare = require('gulp-declare');
@@ -9,10 +12,19 @@ var uglify = require('gulp-uglify');
 var del = require('del');
 var runSequence = require('run-sequence');
 
+var pkg = require('./package.json');
+var banner = ['/*!',
+  ' * 50onRed - Fifty PJAX Table v<%= pkg.version %> (<%= pkg.homepage %>)',
+  ' * Copyright ' + (new Date()).getFullYear(),
+  ' * <%= pkg.author %>',
+  ' */\n'
+].join('\n');
+
 var output_names = {
   js: 'fifty_pjax_table.js',
   standalone_vendor_js: 'standalone_vendor.js',
-  standalone_js: 'standalone.js'
+  standalone_js: 'standalone.js',
+  less: 'fifty_pjax_table.css'
 };
 
 var paths = {
@@ -20,7 +32,7 @@ var paths = {
   js: ['./src/js/table.js'],
   standalone_vendor_js: [
     './bower_components/jquery/dist/jquery.js',
-    './bower_components/fifty-widget/dist/fisty_widget.js',
+    './bower_components/fifty-widget/dist/fifty_widget.js',
     './bower_components/chance/chance.js',
     './bower_components/handlebars/handlebars.runtime.js'
   ],
@@ -28,6 +40,7 @@ var paths = {
     './src/js/table_generator.js',
     './src/js/standalone.js'
   ],
+  less: ['./src/less/table.less'],
   templates: './src/templates/*.hbs'
 };
 
@@ -73,10 +86,34 @@ gulp.task('js_min', function() {
   return gulp.src(paths.js)
     .pipe(concat(output_names.js))
     .pipe(uglify({ preserveComments: 'some' }))
+    .pipe(header(banner, { pkg: pkg }))
+    .pipe(rename({ suffix: '.min' }))
+    .pipe(gulp.dest('./dist'));
+});
+
+gulp.task('less', function() {
+  return gulp.src(paths.less)
+    .pipe(less({ strictMath: true }))
+    .pipe(gulp.dest('./dist'));
+});
+
+gulp.task('lessmin', function() {
+  return gulp.src(paths.less)
+    .pipe(less({ strictMath: true }))
+    .pipe(cssmin({ keepSpecialComments: 1 }))
+    .pipe(header(banner, { pkg: pkg }))
     .pipe(rename({ suffix: '.min' }))
     .pipe(gulp.dest('./dist'));
 });
 
 gulp.task('default', function(callback){
-  runSequence('clean', ['js', 'js_min', 'templates', 'standalone_vendor_js', 'standalone_js'], callback);
+  runSequence('clean', [
+    'js', 
+    'js_min', 
+    'less', 
+    'lessmin', 
+    'templates', 
+    'standalone_vendor_js', 
+    'standalone_js'
+  ], callback);
 });
