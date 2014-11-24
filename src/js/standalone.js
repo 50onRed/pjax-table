@@ -5,4 +5,6 @@
     }
     return 'down';
   });
+  
+  $('#table-container').html(Fifty.modules.tableGenerator.generate());
 })();

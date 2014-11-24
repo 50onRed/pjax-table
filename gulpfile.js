@@ -10,13 +10,25 @@ var del = require('del');
 var runSequence = require('run-sequence');
 
 var output_names = {
-  js: 'fifty_pjax_table.js'
+  js: 'fifty_pjax_table.js',
+  standalone_vendor_js: 'standalone_vendor.js',
+  standalone_js: 'standalone.js'
 };
+
 var paths = {
   json: ['./bower.json', './package.json'],
   js: ['./src/js/table.js'],
-  templates: './src/templates/*.hbs',
-  template_precompile_output: './src/js/'
+  standalone_vendor_js: [
+    './bower_components/jquery/dist/jquery.js',
+    './bower_components/fifty-widget/dist/fisty_widget.js',
+    './bower_components/chance/chance.js',
+    './bower_components/handlebars/handlebars.runtime.js'
+  ],
+  standalone_js: [
+    './src/js/table_generator.js',
+    './src/js/standalone.js'
+  ],
+  templates: './src/templates/*.hbs'
 };
 
 gulp.task('clean', function(cb) {
@@ -36,7 +48,19 @@ gulp.task('templates', function(){
       noRedeclare: true, // Avoid duplicate declarations
     }))
     .pipe(concat('templates.js'))
-    .pipe(gulp.dest(paths.template_precompile_output));
+    .pipe(gulp.dest('./standalone'));
+});
+
+gulp.task('standalone_vendor_js', function() {
+  return gulp.src(paths.standalone_vendor_js)
+    .pipe(concat(output_names.standalone_vendor_js))
+    .pipe(gulp.dest('./standalone'));
+});
+
+gulp.task('standalone_js', function() {
+  return gulp.src(paths.standalone_js)
+    .pipe(concat(output_names.standalone_js))
+    .pipe(gulp.dest('./standalone'));
 });
 
 gulp.task('js', function() {
@@ -54,5 +78,5 @@ gulp.task('js_min', function() {
 });
 
 gulp.task('default', function(callback){
-  runSequence('clean', ['js', 'js_min', 'templates'], callback);
+  runSequence('clean', ['js', 'js_min', 'templates', 'standalone_vendor_js', 'standalone_js'], callback);
 });

@@ -11,6 +11,7 @@
   "devDependencies": {
     "chance": "0.6.1",
     "jquery": "1.11.1",
+    "handlebars": "2.0.0",
     "fifty-widget": "git@bitbucket.org:50onred/fifty-widget.git#0.1.0"
   }
 }
