@@ -2,7 +2,7 @@ this["Fifty"] = this["Fifty"] || {};
 this["Fifty"]["templates"] = this["Fifty"]["templates"] || {};
 this["Fifty"]["templates"]["body_cell"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   var helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
-  return "<td data-property=\""
+  return "<td class=\"fifty-table-cell\" data-property=\""
     + escapeExpression(((helper = (helper = helpers.property || (depth0 != null ? depth0.property : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"property","hash":{},"data":data}) : helper)))
     + "\" data-value=\""
     + escapeExpression(((helper = (helper = helpers.value || (depth0 != null ? depth0.value : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"value","hash":{},"data":data}) : helper)))
@@ -11,14 +11,14 @@ this["Fifty"]["templates"]["body_cell"] = Handlebars.template({"compiler":[6,">=
     + "</td>";
 },"useData":true});
 this["Fifty"]["templates"]["body_row"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, buffer = "<tr>";
+  var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, buffer = "<tr class=\"fifty-table-row\">";
   stack1 = ((helper = (helper = helpers.cells || (depth0 != null ? depth0.cells : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"cells","hash":{},"data":data}) : helper));
   if (stack1 != null) { buffer += stack1; }
   return buffer + "</tr>";
 },"useData":true});
 this["Fifty"]["templates"]["header_cell"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   var helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
-  return "<th data-sortable=\"true\" data-property=\""
+  return "<th class=\"fifty-table-header sortable\" data-sortable=\"true\" data-property=\""
     + escapeExpression(((helper = (helper = helpers.property || (depth0 != null ? depth0.property : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"property","hash":{},"data":data}) : helper)))
     + "\" data-current-sort-direction=\""
     + escapeExpression(((helper = (helper = helpers.current_sort || (depth0 != null ? depth0.current_sort : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"current_sort","hash":{},"data":data}) : helper)))
@@ -29,7 +29,7 @@ this["Fifty"]["templates"]["header_cell"] = Handlebars.template({"compiler":[6,"
     + "\"></i>\n  </span>\n</th>\n";
 },"useData":true});
 this["Fifty"]["templates"]["header_row"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, buffer = "<tr>";
+  var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, buffer = "<tr class=\"fifty-table-header-row\">";
   stack1 = ((helper = (helper = helpers.cells || (depth0 != null ? depth0.cells : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"cells","hash":{},"data":data}) : helper));
   if (stack1 != null) { buffer += stack1; }
   return buffer + "</tr>";
