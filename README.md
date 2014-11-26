@@ -95,39 +95,38 @@ The current pagination markup makes use of bootstrap 3 classes and structure for
         </ul>
       </div>
       <div class="btn-group btn-sm btn-link">From {{ from }} to {{ to }} of {{ total }}</div>
-  </div>
-  <!-- -->
-  <div class="pull-right btn-toolbar">
-    {{#if on_last_page }}
-      <div class="btn-group">
-        <button type="button" class="btn btn-default btn-sm ui-prev-page" {{#if on_first_page }}disabled{{/if}}>
-          <i class="fa fa-chevron-left"></i>
-        </button>
-      </div>
-      <!-- -->
-      <div class="btn-group">
-        <div class="ui-page-index-dropdown dropdown" data-current-page="{{ $current_page }}">
-          <button class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-            <span class="dropdown-label">Page {{ current_page }}</span>
-            <i class="fa fa-angle-down"></i>
+    </div>
+    <!-- -->
+    <div class="pull-right btn-toolbar">
+      {{#if on_last_page }}
+        <div class="btn-group">
+          <button type="button" class="btn btn-default btn-sm ui-prev-page" {{#if on_first_page }}disabled{{/if}}>
+            <i class="fa fa-chevron-left"></i>
           </button>
-          <ul class="dropdown-menu open-up ui-page-select-dropdown">
-            {{ page_items }}
-          </ul>
         </div>
-      </div>
-      <!-- -->
-      <div class="btn-group">
-        <button type="button" class="btn btn-default btn-sm ui-next-page" {{#if on_last_page }}disabled{{/if}}>
-          <i class="fa fa-chevron-right"></i>
-        </button>
-      </div>
-    {{else}}
-      <div class="btn-group btn-sm btn-link">Page {{ current_page }} of {{ last_page }}</div>
-    {{/if}}
+        <!-- -->
+        <div class="btn-group">
+          <div class="ui-page-index-dropdown dropdown" data-current-page="{{ $current_page }}">
+            <button class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+              <span class="dropdown-label">Page {{ current_page }}</span>
+              <i class="fa fa-angle-down"></i>
+            </button>
+            <ul class="dropdown-menu open-up ui-page-select-dropdown">
+              {{ page_items }}
+            </ul>
+          </div>
+        </div>
+        <!-- -->
+        <div class="btn-group">
+          <button type="button" class="btn btn-default btn-sm ui-next-page" {{#if on_last_page }}disabled{{/if}}>
+            <i class="fa fa-chevron-right"></i>
+          </button>
+        </div>
+      {{else}}
+        <div class="btn-group btn-sm btn-link">Page {{ current_page }} of {{ last_page }}</div>
+      {{/if}}
+    </div>
   </div>
-</div>
-
 ```
 
 ### Dependencies
