@@ -1,24 +1,26 @@
-// install node dependencies, most notably, gulp and gulp plugins
-npm install
 
-// install client dependencies
-bower install
+### Building
+    // install node dependencies, most notably, gulp and gulp plugins
+    npm install
 
-// (default task) cleans and then builds standalone and distributable versions
-gulp
+    // install client dependencies
+    bower install
 
-// run unit tests against build versions in phantomJS with singleRun=true 
-// Pro Tip: don’t forget the Nyan Reporter
-karma start ./path/to/karma.conf.js
+    // (default task) cleans and then builds standalone and distributable versions
+    gulp
 
-// (patch/minor/major) bump package.json and bower.json versions
-gulp bump-{type}
+    // run unit tests against build versions in phantomJS with singleRun=true 
+    // Pro Tip: don’t forget the Nyan Reporter
+    karma start ./path/to/karma.conf.js
 
-// commit the bumped version
-git commit -m "bumps version"
+    // (patch/minor/major) bump package.json and bower.json versions
+    gulp bump-{type}
 
-// tag the bumped version in git
-git tag v0.0.1
+    // commit the bumped version
+    git commit -m "bump version"
 
-// push the bumped version with tags
-git push origin master --tags
+    // tag the bumped version in git
+    git tag v0.0.1
+
+    // push the bumped version with tags
+    git push origin master --tags

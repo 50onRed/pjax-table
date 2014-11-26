@@ -13,6 +13,7 @@
     "jquery": "1.11.1",
     "jquery-pjax": "1.9.2",
     "handlebars": "2.0.0",
+    "fontawesome": "4.2.x",
     "fifty-widget": "git@bitbucket.org:50onred/fifty-widget.git#0.1.0"
   }
 }

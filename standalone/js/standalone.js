@@ -8,7 +8,7 @@
   var pagination_page_item = templates.pagination_page_item;
   var table = templates.table;
 
-  var num_columns = 10;
+  var num_columns = 7;
   var num_rows = 50;
 
   function generateData() {
