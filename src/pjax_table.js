@@ -212,20 +212,21 @@
       });
 
       // Search 
-      $searchFilter.keyup(function (e) {
+      $searchFilter.keydown(function (e) {
         // if enter / return
         if (e.which === 13) {
           var query = $(this).val();
-          
-          $searchFilter.trigger('search.table', { query: query });
+          $el.trigger('search.table', { query: query });
           $.extend(queryState, { q: query, page: 1 });
           pjaxForContainer();
+          e.preventDefault(); //prevents the search input from firing default search event
         }
         // if esc clear search and load full table
         if (e.keyCode == 27) {
-          $searchFilter.trigger('clear_search.table');
+          $el.trigger('clear_search.table');
           $.extend(queryState, { q: '', page: 1 });
           pjaxForContainer();
+          e.preventDefault();
         }
       });
 
