@@ -219,14 +219,15 @@
           $el.trigger('search.table', { query: query });
           $.extend(queryState, { q: query, page: 1 });
           pjaxForContainer();
+          e.preventDefault(); //stops the default search event from firing
         }
         // if esc clear search and load full table
         if (e.keyCode == 27) {
           $el.trigger('clear_search.table');
           $.extend(queryState, { q: '', page: 1 });
           pjaxForContainer();
+          e.preventDefault();
         }
-        return false; // stops the default search event from firing
       });
 
       // Search clear
