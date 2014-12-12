@@ -1,7 +1,6 @@
 # Fifty PJAX Table
 
-50's Wrapper for [PJAX](https://github.com/defunkt/jquery-pjax) based tables which includes many defaults for 
-working tables.
+50's Wrapper for [PJAX](https://github.com/defunkt/jquery-pjax) based tables.
 
 *Tables are under active development. When updating to a new version, make sure to reference the change log for any breaking changes*
 
@@ -20,9 +19,9 @@ working tables.
 The app server needs to define correct markup and data attributes 
 to enable features of pjax tables. Some are required, others optional.
 
-* data- attributes are required for functionality *
-* ui- prefixed classes are required for relative js controls to function *
-* other classes are required for base css *
+* data- attributes are required for functionality
+* ui- prefixed classes are required for relative js controls to function
+* other classes are required for base css
 
 #### Base Markup
 The standard fifity table markup and relative data attributes
@@ -75,7 +74,7 @@ The standard fifity table markup and relative data attributes
 
 #### Pagination
 The current pagination markup makes use of bootstrap 3 classes and structure for buttons and dropdowns.
-*This markup may be updated to not remove this dependency in the future.*
+*BS3 is not currently included as a dependency. A base set of styles to make these functional without BS3 may soon be applied. Ideas are welcome.*
 ```
   <div class="fifty-table-pagination ui-pagination" 
     data-current-page="{{ current_page }}" 
@@ -136,7 +135,7 @@ The current pagination markup makes use of bootstrap 3 classes and structure for
   - [Font Awesome 4.2.0](http://fortawesome.github.io/Font-Awesome/)
 
 ### Testing
-  *coming soon*
+  *coming soon, see [tests](https://bitbucket.org/50onred/fifty-pjax-table/issue/2/add-tests)*
 
 ### Building
     // install node dependencies, most notably, gulp and gulp plugins
@@ -148,9 +147,10 @@ The current pagination markup makes use of bootstrap 3 classes and structure for
     // (default task) cleans and then builds standalone and distributable versions
     gulp
 
+    // Not yet included
     // run unit tests against build versions in phantomJS with singleRun=true 
     // Pro Tip: don’t forget the Nyan Reporter
-    karma start ./path/to/karma.conf.js
+    // karma start ./path/to/karma.conf.js
 
     // (patch/minor/major) bump package.json and bower.json versions
     gulp bump-{type}
