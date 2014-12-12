@@ -1,0 +1,14 @@
+@gray-light: #cecece;
+@state-info-bg: #f9fdff;
+@link-color: #007fcf;
+
+.clearfix() {
+  &:before,
+  &:after {
+    content: " "; // 1
+    display: table; // 2
+  }
+  &:after {
+    clear: both;
+  }
+}

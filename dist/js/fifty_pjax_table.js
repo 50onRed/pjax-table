@@ -116,16 +116,16 @@
       // create this shortcut whenever the table loads
       totalRows = $('#' + wrapperId).data('total-rows');
       $tbody = $el.find('tbody');
+      
       var numColumns = getNumColumns();
-
       if (!totalRows) {
         $tbody.html('<tr><td class="empty-table-content" colspan="' + numColumns 
           + '">Whoops! Looks like there\'s nothing in this table!</td></tr>');
       }
-      // Checkboxes
-      // $el.find('.shiftClick').shiftClick();
 
-      // refreshPlugins();
+      if ($.fn.tooltip) {
+        $el.find('[data-toggle="tooltip"]').tooltip();
+      }
     }
 
     function init () {
@@ -245,9 +245,21 @@
         var last_selected_index = $all_visible_rows.index($last_selected_tr);
         var start = Math.min(current_selected_index, last_selected_index);
         var end = Math.max(current_selected_index, last_selected_index);
+        
+        // if selecting from top down, don't process the first one
+        if (last_selected_index < current_selected_index && $last_selected_tr.hasClass('ui-selected')) {
+          start += 1;
+        } else {
+          end +=1;
+        }
 
-        $all_visible_rows.slice(start, end + 1).each(function() {
-          $(this).addClass('ui-selected').children().first().find('input').prop('checked', true);
+        $all_visible_rows.slice(start, end).each(function() {
+          var $row = $(this);
+          if ($row.hasClass('ui-selected')) {
+            $row.removeClass('ui-selected').children().first().find('input').prop('checked', false);
+          } else {
+            $row.addClass('ui-selected').children().first().find('input').prop('checked', true);
+          }
         });
       }
 
@@ -262,27 +274,22 @@
         var record = getRecord($tr.get(0));
         var shift_click_id = $el.data('last_selected');
 
+        // handle shift click by selecting everything inbetween
+        if (shift_click_id && $tr.data('shiftKey')) {
+          shiftSelectRows($tr, shift_click_id);
+        }
+        // always set last selected, whether or not it was checked on or off
+        $el.data('last_selected', record.id);
+
         // ignore header check all input for selected state
         if($checkbox.prop('checked')) {
-
-          // handle shift click by selecting everything inbetween
-          if (shift_click_id && $tr.data('shiftKey')) {
-            shiftSelectRows($tr, shift_click_id);
-          }
-
-          $el.data('last_selected', record.id);
           $tr.addClass('ui-selected');
-          $el.trigger('select.table', record);
+          $el.trigger('table.select', record);
         } else {
-          $el.data('last_selected', null);
           $tr.removeClass('ui-selected');
           $el.find('th[data-select-all-enabled="true"] input[type="checkbox"]').prop('checked', false);
-          $el.trigger('deselect.table', record);
+          $el.trigger('table.deselect', record);
         }
-      });
-
-      $el.on('click', '.tooltip', function(e) {
-        $(e.target).tooltip();
       });
 
       refreshPlugins();

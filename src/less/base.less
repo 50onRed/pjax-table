@@ -1,0 +1,70 @@
+[data-fifty-table] {
+  position: relative;
+}
+
+.table thead {
+  border: 1px solid @gray-light;
+  background: @gray-light;
+}
+
+.table thead > tr > th {
+  padding: 15px 15px;
+  border-right: 1px solid @gray-light;
+  vertical-align: middle
+}
+
+.table .id-header,
+.table .status-header {
+  border-right: 0 none;
+}
+
+.table tbody > tr > td {
+  border: 1px solid @gray-light;
+  padding: 25px 15px 20px;
+  vertical-align: top;
+}
+
+.table tfoot > tr > td {
+  border: 1px solid @gray-light;
+  background: @gray-light;
+}
+
+.fifty-table-cell-wrapper {
+  min-height: 25px;
+}
+
+.table td .btn-group {
+  margin-top: -10px;
+  margin-bottom: -10px;
+}
+
+th[data-sortable="true"] {
+  cursor: pointer;
+}
+
+.table-controls .dropdown-menu > li > a {
+  padding: 5px 20px;
+}
+
+.table-controls .btn-toolbar > .btn-group {
+  margin-bottom: 5px;
+}
+
+.fifty-table-footer-static-content {
+  text-align: right;
+  font-weight: bold;
+}
+
+a.table-cell-action {
+  color: @gray-light;
+  margin-left: 15px;
+}
+
+.table tbody tr:hover {
+  background: @state-info-bg;
+}
+
+.table tbody tr:hover a.table-cell-action {
+  color: @link-color;
+}
+
