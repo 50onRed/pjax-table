@@ -130,8 +130,13 @@ The current pagination markup makes use of bootstrap 3 classes and structure for
 ```
 
 ### Dependencies
+  - [jQuery 1.11.1](http://jquery.com/)
+  - [Fifty Widget](https://bitbucket.org/50onred/fifty-widget/overview)
+  - [jQuery PJAX 1.9.2](https://github.com/defunkt/jquery-pjax)
+  - [Font Awesome 4.2.0](http://fortawesome.github.io/Font-Awesome/)
 
 ### Testing
+  *coming soon*
 
 ### Building
     // install node dependencies, most notably, gulp and gulp plugins
