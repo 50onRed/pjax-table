@@ -16,6 +16,15 @@ this["Fifty"]["templates"]["body_row"] = Handlebars.template({"compiler":[6,">= 
   if (stack1 != null) { buffer += stack1; }
   return buffer + "</tr>";
 },"useData":true});
+this["Fifty"]["templates"]["footer_cell"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+  return "<td class=\"fifty-table-footer fifty-table-footer-static-content\" colspan=\"7\"></td>";
+  },"useData":true});
+this["Fifty"]["templates"]["footer_row"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+  var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, buffer = "<tr class=\"fifty-table-footer-row\">";
+  stack1 = ((helper = (helper = helpers.cells || (depth0 != null ? depth0.cells : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"cells","hash":{},"data":data}) : helper));
+  if (stack1 != null) { buffer += stack1; }
+  return buffer + "</tr>";
+},"useData":true});
 this["Fifty"]["templates"]["header_cell"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   var helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
   return "<th class=\"fifty-table-header sortable\" data-sortable=\"true\" data-property=\""
@@ -92,7 +101,7 @@ this["Fifty"]["templates"]["pagination_page_item"] = Handlebars.template({"1":fu
 this["Fifty"]["templates"]["table"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, buffer = "<div id=\"fifty-table\" \n  data-fifty-table-id=\"wrapper-id\" \n  data-pjax-container=\"#fifty-table\" \n  data-push-state-enabled=\"true\" \n  data-paginated=\"true\">\n  <div id=\"wrapper-id\" class=\"table-wrapper\" data-total-rows=\""
     + escapeExpression(((helper = (helper = helpers.total_rows || (depth0 != null ? depth0.total_rows : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"total_rows","hash":{},"data":data}) : helper)))
-    + "\">\n    <table class=\"table table-bordered\">\n      <thead>\n        ";
+    + "\">\n    <table class=\"table\">\n      <thead>\n        ";
   stack1 = ((helper = (helper = helpers.header_rows || (depth0 != null ? depth0.header_rows : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"header_rows","hash":{},"data":data}) : helper));
   if (stack1 != null) { buffer += stack1; }
   buffer += "\n      </thead>\n      <tbody>\n        ";
