@@ -16,7 +16,10 @@ module.exports = function(config) {
       "bower_components/jquery/dist/jquery.js",
 
       // fifty files
-      "src/js/table.js",
+      "standalone/js/standalone_vendor.js",
+      "standalone/js/templates.js",
+      "dist/js/fifty_pjax_table.js",
+      "standalone/js/standalone.js",
 
       // test files
       'test/**/*.js'
