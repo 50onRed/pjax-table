@@ -1,4 +1,4 @@
-(function(Fifty) {
+(function(Fifty, data) {
   var templates = Fifty.templates;
   var body_cell = templates.body_cell;
   var body_row = templates.body_row;
@@ -8,37 +8,34 @@
   var pagination_page_item = templates.pagination_page_item;
   var table = templates.table;
 
-  var num_columns = 7;
   var num_rows = 50;
-
+  
   function generateData() {
-    var table_data = {
-      header: [],
-      body: []
-    };
-    var property;
-
-    for (var i = 0; i < num_columns; i++) {
-      table_data.header.push({
-        name: chance.string(),
-        property: chance.string(),
-        current_sort: 'desc'
-      });
-    }
-    
-    for (var x = 0; x < num_rows; x++) {
-      table_data.body.push([]);
-      property = chance.string();
-      for (var y = 0; y < num_columns; y++) {
-        table_data.body[x].push({
-          property: property,
-          display_value: chance.string(),
-          value: chance.string()
+      var table_data = {
+        header: [],
+        body: []
+      };
+      var cols = Object.keys(data[0]);
+      
+      for (var i = 0; i < cols.length; i++) {
+        table_data.header.push({
+          name: cols[i],
+          property: cols[i],
+          current_sort: 'desc'
         });
       }
-    }
-
-    return table_data;
+    
+      for (var x = 0; x < num_rows; x++) {
+        table_data.body[x] = [];
+        for (var y = 0; y < cols.length; y++) {
+          table_data.body[x].push({
+            property: cols[y],
+            display_value: data[x][cols[y]],
+            value: data[x][cols[y]]
+          });
+        }
+      }
+      return table_data;
   }
 
   function generate() {
@@ -57,7 +54,7 @@
         }).join('')
       });
     }).join('');
-
+    
     var table_html = table({
       header_rows: header_row_html,
       body_rows: body_row_html,
@@ -65,7 +62,6 @@
       pagination: '',
       total_rows: table_data.body.length
     });
-
     return table_html;
   }
 
@@ -73,7 +69,8 @@
   Fifty.modules.tableGenerator = {
     generate: generate
   };
-})(Fifty = Fifty || {});
+})(Fifty = Fifty || {}, data);
+
 (function() {
   Handlebars.registerHelper('sortIcon', function(sort_direction) {
     if (sort_direction === 'asc') {
@@ -82,6 +79,7 @@
     return 'down';
   });
 
+  $('body').html('<div id="table-container"></div>');
   $('#table-container').html(Fifty.modules.tableGenerator.generate());
   $('#fifty-table').fiftyTable({});
 })();
