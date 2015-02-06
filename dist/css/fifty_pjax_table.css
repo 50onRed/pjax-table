@@ -1,5 +1,5 @@
 /*!
- * 50onRed - Fifty PJAX Table v0.1.1 ()
+ * 50onRed - Fifty PJAX Table v0.1.2 ()
  * Copyright 2015
  * 
  */
