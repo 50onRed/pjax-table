@@ -13,14 +13,14 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       // vendor files
-      "bower_components/jquery/dist/jquery.js",
+      'bower_components/jquery/dist/jquery.js',
       
       // fifty files
-      "standalone/js/standalone_vendor.js",
-      "standalone/js/templates.js",
-      "src/js/data.js",
-      "dist/js/fifty_pjax_table.js",
-      "standalone/js/standalone.js",
+      'standalone/js/standalone_vendor.js',
+      'standalone/js/templates.js',
+      'src/js/data.js',
+      'dist/js/fifty_pjax_table.js',
+      'standalone/js/standalone.js',
       
       // test files
       'test/**/*.js'
