@@ -1,6 +1,6 @@
 {
   "name": "fifty_pjax_table",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "private": true,
   "description": "Fifty's PJAX Table JS",
   "devDependencies": {

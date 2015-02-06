@@ -255,7 +255,7 @@
 
         $all_visible_rows.slice(start, end).each(function() {
           var $row = $(this);
-          if ($row.hasClass('ui-selected')) {
+          if (!$last_selected_tr.hasClass('ui-selected')) {
             $row.removeClass('ui-selected').children().first().find('input').prop('checked', false);
           } else {
             $row.addClass('ui-selected').children().first().find('input').prop('checked', true);
