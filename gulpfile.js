@@ -23,7 +23,6 @@ var banner = ['/*!',
 var output_names = {
   js: 'fifty_pjax_table.js',
   standalone_vendor_js: 'standalone_vendor.js',
-  standalone_js: 'standalone.js',
   less: 'fifty_pjax_table.css',
   lessmin: 'fifty_pjax_table.min.css'
 };
@@ -44,17 +43,13 @@ var paths = {
     './bower_components/chance/chance.js',
     './bower_components/handlebars/handlebars.runtime.js'
   ],
-  standalone_js: [
-    './src/js/table_generator.js',
-    './src/js/standalone.js'
-  ],
   all_less: ['./src/less/**/*.less'],
   less: ['./src/less/table.less'],
   templates: ['./src/templates/*.hbs']
 };
 
 gulp.task('clean', function(cb) {
-  del(['dist/**/*', 'standalone/**/*'], cb);
+  del(['dist/**/*', 'standalone/js/vendor/*', 'standalone/js/templates.js'], cb);
 });
 
 gulp.task('bump-patch', function(){ return gulp.src(paths.json).pipe(bump()).pipe(gulp.dest('./')); });
@@ -76,13 +71,7 @@ gulp.task('templates', function(){
 gulp.task('standalone_vendor_js', function() {
   return gulp.src(paths.standalone_vendor_js)
     .pipe(concat(output_names.standalone_vendor_js))
-    .pipe(gulp.dest('./standalone/js'));
-});
-
-gulp.task('standalone_js', function() {
-  return gulp.src(paths.standalone_js)
-    .pipe(concat(output_names.standalone_js))
-    .pipe(gulp.dest('./standalone/js'));
+    .pipe(gulp.dest('./standalone/js/vendor'));
 });
 
 gulp.task('standalone_vendor_css', function() {
@@ -140,8 +129,7 @@ gulp.task('default', function(callback){
     'lessmin',
     'less_copy',
     'templates', 
-    'standalone_vendor_js', 
-    'standalone_js',
+    'standalone_vendor_js',
     'standalone_vendor_css',
     'standalone_vendor_fonts'
   ], callback);
