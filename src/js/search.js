@@ -5,7 +5,7 @@
     var $searchFilter = $el.find('input[type="search"]');
     
     $el.find('.ui-search').click(function() {
-      $el.trigger('submit.search', { query: $searchFilter.val() });
+      $el.trigger('submit:search', { query: $searchFilter.val() });
     });
 
     $el.find('.ui-close').click(clearSearch);
@@ -22,7 +22,7 @@
 
     function clearSearch() {
       $searchFilter.val('');
-      $el.trigger('clear.search');
+      $el.trigger('clear:search');
     }
   }
   Fifty.widget('fiftySearch', Search);
