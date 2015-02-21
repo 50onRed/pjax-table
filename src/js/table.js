@@ -214,18 +214,18 @@
       });
 
       // Search
-      $searchBox.on('submit:search', function(query) {
+      $searchBox.on('submit:search', function(e, query) {
         $el.trigger('search.table', { query: query });
         $.extend(queryState, { q: query, page: 1 });
         pjaxForContainer();
       });
       // Search clear
-      $searchBox.on('clear:search', function() {
+      $searchBox.on('clear:search', function(e) {
         $el.trigger('clear_search.table');
         $.extend(queryState, { q: '', page: 1});
         pjaxForContainer();
       });
-
+      
       function shiftSelectRows($tr, shift_click_id) {
         var $last_selected_tr = $tbody.find('td[data-value="' + shift_click_id + '"]').parent();
         var $all_visible_rows = $tbody.find('tr');

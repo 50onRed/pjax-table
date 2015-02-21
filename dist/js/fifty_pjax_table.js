@@ -214,18 +214,18 @@
       });
 
       // Search
-      $searchBox.on('submit:search', function(query) {
+      $searchBox.on('submit:search', function(e, query) {
         $el.trigger('search.table', { query: query });
         $.extend(queryState, { q: query, page: 1 });
         pjaxForContainer();
       });
       // Search clear
-      $searchBox.on('clear:search', function() {
+      $searchBox.on('clear:search', function(e) {
         $el.trigger('clear_search.table');
         $.extend(queryState, { q: '', page: 1});
         pjaxForContainer();
       });
-
+      
       function shiftSelectRows($tr, shift_click_id) {
         var $last_selected_tr = $tbody.find('td[data-value="' + shift_click_id + '"]').parent();
         var $all_visible_rows = $tbody.find('tr');
@@ -617,15 +617,16 @@ $(function(){
     var $searchFilter = $el.find('input[type="search"]');
     
     $el.find('.ui-search').click(function() {
-      $el.trigger('submit:search', { query: $searchFilter.val() });
+      $el.trigger('submit:search', $searchFilter.val());
     });
 
     $el.find('.ui-close').click(clearSearch);
 
     $searchFilter.keydown(function (e) {
+      $('.ui-close').removeClass('hidden');
       if (e.which === 13) {          //enter / return
         e.preventDefault();
-        $el.trigger('submit.search', { query: $(this).val() });
+        $el.trigger('submit:search', $(this).val());
       } else if (e.which == 27) {    //escape
         e.preventDefault();
         clearSearch();
@@ -635,6 +636,7 @@ $(function(){
     function clearSearch() {
       $searchFilter.val('');
       $el.trigger('clear:search');
+      $('.ui-close').addClass('hidden');
     }
   }
   Fifty.widget('fiftySearch', Search);
