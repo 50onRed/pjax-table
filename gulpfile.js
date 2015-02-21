@@ -21,15 +21,21 @@ var banner = ['/*!',
 ].join('\n');
 
 var output_names = {
-  js: 'fifty_pjax_table.js',
   standalone_vendor_js: 'standalone_vendor.js',
   less: 'fifty_pjax_table.css',
-  lessmin: 'fifty_pjax_table.min.css'
+  lessmin: 'fifty_pjax_table.min.css',
+  js: 'fifty_pjax_table.js'
 };
 
 var paths = {
-  json: ['./bower.json', './package.json'],
-  js: ['./src/js/table.js'],
+  json: [
+    './bower.json', 
+    './package.json'
+  ],
+  js: [
+    './src/js/table.js', 
+    './src/js/search.js'
+  ],
   standalone_vendor_css: [
     './bower_components/fontawesome/css/font-awesome.css'
   ],
@@ -45,7 +51,7 @@ var paths = {
   ],
   all_less: ['./src/less/**/*.less'],
   less: ['./src/less/table.less'],
-  templates: ['./src/templates/*.hbs']
+  templates: ['./src/templates/*.hbs'],
 };
 
 gulp.task('clean', function(cb) {
@@ -124,7 +130,7 @@ gulp.task('less_copy', function() {
 gulp.task('default', function(callback){
   runSequence('clean', [
     'js', 
-    'js_min', 
+    'js_min',
     'less', 
     'lessmin',
     'less_copy',
