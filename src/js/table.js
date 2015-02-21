@@ -23,8 +23,8 @@
   *   @param {boolean} data-paginated whether or not pagination is enabled
   *
   *   Events which trigger table functionality
-  *     submit.search: triggers a table search query when triggered by the element specified in options.search_id
-  *     clear.search:  triggers a clearance of the current search query when triggered by the element specified in options.search_id
+  *     submit:search: triggers a table search query when triggered by the element specified in options.search_id
+  *     clear:search:  triggers a clearance of the current search query when triggered by the element specified in options.search_id
   *
   *   Events, triggered on the table container element
   *     load.table: triggered any time the table has finished loaded, on pjax success for initial load, update, and refresh
