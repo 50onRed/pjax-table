@@ -13,7 +13,7 @@
   *     @param {Array<object>} options.plugins a list of jquery prototype based plugin configurations to be intialized and
   *       re-initialized on table load. Plugins are initialized for each row, being passed the row record and current query state.
   *       config example: [{ target: '[data-plugin-element-selector]', constructorName: 'myPlugin'}]
-  *     @param {string} options.search_id  A selector for a search box to be used with the table
+  *     @param {string} options.search_id  A selector for a search box to be used with the table. 
   *
   *   Data Attribute Params, parameters expected to be included on the table container element for initialization
   *   @param {string}  data-fifty-table-id the table id
@@ -21,6 +21,10 @@
   *   @param {string}  data-pjax-container the selector for the container to be passed to pjax requests
   *   @param {boolean} data-push-state-enabled a flag for whether or not to enable pjax push state
   *   @param {boolean} data-paginated whether or not pagination is enabled
+  *
+  *   Events which trigger table functionality
+  *     submit:search: triggers a table search query when triggered by the element specified in options.search_id
+  *     clear:search:  triggers a clearance of the current search query when triggered by the element specified in options.search_id
   *
   *   Events, triggered on the table container element
   *     load.table: triggered any time the table has finished loaded, on pjax success for initial load, update, and refresh
@@ -41,8 +45,7 @@
     var options = options || {};
     var $el = $(this);
     var $tbody = null;
-    var $searchBox = $('#' + (options.search_id || $el.data('search_id')));
-    var $searchFilter = $searchBox.find('input[type="search"]')
+    var $searchBox = $('#' + (options.search_id || $el.data('search-id')));
     var wrapperId = $el.data('fifty-table-id');
     var pjax_url = $el.data('pjax-url') || window.location.pathname;
     var pjax_container = $el.data('pjax-container');  //should generally be the same as  $el
@@ -104,7 +107,6 @@
       var search_query = $wrapper.data('current-search-query');
       if (search_query) {
         $.extend(queryState, { q: search_query });
-        $searchFilter.val(search_query);
       }
 
       // TODO: this may need to be abstracted in the future, unless we bundle the filter builder
@@ -211,29 +213,15 @@
         }
       });
 
-      // Search 
-      $searchFilter.keydown(function (e) {
-        // if enter / return
-        if (e.which === 13) {
-          var query = $(this).val();
-          $el.trigger('search.table', { query: query });
-          $.extend(queryState, { q: query, page: 1 });
-          pjaxForContainer();
-          e.preventDefault(); //stops the default search event from firing
-        }
-        // if esc clear search and load full table
-        if (e.keyCode == 27) {
-          $el.trigger('clear_search.table');
-          $.extend(queryState, { q: '', page: 1 });
-          pjaxForContainer();
-          e.preventDefault();
-        }
+      // Search
+      $searchBox.on('submit:search', function(query) {
+        $el.trigger('search.table', { query: query });
+        $.extend(queryState, { q: query, page: 1 });
+        pjaxForContainer();
       });
-
       // Search clear
-      $searchBox.on('click', '.ui-close', function() {
-        $searchFilter.val('');
-        $searchFilter.trigger('clear_search.table');
+      $searchBox.on('clear:search', function() {
+        $el.trigger('clear_search.table');
         $.extend(queryState, { q: '', page: 1});
         pjaxForContainer();
       });
@@ -475,7 +463,7 @@
         format = $cell.data('format');
 
         if (format) {
-          value = displayFormatters[format](value)
+          value = displayFormatters[format](value);
         }
         $cell.find($cell.data('display-target')).text(value);
 
@@ -619,5 +607,42 @@
 $(function(){
   $('[data-fifty-table][data-auto-init]').each(function () {
     $(this).fiftyTable({});
+  });
+});
+
+(function($, Fifty) {
+
+  function Search() {
+    var $el = $(this);
+    var $searchFilter = $el.find('input[type="search"]');
+    
+    $el.find('.ui-search').click(function() {
+      $el.trigger('submit:search', { query: $searchFilter.val() });
+    });
+
+    $el.find('.ui-close').click(clearSearch);
+
+    $searchFilter.keydown(function (e) {
+      if (e.which === 13) {          //enter / return
+        e.preventDefault();
+        $el.trigger('submit.search', { query: $(this).val() });
+      } else if (e.which == 27) {    //escape
+        e.preventDefault();
+        clearSearch();
+      }
+    });
+
+    function clearSearch() {
+      $searchFilter.val('');
+      $el.trigger('clear:search');
+    }
+  }
+  Fifty.widget('fiftySearch', Search);
+})(jQuery, window.Fifty = window.Fifty || {});
+
+// auto-init search
+$(function(){
+  $('[data-fifty-search][data-auto-init]').each(function () {
+    $(this).fiftySearch();
   });
 });
