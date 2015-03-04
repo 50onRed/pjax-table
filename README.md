@@ -1,8 +1,6 @@
-# Fifty PJAX Table
+# PJAX Table
 
 50's Wrapper for [PJAX](https://github.com/defunkt/jquery-pjax) based tables.
-
-*Tables are under active development. When updating to a new version, make sure to reference the change log for any breaking changes*
 
 ### Features
   - pjax loading with push state
@@ -24,7 +22,7 @@ to enable features of pjax tables. Some are required, others optional.
 * other classes are required for base css
 
 #### Base Markup
-The standard fifity table markup and relative data attributes
+The standard pjax table markup and relative data attributes
 ```
   <!-- the container that the fifty table script will attach to and replace the contents of with pjax -->
   <div id="my-primary-id" 
@@ -130,13 +128,11 @@ The current pagination markup makes use of bootstrap 3 classes and structure for
 
 ### Dependencies
   - [jQuery 1.11.1](http://jquery.com/)
-  - [Fifty Widget](https://bitbucket.org/50onred/fifty-widget/overview)
   - [jQuery PJAX 1.9.2](https://github.com/defunkt/jquery-pjax)
   - [Font Awesome 4.2.0](http://fortawesome.github.io/Font-Awesome/)
 
 ### Testing
-  *coming soon, see [tests](https://bitbucket.org/50onred/fifty-pjax-table/issue/2/add-tests)*
-
+  
 ### Building
     // install node dependencies, most notably, gulp and gulp plugins
     npm install

@@ -14,7 +14,7 @@ var runSequence = require('run-sequence');
 
 var pkg = require('./package.json');
 var banner = ['/*!',
-  ' * 50onRed - Fifty PJAX Table v<%= pkg.version %> (<%= pkg.homepage %>)',
+  ' * 50onRed - PJAX Table v<%= pkg.version %> (<%= pkg.homepage %>)',
   ' * Copyright ' + (new Date()).getFullYear(),
   ' * <%= pkg.author %>',
   ' */\n'
@@ -22,9 +22,9 @@ var banner = ['/*!',
 
 var output_names = {
   standalone_vendor_js: 'standalone_vendor.js',
-  less: 'fifty_pjax_table.css',
-  lessmin: 'fifty_pjax_table.min.css',
-  js: 'fifty_pjax_table.js'
+  less: 'pjax_table.css',
+  lessmin: 'pjax_table.min.css',
+  js: 'pjax_table.js'
 };
 
 var paths = {
@@ -45,7 +45,6 @@ var paths = {
   standalone_vendor_js: [
     './bower_components/jquery/dist/jquery.js',
     './bower_components/jquery-pjax/jquery.pjax.js',
-    './bower_components/fifty-widget/dist/fifty_widget.js',
     './bower_components/chance/chance.js',
     './bower_components/handlebars/handlebars.runtime.js'
   ],
