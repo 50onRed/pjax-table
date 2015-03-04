@@ -14,33 +14,35 @@
   var sortMap = { asc: 'desc', desc: 'asc' };
 
   /**
-  *   Table implements script controls for fifty table
-  *   * See bottom for table interface
+  *   Table implements script controls for pjax table
+  *   "_" prefixed methods are considered internal usage only
   *
   *   @constructor
   *
-  *   @param {object} "this" is the table container element the module is being initialized with
+  *   @param {object} el is the table container element the module is being initialized with
   *   @param {object} options
   *     @param {Array<object>} options.refreshEvents a list of delegated event configurations that should trigger a table refresh.
   *       event listeners are attached at the table container element level, filters are optional.
   *       config example: [{ eventName: 'click', filter: '.my-class-selector' }]
-  *     @param {Array<object>} options.plugins a list of jquery prototype based plugin configurations to be intialized and
+  *     @param {Array<object>} options.plugins a list of jQuery prototype based plugin configurations to be intialized and
   *       re-initialized on table load. Plugins are initialized for each row, being passed the row record and current query state.
   *       config example: [{ target: '[data-plugin-element-selector]', constructorName: 'myPlugin'}]
   *     @param {string} options.search_id  A selector for a search box to be used with the table. 
   *
   *   Data Attribute Params, parameters expected to be included on the table container element for initialization
-  *   @param {string}  data-fifty-table-id the table id
+  *   @param {string}  data-table-id the table id
   *   @param {string}  data-pjax-url the url to be used for loading the table with pjax
   *   @param {string}  data-pjax-container the selector for the container to be passed to pjax requests
   *   @param {boolean} data-push-state-enabled a flag for whether or not to enable pjax push state
   *   @param {boolean} data-paginated whether or not pagination is enabled
+  *   @param {string}  data-search-id an optional search control element id
+  *   
+  *   Notes on search module: 
+  *     Events which are registered within the table
+  *     search:submit triggers a table search query when triggered by the element specified in options.search_id
+  *     search:clear triggers a clearance of the current search query when triggered by the element specified in options.search_id
   *
-  *   Events which trigger table functionality
-  *     submit:search: triggers a table search query when triggered by the element specified in options.search_id
-  *     clear:search:  triggers a clearance of the current search query when triggered by the element specified in options.search_id
-  *
-  *   Events, triggered on the table container element
+  *   Events, triggered by the table on the table container element
   *     table:load triggered any time the table has finished loaded, on pjax success for initial load, update, and refresh
   *     table:sort {object}, triggered when a column is sorted, includes direction and property
   *     table:page {number}, triggered when a specific page has been chosen to jump to
@@ -54,27 +56,28 @@
   *     table:search {object}, triggered when a search query is used to filter the table
   *     table:search:clear {}, triggered when a search query is cleared
   */
-  function Table(options) {
+  function Table(el, options) {
+    this._$el = $(el);
     this._options = options || {};
-    this._$el = $(this);
     this._$tbody = null;
 
-    var search_id = this._options.search_id || this._$el.data('search-id') || null;
-    this._$searchBox = search_id ? $(search_id) : null;
-
-    this._wrapperId = this._$el.data('fifty-table-id');
+    this._wrapperId = this._$el.data('table-id');
     this._pjaxURL = this._$el.data('pjax-url') || window.location.pathname;
     this._pjaxContainer = this._$el.data('pjax-container');  //should generally be the same as  $el
     this._pushState = this._$el.data('push-state-enabled');
     this._paginated = this._$el.data('paginated');
     this._totalRows = null;
     
+    var search_id = this._options.search_id || this._$el.data('search-id') || null;
+    this._$searchBox = search_id ? $(search_id) : null;
+
     this._queryState = {};
 
     this._init();
   }
 
   $.extend(Table.prototype, {
+    
     createSortQuery: function(property, sort_direction) {
       return {
         order: property + '__' + sort_direction,
@@ -278,16 +281,6 @@
     },
 
     /**
-    *   Refreshes the configured plugins by applying them to all rows
-    *   See docs at top of table module or applyPlugins for plugin defintion details
-    */
-    refreshPlugins: function() {
-      if (this._options.plugins) {
-        this._applyPlugins(this._options.plugins);
-      }
-    },
-
-    /**
     *   Generic row level plugin initialization, providing the row record as a pojo ( plugins expected to be prototype based )
     *
     *   Notes:
@@ -365,6 +358,83 @@
     
       this.refreshPlugins();
       this._initPluginRefreshEvents();
+    },
+
+    /**
+    *   @param {Object} a tr DOM element
+    *   @return {Object}
+    */
+    _getRecord: function(rowEl) {
+      var record = { additional_fields: {} };
+
+      $(rowEl).children().each(function () {
+        var $cell = $(this);
+        var data = $cell.data();
+
+        record[data.property] = data.value;
+
+        // add additional fields, ignore constructures and objects / arrays, allow primitives
+        $.each($cell.data(), function (key, value) {
+          if (key !== 'property' && key !== 'value') {
+            if (typeof value !== 'function' && typeof value !== 'object') {
+              record.additional_fields[key] = value;
+            }
+          }
+        });
+      });
+
+      return record;
+    },
+
+    /**
+    *   Finds a row by id by comparing against the cell with data-propert="id", typically the first cell
+    *   @param {number} id the id to match
+    *   @return {object} the row DOM element
+    */
+    _findRowById: function(id) {
+      return this._$tbody.find('tr').filter(function (index, rowElement) {
+        if (this._getRecord(this).id === id) {
+          return true;
+        }
+        return false;
+      }.bind(this)).get(0);
+    },
+
+    /**
+    *   Updates cell values for a given row, using jQuery.data() which updates them in memory, not on the original element attributes
+    *     * Note: for editable cells, and eventually all cells, with appropriate attributes, this will update the cell display value as well
+    *   @param {object} the row DOM element
+    *   @param {object} the object of key value pairs to match and update
+    */
+    _updateRowFields: function(row, data, callback) {
+      var $row = $(row);
+      var $cell;
+      var format;
+
+      $.each(data, function (key, value) {
+        $cell = $row.find('td[data-property="' + key + '"]');
+        $cell.data(key, value);
+        format = $cell.data('format');
+
+        if (format) {
+          value = displayFormatters[format](value);
+        }
+        $cell.find($cell.data('display-target')).text(value);
+
+        if (typeof callback === 'function') {
+          callback($cell, key, value);
+        }
+      });
+    },
+
+    /**
+    *   Refreshes the configured plugins by applying them to all rows
+    *   See docs at top of table module or applyPlugins for plugin defintion details
+    */
+    refreshPlugins: function() {
+      if (this._options.plugins) {
+        this._applyPlugins(this._options.plugins);
+      }
     },
 
     /**
@@ -460,73 +530,6 @@
     },
 
     /**
-    *   @param {Object} a tr DOM element
-    *   @return {Object}
-    */
-    _getRecord: function(rowEl) {
-      var record = { additional_fields: {} };
-
-      $(rowEl).children().each(function () {
-        var $cell = $(this);
-        var data = $cell.data();
-
-        record[data.property] = data.value;
-
-        // add additional fields, ignore constructures and objects / arrays, allow primitives
-        $.each($cell.data(), function (key, value) {
-          if (key !== 'property' && key !== 'value') {
-            if (typeof value !== 'function' && typeof value !== 'object') {
-              record.additional_fields[key] = value;
-            }
-          }
-        });
-      });
-
-      return record;
-    },
-
-    /**
-    *   Finds a row by id by comparing against the cell with data-propert="id", typically the first cell
-    *   @param {number} id the id to match
-    *   @return {object} the row DOM element
-    */
-    _findRowById: function(id) {
-      return this._$tbody.find('tr').filter(function (index, rowElement) {
-        if (this._getRecord(this).id === id) {
-          return true;
-        }
-        return false;
-      }.bind(this)).get(0);
-    },
-
-    /**
-    *   Updates cell values for a given row, using jQuery.data() which updates them in memory, not on the original element attributes
-    *     * Note: for editable cells, and eventually all cells, with appropriate attributes, this will update the cell display value as well
-    *   @param {object} the row DOM element
-    *   @param {object} the object of key value pairs to match and update
-    */
-    _updateRowFields: function(row, data, callback) {
-      var $row = $(row);
-      var $cell;
-      var format;
-
-      $.each(data, function (key, value) {
-        $cell = $row.find('td[data-property="' + key + '"]');
-        $cell.data(key, value);
-        format = $cell.data('format');
-
-        if (format) {
-          value = displayFormatters[format](value);
-        }
-        $cell.find($cell.data('display-target')).text(value);
-
-        if (typeof callback === 'function') {
-          callback($cell, key, value);
-        }
-      });
-    },
-
-    /**
     *   @return {number} number of rows
     */
     getNumRecords: function() {
@@ -563,7 +566,7 @@
     getSelected: function(formatFn) {
       return this._$tbody.find('tr.ui-selected').map(function (index, rowElement) {
         if (typeof formatFn === 'function') {
-          return formatFn(getRecord(this));
+          return formatFn(this._getRecord(this));
         }
         return this._getRecord(this);
       }.bind(this)).get();
@@ -601,33 +604,68 @@
       return this._totalRows;
     }
   });
+  
+  $.fn.pjaxTable = function(options) {
+    var args = slice.call(arguments);
+    var allowedMethods = [
+      'update'
+      'refresh',
+      'refreshPlugins',
+      'getUrl',
+      'updateParameters',
+      'removeParameters',
+      'getParameters',
+      'getNumRecords',
+      'getNumColumns',
+      'hasSelected',
+      'getNumSelected',
+      'getSelected',
+      'getSelectedIds',
+      'getAllRecords',
+      'updateRow',
+      'getTotalRows'
+    ];
+    var values = []; // return values
 
+    $(this).each(function() {
+      // get the current instance or create a new one
+      var $el = $(this);
+      var widget = $el.data('pjaxTable');
+      var methodReturn;
 
-    // init();
-    // $.extend(_this, {
-    //   update: update,
-    //   refresh: refresh,
-    //   refreshPlugins: refreshPlugins,
-    //   getUrl: getUrl,
-    //   updateParameters: updateParameters,
-    //   removeParameters: removeParameters,
-    //   getParameters: getParameters,
-    //   getNumRecords: getNumRecords,
-    //   getNumColumns: getNumColumns,
-    //   hasSelected: hasSelected,
-    //   getNumSelected: getNumSelected,
-    //   getSelected: getSelected,
-    //   getSelectedIds: getSelectedIds,
-    //   getAllRecords: getAllRecords,
-    //   applyPlugins: applyPlugins,
-    //   updateRow: updateRow,
-    //   getTotalRows: getTotalRows
-    // });
-    // return _this;
+      if (!widget) {
+        widget = $el.data('pjaxTable', new widgetConstructor(this, options)).data('pjaxTable');
+      }
+
+      // execute methods and return the method return or this element for chaining
+      if (typeof options == 'string' && widget) {
+        // special case for resetting widgets, cleanup and reset
+        if (options === 'destroy') {
+          if (typeof widget.destroy === 'function') {
+            widget.destroy();
+          }
+          
+          delete $el.data()[finalName];
+          $el = null;
+        } else if (indexOf(options, allowedMethods) === -1) {
+          throw new Error('Invalid method: ' + options);
+        } else {
+          methodReturn = widget[options].apply(this, args.slice(1, args.length));
+          values.push(methodReturn);
+        }
+      } else {
+        values.push(widget);
+      }
+    });
     
-    // TODO: WIDGET CODE
-    // TODO: UPDATE WINDOW TO USE PJAXTABLE ?
-
+    // return only 1 value if possible
+    if (values.length > 1) {
+      return values;
+    } else if (values.length === 1) {
+      return values[0];
+    }
+  };
+  
   // auto-init tables
   $(function(){ $('[data-fifty-table][data-auto-init]').fiftyTable({}); });
 })(jQuery, window);
