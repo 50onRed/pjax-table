@@ -1,18 +1,5 @@
 (function ($, window) {
   'use strict'
-
-  // formatting for cells with defined data-format attributes, uses numeral.js
-  var displayFormatters = {
-    usd: function (val) {
-      return numeral(val).format('$0,0.00');
-    },
-    usd_thousandth: function (val) {
-      return numeral(val).format('$0,0.000');
-    }
-  };
-
-  var sortMap = { asc: 'desc', desc: 'asc' };
-
   /**
   *   Table implements script controls for pjax table
   *   "_" prefixed methods are considered internal usage only
@@ -71,6 +58,7 @@
     var search_id = this._options.search_id || this._$el.data('search-id') || null;
     this._$searchBox = search_id ? $(search_id) : null;
 
+    this._sortMap = { asc: 'desc', desc: 'asc' };
     this._queryState = {};
 
     this._init();
@@ -161,7 +149,7 @@
     _onClickSortable: function (e) {
       var $sortable = $(e.target).closest('th[data-sortable="true"]');
       var property = $sortable.data('property');
-      var sortDirection = sortMap[$sortable.data('current-sort-direction')] || $sortable.data('default-sort-direction');
+      var sortDirection = this._sortMap[$sortable.data('current-sort-direction')] || $sortable.data('default-sort-direction');
 
       this._$el.trigger('table:sort', { direction: sortDirection, property: property });
       $.extend(this._queryState, this.createSortQuery(property, sortDirection));
@@ -414,11 +402,6 @@
       $.each(data, function (key, value) {
         $cell = $row.find('td[data-property="' + key + '"]');
         $cell.data(key, value);
-        format = $cell.data('format');
-
-        if (format) {
-          value = displayFormatters[format](value);
-        }
         $cell.find($cell.data('display-target')).text(value);
 
         if (typeof callback === 'function') {
@@ -595,6 +578,7 @@
     *
     *   @param {number} the id of the row, located in the row's first cell, data-property="id"
     *   @param {Object} and object of key value pairs to update corresponding cell data-property - data-value pairs
+    *   @param {function} a callback to process the row
     */
     updateRow: function(id, data, callback) {
       this._updateRowFields(this._findRowById(id), data, callback);
@@ -665,7 +649,7 @@
       return values[0];
     }
   };
-  
+
   // auto-init tables
   $(function(){ $('[data-fifty-table][data-auto-init]').fiftyTable({}); });
 })(jQuery, window);
