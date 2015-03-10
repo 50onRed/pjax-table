@@ -1,6 +1,6 @@
 {
   "name": "fifty_pjax_table",
-  "version": "0.1.7",
+  "version": "0.2.0",
   "private": true,
   "ignore": [
     "**/.*",
@@ -10,10 +10,13 @@
   ],
   "devDependencies": {
     "chance": "0.6.1",
+    "handlebars": "2.0.0",
+    "fontawesome": "4.2.x"
+  },
+  "dependencies": {
     "jquery": "1.11.1",
     "jquery-pjax": "1.9.2",
-    "handlebars": "2.0.0",
-    "fontawesome": "4.2.x",
+    "spin.js": "2.0.1",
     "fifty-widget": "git@bitbucket.org:50onred/fifty-widget.git#1.0.0"
   }
 }

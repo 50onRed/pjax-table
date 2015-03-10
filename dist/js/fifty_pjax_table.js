@@ -130,9 +130,35 @@
       }
     }
 
+    function addLoadMask() {
+      var $loadMask = $('<div class="ui-load-mask">');
+      $el.css({ position: 'relative' });
+      $el.append($loadMask);
+      $loadMask.spin(options.loadMaskConfig || 'small');
+    }
+
+    function removeLoadMask() {
+      $el.find('.ui-load-mask').remove();
+      $el.css({ position: '' });
+    }
+
     function init () {
       syncQueryState();
       onTableLoaded();
+
+      if (options.enableLoadMask) {
+        $el.on('pjax:start', function (e, xhr, options) {
+          addLoadMask();
+        });
+
+        $el.on('pjax:beforeReplace', function (e, data, status, xhr, options) {
+          removeLoadMask();
+        });
+
+        $el.on('pjax:error', function (xhr, textStatus, error, options) {
+          removeLoadMask();
+        });
+      }
 
       // pjax timing out, we want to cancel the automatic retry
       $el.on('pjax:timeout', function (e) {

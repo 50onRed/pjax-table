@@ -45,6 +45,8 @@ var paths = {
   standalone_vendor_js: [
     './bower_components/jquery/dist/jquery.js',
     './bower_components/jquery-pjax/jquery.pjax.js',
+    './bower_components/spin.js/spin.js',
+    './bower_components/spin.js/jquery.spin.js',
     './bower_components/fifty-widget/dist/fifty_widget.js',
     './bower_components/chance/chance.js',
     './bower_components/handlebars/handlebars.runtime.js'
