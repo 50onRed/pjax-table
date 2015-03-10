@@ -11174,72 +11174,14 @@ $.support.pjax ? enable() : disable()
 
   /**
   *   @constructor
+  *   defaults to prototype based widget construction with new
+  *   supports module pattern through a flag
+  *   
   *   @param {string} name the name or namespace of the widget
   *   @param {function} widgetConstructor the constructor function for the widget
+  *   @param {boolean} isModule whether this module is defined using the module pattern
   */
-  function protoWidget(name, widgetConstructor) {    
-    var namespace = $;
-    var names = name.split('.');
-    var finalName = names.pop();
-    var length;
-
-    if (!names.length) {
-      names = ['fifty', 'proto_widget'];
-    }
-
-    length = names.length;
-    for(var i = 0; i < length; i++) {
-      if (!namespace[names[i]]) {
-        namespace[names[i]] = {};
-      }
-      namespace = namespace[names[i]];
-    }
-
-    function builder(options) {
-      var args = slice.call(arguments);
-
-      return $(this).each(function () {
-        var $el = $(this);
-        var widget = $el.data(finalName) || $el.data(finalName, new widgetConstructor(this, options)).data(finalName);
-
-        // execute methods and return the method return or this element for chaining
-        if (typeof options == 'string' && widget) { 
-          if (options === 'destroy') {
-
-            if (typeof widget.destroy === 'function') {
-              widget.destroy();
-            }
-            
-            delete $el.data()[finalName];
-            $el = null;
-          } else {
-            widget[options].apply(widget, args);
-          }
-        }
-      });
-    };
-
-    if (!$.fn[finalName]) {
-      $.fn[finalName] = builder;
-    }
-    namespace[finalName] = builder;
-
-    return builder;
-  }
-
-  Fifty.protoWidget = protoWidget;
-})(jQuery, window.Fifty = window.Fifty || {});
-
-(function($, Fifty) {
-  'use strict';
-  var slice = Array.prototype.slice;
-
-  /**
-  *   @constructor
-  *   @param {string} name the name or namespace of the widget
-  *   @param {function} widgetConstructor the constructor function for the widget
-  */
-  function widget(name, widgetConstructor) {
+  function widget(name, widgetConstructor, isModule) {
     var namespace = $;
     var names = name.split('.');
     var finalName = names.pop();
@@ -11257,32 +11199,66 @@ $.support.pjax ? enable() : disable()
       namespace = namespace[names[i]];
     }
 
+    /**
+    *   builder is the function that is attached to $.fn
+    *   and controls instance construction or method execution
+    *   on a jQuery object's element collection
+    *   
+    *   @param {Object|string|undefined}
+    *     object for configuration of a new instance
+    *     string for method execution on instances in the collection
+    *     undefined/nothing to receive the widget instance(s) in the collection
+    *   
+    *   @return {Object|Array<object>|?|Array<?>} returns
+    *     the widget instance object, and array of instance objects,
+    *     anything returned by an instance method, or 
+    *     any array of any things returned by instance methods
+    */
     function builder(options) {
-      var $el = $(this);
       var args = slice.call(arguments);
-      // get the current instance or create a new one
-      var widget = $el.data(finalName) || $el.data(finalName, widgetConstructor.apply(this, args)).data(finalName);
-      var methodReturn;
+      var values = []; // return values
 
-      // execute methods and return the method return or this element for chaining
-      if (typeof options == 'string' && widget) {
-        // special case for resetting widgets, cleanup and reset
-        if (options === 'destroy') {
-          
-          if (typeof widget.destroy === 'function') {
-            widget.destroy();
+      $(this).each(function() {
+        // get the current instance or create a new one
+        var $el = $(this);
+        var widget = $el.data(finalName);
+        var methodReturn;
+
+        if (!widget) {
+          if (!isModule) {
+            widget = $el.data(finalName, new widgetConstructor(this, options)).data(finalName);
+          } else {
+            widget = $el.data(finalName, widgetConstructor.apply(this, args)).data(finalName);
           }
-          
-          delete $el.data()[finalName];
-          $el = null;
-        } else {
-          methodReturn = widget[options].apply(this, args.slice(1, args.length)); // don't include method name
-          return (typeof methodReturn !== 'undefined' && methodReturn !== widget) ? methodReturn : $el;
         }
+
+        // execute methods and return the method return or this element for chaining
+        if (typeof options == 'string' && widget) {
+          // special case for resetting widgets, cleanup and reset
+          if (options === 'destroy') {
+            if (typeof widget.destroy === 'function') {
+              widget.destroy();
+            }
+            
+            delete $el.data()[finalName];
+            $el = null;
+          } else {
+            methodReturn = widget[options].apply(widget, args.slice(1, args.length)); // don't include method name
+            values.push(methodReturn);
+          }
+        } else {
+          values.push(widget);
+        }
+      });
+    
+      // return only 1 value if possible
+      if (values.length > 1) {
+        return values;
+      } else if (values.length === 1) {
+        return values[0];
       }
 
-      // return the widget instance by default
-      return widget;
+      // if no instances found in collection, method will appropriately return undefined
     };
 
     if (!$.fn[finalName]) {
