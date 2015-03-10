@@ -600,7 +600,7 @@
     return _this;
   }
 
-  Fifty.widget('fiftyTable', Table);
+  Fifty.widget('fiftyTable', Table, true);
 })(jQuery, window.Fifty = window.Fifty || {});
 
 // auto-init tables
