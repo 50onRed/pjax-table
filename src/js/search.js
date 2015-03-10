@@ -27,7 +27,7 @@
       $('.ui-close').addClass('hidden');
     }
   }
-  Fifty.widget('fiftySearch', Search);
+  Fifty.widget('fiftySearch', Search, true);
 })(jQuery, window.Fifty = window.Fifty || {});
 
 // auto-init search
