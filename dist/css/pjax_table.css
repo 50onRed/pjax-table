@@ -48,14 +48,14 @@ th[data-sortable="true"] {
   text-align: right;
   font-weight: bold;
 }
-a.table-cell-action {
+a.pjax-table-cell-action {
   color: #cecece;
   margin-left: 15px;
 }
 .table tbody tr:hover {
   background: #f9fdff;
 }
-.table tbody tr:hover a.table-cell-action {
+.table tbody tr:hover a.pjax-table-cell-action {
   color: #007fcf;
 }
 td[data-property="enabled"] {
@@ -64,7 +64,7 @@ td[data-property="enabled"] {
 [data-property="id"] {
   width: 40px;
 }
-[data-property="id"] .fifty-table-cell-wrapper {
+[data-property="id"] .pjax-table-cell-wrapper {
   margin-top: -3px;
   margin-bottom: -3px;
 }
