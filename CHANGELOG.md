@@ -5,10 +5,18 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased][unreleased]
 - base ajax plugin in consideration
 
-# [1.0.0]
+# [1.0.0]  {date}
+### Added
+- pjax table now defines it's own plugin code
+- calling methods through jquery, i.e. $el.pjaxTable('update') only allows
+methods defined in the allowedMethods array. All method calls can otherwise 
+be accessed by referencing the instance directly.
+
 ### Changed
 - fiftyTable is now pjaxTable
 - data attributes and styles that used "fifty" in the name are now "pjax"
+- pjax table now uses the prototype pattern
+- event names have be redesigned to follow "table:event" scheme
 - push state enabled by default under flag pushState, or data-push-state
 - ajax disabled by default under flag ajaxOnly, or data-ajax-only
 - pjaxUrl is now just "url" and configurable through options or as data-url attribute
