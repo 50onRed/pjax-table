@@ -722,7 +722,7 @@
 
 (function($) {
   'use strict';
-
+  var slice = Array.prototype.slice;
   function PjaxTableSearch(el, options) {
     this._$el = $(this);
     this._$searchFilter = $el.find('input[type="search"]');
@@ -760,7 +760,42 @@
     this._$el.find('.ui-close').addClass('hidden');
   };
 
-  // jquery plugin definition
-  // Fifty.widget('fiftySearch', Search); 
-  // $('[data-fifty-search][data-auto-init]').pjaxTableSearch({});
+  $.fn.pjaxTableSearch = function(options) {
+    var args = slice.call(arguments);
+    var values = []; // return values
+
+    $(this).each(function() {
+      // get the current instance or create a new one
+      var $el = $(this);
+      var widget = $el.data('pjaxTableSearch');
+
+      if (!widget) {
+        widget = $el.data('pjaxTableSearch', new PjaxTableSearch(this, options)).data('pjaxTableSearch');
+      }
+
+      // execute methods and return the method return or this element for chaining
+      if (typeof options == 'string' && widget) {
+        // special case for resetting widgets, cleanup and reset
+        if (options === 'destroy') {
+          if (typeof widget.destroy === 'function') {
+            widget.destroy();
+          }
+          
+          delete $el.data()[finalName];
+          $el = null;
+        }
+      } else {
+        values.push(widget);
+      }
+    });
+    
+    // return only 1 value if possible
+    if (values.length > 1) {
+      return values;
+    } else if (values.length === 1) {
+      return values[0];
+    }
+  };
+  
+  $('[data-pjax-table-search][data-auto-init]').pjaxTableSearch({});
 })(jQuery);

@@ -5,9 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased][unreleased]
 - base ajax plugin in consideration
 
-# [1.0.0] 
-### Added
-
+# [1.0.0]
 ### Changed
 - fiftyTable is now pjaxTable
 - data attributes and styles that used "fifty" in the name are now "pjax"
