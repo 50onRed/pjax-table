@@ -18,6 +18,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - search_id option is now camelCased as searchId
 - the markup shown for no table data is now a configurable function, noDataTemplate, which recieves the number of
 columns in the table as a param.
+- the createSortQuery function is now configurable, so the application can specify a sort query which appropriately
+matches the server implementation
 
 ### Removed
 - data-table-id and total-rows attribute on the wrapper. A wrapper is no longer required
