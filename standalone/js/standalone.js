@@ -8,5 +8,5 @@
 
   $('body').html('<div id="table-container"></div>');
   $('#table-container').html(Fifty.modules.tableGenerator.generate());
-  $('#fifty-table').fiftyTable({});
+  $('#pjax-table').pjaxTable({});
 })();

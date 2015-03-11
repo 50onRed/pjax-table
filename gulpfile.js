@@ -8,6 +8,7 @@ var header = require('gulp-header');
 var handlebars = require('gulp-handlebars');
 var wrap = require('gulp-wrap');
 var declare = require('gulp-declare');
+var jsValidate = require('gulp-jsvalidate');
 var uglify = require('gulp-uglify');
 var del = require('del');
 var runSequence = require('run-sequence');
@@ -91,12 +92,14 @@ gulp.task('standalone_vendor_fonts', function() {
 
 gulp.task('js', function() {
   return gulp.src(paths.js)
+    .pipe(jsValidate())
     .pipe(concat(output_names.js))
     .pipe(gulp.dest('./dist/js'));
 });
 
 gulp.task('js_min', function() {
   return gulp.src(paths.js)
+    .pipe(jsValidate())
     .pipe(concat(output_names.js))
     .pipe(uglify({ preserveComments: 'some' }))
     .pipe(header(banner, { pkg: pkg }))
@@ -130,7 +133,7 @@ gulp.task('default', function(callback){
   runSequence('clean', [
     'js', 
     'js_min',
-    'less', 
+    'less',
     'lessmin',
     'less_copy',
     'templates', 

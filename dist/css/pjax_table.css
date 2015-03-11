@@ -1,9 +1,9 @@
 /*!
- * 50onRed - Fifty PJAX Table v0.1.5 ()
+ * 50onRed - PJAX Table v0.1.6 ()
  * Copyright 2015
  * 
  */
-[data-fifty-table] {
+[data-pjax-table] {
   position: relative;
 }
 .table thead {
@@ -28,7 +28,7 @@
   border: 1px solid #cecece;
   background: #cecece;
 }
-.fifty-table-cell-wrapper {
+.pjax-table-cell-wrapper {
   min-height: 25px;
 }
 .table td .btn-group {
@@ -44,7 +44,7 @@ th[data-sortable="true"] {
 .table-controls .btn-toolbar > .btn-group {
   margin-bottom: 5px;
 }
-.fifty-table-footer-static-content {
+.pjax-table-footer-static-content {
   text-align: right;
   font-weight: bold;
 }
@@ -68,14 +68,14 @@ td[data-property="enabled"] {
   margin-top: -3px;
   margin-bottom: -3px;
 }
-.fifty-table td.numeric {
+.pjax-table td.numeric {
   text-align: right;
 }
-.fifty-table-pagination:before,
-.fifty-table-pagination:after {
+.pjax-table-pagination:before,
+.pjax-table-pagination:after {
   content: " ";
   display: table;
 }
-.fifty-table-pagination:after {
+.pjax-table-pagination:after {
   clear: both;
 }

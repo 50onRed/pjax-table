@@ -1,21 +1,17 @@
-<div id="fifty-table" 
-  data-fifty-table-id="wrapper-id" 
-  data-pjax-container="#fifty-table" 
-  data-push-state-enabled="true" 
-  data-paginated="true">
-  <div id="wrapper-id" class="table-wrapper" data-total-rows="{{ total_rows }}">
-    <table class="table">
-      <thead>
-        {{{ header_rows }}}
-      </thead>
-      <tbody>
-        {{{ body_rows }}}
-      </tbody>
-      <tfoot>
-        {{{ footer_rows }}}
-      </tfoot>
-    </table>
-  </div>
+<div id="pjax-table"
+  data-pjax-table 
+  data-pjax-container="#pjax-table">
+  <table class="table pjax-table" data-total-rows="{{ total_rows }}">
+    <thead>
+      {{{ header_rows }}}
+    </thead>
+    <tbody>
+      {{{ body_rows }}}
+    </tbody>
+    <tfoot>
+      {{{ footer_rows }}}
+    </tfoot>
+  </table>
   <div>
     {{ pagination }}
   </div>

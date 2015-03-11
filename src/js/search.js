@@ -1,38 +1,44 @@
-(function($, Fifty) {
+(function($) {
+  'use strict';
 
-  function Search() {
-    var $el = $(this);
-    var $searchFilter = $el.find('input[type="search"]');
+  function PjaxTableSearch(el, options) {
+    this._$el = $(this);
+    this._$searchFilter = $el.find('input[type="search"]');
     
-    $el.find('.ui-search').click(function() {
-      $el.trigger('submit:search', $searchFilter.val());
-    });
-
-    $el.find('.ui-close').click(clearSearch);
-
-    $searchFilter.keydown(function (e) {
-      $('.ui-close').removeClass('hidden');
-      if (e.which === 13) {          //enter / return
-        e.preventDefault();
-        $el.trigger('submit:search', $(this).val());
-      } else if (e.which == 27) {    //escape
-        e.preventDefault();
-        clearSearch();
-      }
-    });
-
-    function clearSearch() {
-      $searchFilter.val('');
-      $el.trigger('clear:search');
-      $('.ui-close').addClass('hidden');
-    }
+    this._init();
   }
-  Fifty.widget('fiftySearch', Search);
-})(jQuery, window.Fifty = window.Fifty || {});
 
-// auto-init search
-$(function(){
-  $('[data-fifty-search][data-auto-init]').each(function () {
-    $(this).fiftySearch();
-  });
-});
+  PjaxTableSearch.prototype._init = function() {
+    this._$el.find('.ui-search').click(this._onClickSearch.bind(this));
+    this._$el.find('.ui-close').click(this._onClickClose.bind(this));
+    this._$searchFilter.keydown(this._onInputKeydown.bind(this));
+  };
+
+  PjaxTableSearch.prototype._onClickSearch = function(e) {
+    this._$el.trigger('search:submit', $searchFilter.val());
+  };
+
+  PjaxTableSearch.prototype._onInputKeydown = function(e) {
+    e.preventDefault();
+    this._$el.find('.ui-close').removeClass('hidden');
+    if (e.which === 13) {          //enter / return
+      this._$el.trigger('search:submit', $(e.currentTarget).val());
+    } else if (e.which == 27) {    //escape
+      this._clearSearch();
+    }
+  };
+
+  PjaxTableSearch.prototype._onClickClose = function(e) {
+    this._clearSearch();
+  };
+
+  PjaxTableSearch.prototype._clearSearch = function(e) {
+    this._$searchFilter.val('');
+    this._$el.trigger('search:clear');
+    this._$el.find('.ui-close').addClass('hidden');
+  };
+
+  // jquery plugin definition
+  // Fifty.widget('fiftySearch', Search); 
+  // $('[data-fifty-search][data-auto-init]').pjaxTableSearch({});
+})(jQuery);
