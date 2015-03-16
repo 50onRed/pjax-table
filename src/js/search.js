@@ -1,6 +1,10 @@
 (function($) {
   'use strict';
   var slice = Array.prototype.slice;
+
+  /**
+  *
+  */
   function PjaxTableSearch(el, options) {
     this._$el = $(this);
     this._$searchFilter = $el.find('input[type="search"]');
@@ -75,7 +79,5 @@
     }
   };
   
-  $(function() {
-    $('[data-pjax-table-search][data-auto-init]').pjaxTableSearch({});
-  });
+  $(function() { $('[data-pjax-table-search][data-auto-init]').pjaxTableSearch({}); });
 })(jQuery);

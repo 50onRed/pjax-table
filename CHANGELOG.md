@@ -32,3 +32,14 @@ matches the server implementation
 and all data attributes should be defined on the table element.
 - tooltip initialization on load has now been decoupled, and should be done by an initializing
 script on the 'table:load' event.
+
+# [0.2.0] - 2015-3-10
+## Added
+- load mask support with spin.js under an enableLoadMask flag
+- loadMaskConfig for spin.js configuration
+
+# [0.1.7] - 2015-3-10
+## Changed
+- widget upgraded to 1.0.0
+- widget registration requires flag for the revealing module
+

@@ -1,6 +1,7 @@
 (function ($, window) {
   'use strict';
   var slice = Array.prototype.slice;
+  
   /**
   *   Table implements script controls for pjax table
   *   "_" prefixed methods are considered internal usage only
