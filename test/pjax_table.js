@@ -1,7 +1,7 @@
 describe('pjax table test', function() {
   var $fiftyTable = $('#fifty-table');
   var fiftyTable = $fiftyTable.fiftyTable();
-
+  
   it('should exist', function() {
     expect($fiftyTable.length).toEqual(1);
   });

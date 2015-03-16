@@ -203,7 +203,7 @@
         this._desyncSort();
       }
 
-      if (searchQuery) {
+      if (searchStr) {
         this._syncSearch(searchStr);
       } else {
         this._desyncSearch();
