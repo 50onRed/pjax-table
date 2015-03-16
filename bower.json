@@ -2,11 +2,26 @@
   "name": "pjax_table",
   "version": "0.2.0",
   "private": true,
+  "main": "dist/js/pjax_table.js",
+  "license": "MIT",
+  "authors": [
+    "Matthew Parke <mparke@50onred.com>"
+  ],
+  "homepage": "",
+  "repository": {
+    "type": "git"
+  },
   "ignore": [
     "**/.*",
     "components",
     "bower_components",
     "tests"
+  ],
+  "keywords": [
+    "table",
+    "pjax",
+    "pjax-table",
+    "jquery-pjax"
   ],
   "devDependencies": {
     "chance": "0.6.1",
