@@ -45,7 +45,7 @@ The standard pjax table markup and required data attributes.
 </div>
 ```
 
-#### pjax-table container data attributes
+### pjax-table container data attributes
 data-attribute | default | description
 -------------- | ------- | -----------
 `data-pjax-table` | none | the default selector for initializing tables (only used for init)
@@ -56,7 +56,7 @@ data-attribute | default | description
 `data-pjax-container` | element.id | the container to be used for loading pjax, defaults to the initializing element's id
 `data-search-id` | none | the id selector of a search box to be used
 
-#### pjax-table table data attributes
+### pjax-table table data attributes
 data-attribute | default | description
 -------------- | ------- | -----------
 `data-total-rows` | 0 | the total number of rows returned by the server
@@ -64,7 +64,7 @@ data-attribute | default | description
 `data-current-sort-order` | desc | the current sort property order (asc/desc)
 
 
-#### pjax-table th data attributes
+### pjax-table th data attributes
 data-attribute | default | description
 -------------- | ------- | -----------
 `data-sortable` | true | whether or not this column is sortable
@@ -73,21 +73,14 @@ data-attribute | default | description
 `data-default-sort-order` | none | the default sort order of this column
 
 
-#### pjax-table td data attributes
+### pjax-table td data attributes
 data-attribute | default | description
 -------------- | ------- | -----------
 `data-property` | none | the property name for this cell
 `data-value` | none | the value for this cell
 
 
-#### pjax-table pagination data attributes
-data-attribute | default | description
--------------- | ------- | -----------
-`data-current-page` | defined by pagination markup | the current page 
-`data-current-perpage` | defined by pagination markup | the current perpage 
-
-
-#### pjax-table js options
+### js options
 key | default | description
 --- | ------- | -----------
 `ajaxOnly` | `data-ajax-only` or false | see `data-ajax-only` option
@@ -101,14 +94,43 @@ key | default | description
 `searchQueryKey` | `q` | the query string key for search
 
 
-#### Pagination
-The current pagination markup makes use of bootstrap 3 classes and structure for buttons and dropdowns.
-*BS3 is not currently included as a dependency. A base set of styles to make these functional without BS3 may soon be applied. Ideas are welcome.*
+## Pagination
+### pagination container data attributes
+data-attribute | default | description
+-------------- | ------- | -----------
+`data-current-page` | defined by pagination markup | the current page 
+`data-current-perpage` | defined by pagination markup | the current perpage 
+
+
+### pagination perpage data attributes
+data-attribute | default | description
+-------------- | ------- | -----------
+`data-value` | none | the number value of records per page
+
+
+### pagination page data attributes
+data-attribute | default | description
+-------------- | ------- | -----------
+`data-value` | none | the number value of the page
+
+
+### required pagination classes
+class | required children | description
+----- | ----------------- | -----------
+`ui-pagination` | n/a | the pagination container with `data-current-page` and `data-current-perpage`
+`ui-perpage-dropdown` | `li` with `data-value` | the list element of perpage options
+`ui-page-select-dropdown` | `li` with `data-value` | the list element of page options
+`ui-prev-page` | the prev page button
+`ui-next-page` | the next page button
+
+### Example pagination markup
+*The example below uses BS3 classes and markup, but only the classes and structure listed above are required. A base set of styles to make these functional without BS3 may soon be applied. Ideas are welcome.*
 ```
   <div class="pjax-table-pagination ui-pagination" 
-    data-current-page="{{ current_page }}" 
-    data-current-perpage="{{ per_page }}">
-    <!-- -->
+       data-current-page="{{ current_page }}" 
+       data-current-perpage="{{ per_page }}">
+
+    <!-- per page controls -->
     <div class="pull-left btn-toolbar">
       <div class="dropdown btn-group" data-per-page="{{ perpage }}">
         <button data-toggle="dropdown" class="btn btn-default btn-sm dropdown-toggle">
@@ -124,7 +146,8 @@ The current pagination markup makes use of bootstrap 3 classes and structure for
       </div>
       <div class="btn-group btn-sm btn-link">From {{ from }} to {{ to }} of {{ total }}</div>
     </div>
-    <!-- -->
+
+    <!-- page, next page, prev page controls -->
     <div class="pull-right btn-toolbar">
       {{#if on_last_page }}
         <div class="btn-group">
@@ -132,7 +155,7 @@ The current pagination markup makes use of bootstrap 3 classes and structure for
             <i class="fa fa-chevron-left"></i>
           </button>
         </div>
-        <!-- -->
+
         <div class="btn-group">
           <div class="dropdown ui-page-index-dropdown" data-current-page="{{ current_page }}">
             <button class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
@@ -144,7 +167,7 @@ The current pagination markup makes use of bootstrap 3 classes and structure for
             </ul>
           </div>
         </div>
-        <!-- -->
+
         <div class="btn-group">
           <button type="button" class="btn btn-default btn-sm ui-next-page" {{#if on_last_page }}disabled{{/if}}>
             <i class="fa fa-chevron-right"></i>
