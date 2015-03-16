@@ -64,6 +64,8 @@ describe('pjax table', function() {
       searchId: '#test-search-id'
     });
     
+    // todo test options reference
+
     expect(table._url).toEqual('test url string');
     expect(table._ajaxOnly).toEqual(true);
     expect(table._pushState).toEqual(false);
@@ -76,7 +78,27 @@ describe('pjax table', function() {
     expect(table._searchQueryKey).toEqual('test search key');
     expect(table._$searchBox).toBeDefined();
   });
+  
+  it('should have a default sort map', function() {
 
+  });
+
+  it('should have a default query state', function() {
+
+  });
+
+  it('should have a default total rows', function() {
+
+  });
+
+  it('should have a default element reference', function() {
+
+  });
+
+  it('should have a default tbody reference', function() {
+
+  });
+  
   // describe('Events check', function() {
   //   var events = ['load.table', 'sort.table', 'page.table', 'perpage.table', 'nextpage.table', 'prevpage.table', 'select.table',
   //   'deselect.table', 'select_all.table', 'deselect_all.table', 'search.table', 'clear_search.table'
