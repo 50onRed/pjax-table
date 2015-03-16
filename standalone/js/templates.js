@@ -29,9 +29,9 @@ this["Fifty"]["templates"]["header_cell"] = Handlebars.template({"compiler":[6,"
   var helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
   return "<th class=\"fifty-table-header sortable\" data-sortable=\"true\" data-property=\""
     + escapeExpression(((helper = (helper = helpers.property || (depth0 != null ? depth0.property : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"property","hash":{},"data":data}) : helper)))
-    + "\" data-current-sort-direction=\""
+    + "\" data-current-sort-order=\""
     + escapeExpression(((helper = (helper = helpers.current_sort || (depth0 != null ? depth0.current_sort : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"current_sort","hash":{},"data":data}) : helper)))
-    + "\" data-default-sort-direction=\"asc\">\n  "
+    + "\" data-default-sort-order=\"asc\">\n  "
     + escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"name","hash":{},"data":data}) : helper)))
     + "\n  <span class=\"fifty-table-sort-indicator\">\n    <i class=\"fa fa-caret-"
     + escapeExpression(((helpers.sortIcon || (depth0 && depth0.sortIcon) || helperMissing).call(depth0, (depth0 != null ? depth0.current_sort : depth0), {"name":"sortIcon","hash":{},"data":data})))
