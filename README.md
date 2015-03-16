@@ -62,7 +62,7 @@ The standard pjax table markup and required data attributes.
   </div>
 ```
 
-##### pjax-table container data attributes
+#### pjax-table container data attributes
 data-attribute | default | description
 -------------- | ------- | -----------
 `data-pjax-table` | none | the default selector for initializing tables (only used for init)
@@ -73,7 +73,7 @@ data-attribute | default | description
 `data-pjax-container` | element.id | the container to be used for loading pjax, defaults to the initializing element's id
 `data-search-id` | none | the id selector of a search box to be used
 
-##### pjax-table table data attributes
+#### pjax-table table data attributes
 data-attribute | default | description
 -------------- | ------- | -----------
 `data-total-rows` | 0 | the total number of rows returned by the server
@@ -81,7 +81,7 @@ data-attribute | default | description
 `data-current-sort-direction` | desc | the current sort property direction (asc/desc)
 
 
-##### pjax-table th data attributes
+#### pjax-table th data attributes
 data-attribute | default | description
 -------------- | ------- | -----------
 `data-sortable` | true | whether or not this column is sortable
@@ -90,21 +90,21 @@ data-attribute | default | description
 `data-default-sort-direction` | none | the default sort direction of this column
 
 
-##### pjax-table td data attributes
+#### pjax-table td data attributes
 data-attribute | default | description
 -------------- | ------- | -----------
 `data-property` | none | the property name for this cell
 `data-value` | none | the value for this cell
 
 
-##### pjax-table pagination data attributes
+#### pjax-table pagination data attributes
 data-attribute | default | description
 -------------- | ------- | -----------
 `data-current-page` | defined by pagination markup | the current page 
 `data-current-perpage` | defined by pagination markup | the current perpage 
 
 
-##### pjax-table js options
+#### pjax-table js options
 key | default | description
 --- | ------- | -----------
 `ajaxOnly` | `data-ajax-only` or false | see `data-ajax-only` option
@@ -112,12 +112,10 @@ key | default | description
 `paginated` | `data-paginated` or true | see `data-paginated` option
 `pjaxContainer` | `data-pjax-container or element.id | see `data-pjax-container` option
 `noDataTemplate` | see source | a function returning the default template to use for no data returned
-`createSortQuery` | { order: 'propert_direction', page: 1 } | a function returning 
-the structure of the sort query
-`createPaginationQuery` | `{ page: 1 }` | a function returning the structure of the
-pagination query
-`createSearchQuery` | `{ q: 'query string' }` | a function returning the structure of
-the search query
+`sortQueryKey` | `order` | the query string key for sorting
+`pageQueryKey` | `page` | the query string key for page
+`perPageQueryKey` | `perpage` | the query string key for perpage
+`searchQueryKey` | `q` | the query string key for search
 
 <!-- 
 <div data-pjax-table data-auto-init="true"></div>

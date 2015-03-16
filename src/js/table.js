@@ -64,12 +64,11 @@
     this._paginated = this._options.paginated || this._$el.data('paginated') || true;
     this._pjaxContainer = this._options.pjaxContainer || this._$el.data('pjax-container') || this._$el.attr('id');
     this._noDataTemplate = this._options.noDataTemplate || this._noDataTemplate;
-    this._createSortQuery = this._options.createSortQuery || this._createSortQuery;
-    this._destroySortQuery = this._options.destroySortQuery || this._destroySortQuery;
-    this._createPageQuery = this._options.createPageQuery || this._createPageQuery;
-    this._createPerPageQuery = this._options.createPerPageQuery || this._createPerPageQuery;
-    this._createSearchQuery = this._options.createSearchQuery || this._createSearchQuery;
-    this._destroySearchQuery = this._options.destroySortQuery || this._destroySortQuery;
+    this._sortQueryKey = this._options.sortQueryKey || 'order';
+    this._pageQueryKey = this._options.pageQueryKey || 'page';
+    this._perPageQueryKey = this._options.perPageQueryKey || 'perpage';
+    this._searchQueryKey = this._options.searchQueryKey || 'q';
+    
     this._totalRows = null;
     
     var searchId = this._options.searchId || this._$el.data('search-id') || null;
@@ -94,27 +93,35 @@
     },
 
     _createSortQuery: function(property, order) {
-      return { order: property + '__' + order };
+      var query = {};
+      query[this._sortQueryKey] = property + '__' + order;
+      return query;
     },
 
-    _destroySortQuery: function() {
-      delete this._queryState.order;
+    _desyncSort: function() {
+      delete this._queryState[this._sortQueryKey];
     },
 
     _createPageQuery: function(page) {
-      return { page: page };
+      var query = {};
+      query[this._pageQueryKey] = page;
+      return query;
     },
 
     _createPerPageQuery: function(perpage) {
-      return { perpage: perpage };
+      var query = {};
+      query[this._perPageQueryKey] = perpage;
+      return query;
     },
 
     _createSearchQuery: function(searchStr) {
-      return { q: searchStr };
+      var query = {};
+      query[this._searchQueryKey] = searchStr;
+      return query;
     },
 
-    _destroySearchQuery: function() {
-      delete this._queryState.q;
+    _desyncSearch: function() {
+      delete this._queryState[this._searchQueryKey];
     },
 
     _syncSort: function(property, order) {
@@ -184,13 +191,13 @@
       if (sortProperty) {
         this._syncSort(sortProperty, sortOrder)
       } else {
-        this._destroySortQuery();
+        this._desyncSort();
       }
 
       if (searchQuery) {
         this._syncSearch(searchStr);
       } else {
-        this._destroySearchQuery();
+        this._desyncSearch();
       }
     },
 
@@ -247,10 +254,10 @@
     _onClickSortable: function (e) {
       var $sortable = $(e.target).closest('th[data-sortable="true"]');
       var property = $sortable.data('property');
-      var sortDirection = this._sortMap[$sortable.data('current-sort-direction')] || $sortable.data('default-sort-direction');
+      var order = this._sortMap[$sortable.data('current-sort-order')] || $sortable.data('default-sort-order');
 
-      this._$el.trigger('table:sort', { direction: sortDirection, property: property });
-      $.extend(this._queryState, this._createSortQuery(property, sortDirection));
+      this._$el.trigger('table:sort', this._createSortQuery(property, order));
+      this._syncSort(property, order);
       this._load();
     },
 
@@ -258,31 +265,34 @@
       var perpage = $(e.currentTarget).data('value');
 
       this._$el.trigger('table:perpage', this._createPerPageQuery(perpage));
-      $.extend(this._queryState, { perpage: perpage, page: 1 }); // reset the page to 1 when changing per page
+      this._syncPerPage(perpage);
+      this._syncPage(1); // reset the page to 1 when changing per page
       this._load();
     },
 
     _onPageSelect: function (e) {
       var pageIndex = $(e.currentTarget).data('value');
 
-      this._$el.trigger('table:page', { page: pageIndex });
-      $.extend(this._queryState, { page: pageIndex });
+      this._$el.trigger('table:page', this._createPageQuery(pageIndex));
+      this._syncPage(pageIndex);
       this._load();
     },
 
     _onPrevPageSelect: function (e) {
       var pageIndex = parseInt($el.find('.ui-pagination').data('current-page'));
+      var prevPageIndex = pageIndex - 1;
 
-      this._$el.trigger('table:prevpage', { page: pageIndex - 1 });
-      $.extend(this._queryState, { page: pageIndex - 1 });
+      this._$el.trigger('table:prevpage', this._createPageQuery(prevPageIndex));
+      this._syncPage(prevPageIndex);
       this._load();
     },
 
     _onNextPageSelect: function (e) {
       var pageIndex = parseInt($el.find('.ui-pagination').data('current-page'));
+      var nextPageIndex = pageIndex + 1;
 
-      this._$el.trigger('table:nextpage', { page: pageIndex + 1 });
-      $.extend(this._queryState, { page: pageIndex + 1 });
+      this._$el.trigger('table:nextpage', this._createPageQuery(nextPageIndex));
+      this._syncPage(nextPageIndex);
       this._load();
     },
 
@@ -354,15 +364,17 @@
       });
     },
 
-    _onSubmitSearch: function(e, query) {
-      this._$el.trigger('table:search', { query: query });
-      $.extend(this._queryState, { q: query, page: 1 });
+    _onSubmitSearch: function(e, searchStr) {
+      this._$el.trigger('table:search', this._createSearchQuery(searchStr));
+      this._syncSearch(searchStr);
+      this._syncPage(1);
       this._load();
     },
 
     _onClearSearch: function(e) {
       this._$el.trigger('table:search:clear');
-      $.extend(this._queryState, { q: '', page: 1});
+      this._desyncSearch();
+      this._syncPage(1);
       this._load();
     },
 
@@ -567,14 +579,14 @@
     *   Returning true from a filter function will delete the current key in iteration
     */
     removeParameters: function(options) {
-      if(!options){
+      if (!options) {
         return this;
       }
 
-      if(typeof options === 'string') {
+      if (typeof options === 'string') {
         // Remove a single item from the queryState
         delete this._queryState[options];
-      } else if(Array.isArray(options)) {
+      } else if (Array.isArray(options)) {
         // Remove all of the items in the array
         for (var i = 0; i < options.length; i++) {
           delete this._queryState[options[i]];
