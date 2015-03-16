@@ -12,18 +12,14 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      // vendor files
-      'bower_components/jquery/dist/jquery.js',
-      
-      // fifty files
       'standalone/js/vendor/standalone_vendor.js',
-      'dist/js/fifty_pjax_table.js',
+      'dist/js/pjax_table.js',
       'standalone/js/templates.js',
       'standalone/js/data.js',
       'standalone/js/table_generator.js',
-      'standalone/js/standalone.js',
       
       // test files
+      'test/bind_polyfill.js',
       'test/**/*.js'
     ],
 

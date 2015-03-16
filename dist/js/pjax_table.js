@@ -442,7 +442,7 @@
       this._onTableLoaded();
       
       // pjax timing out, we want to cancel the automatic retry
-      this._$el.on('pjax:timeout', this._onPjaxTimeout.bind(this));
+      // this._$el.on('pjax:timeout', this._onPjaxTimeout.bind(this));
       this._$el.on('pjax:success', this._onPjaxSuccess.bind(this));
       this._$el.on('pjax:start', this._onPjaxStart.bind(this));
       this._$el.on('pjax:beforeReplace', this._onPjaxBeforeReplace.bind(this));
@@ -741,16 +741,14 @@
       }
 
       // execute methods and return the method return or this element for chaining
-      if (typeof options === 'string' && widget) {
+      if (typeof options === 'string') {
         // special case for resetting widgets, cleanup and reset
         if (options === 'destroy') {
           if (typeof widget.destroy === 'function') {
             widget.destroy();
           }
-          
-          delete $el.data()[finalName];
-          $el = null;
-        } else if (indexOf(options, allowedMethods) === -1) {
+          delete $el.data()['pjaxTable'];
+        } else if (allowedMethods.indexOf(options) === -1) {
           throw new Error('Invalid method: ' + options);
         } else {
           methodReturn = widget[options].apply(this, args.slice(1, args.length));

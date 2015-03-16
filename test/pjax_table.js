@@ -1,46 +1,77 @@
-describe('pjax table test', function() {
-  var $fiftyTable = $('#fifty-table');
-  var fiftyTable = $fiftyTable.fiftyTable();
-  
-  it('should exist', function() {
-    expect($fiftyTable.length).toEqual(1);
-  });
-  it('should have a fiftyTable() method', function() {
-    expect($fiftyTable.fiftyTable()).toBeDefined();
+describe('pjax table', function() {
+  $('body').append('<div id="table-container"></div>');
+  var $tableContainer = $('#table-container');
+  var $table;
+
+  beforeEach(function() {
+    $tableContainer.html(Fifty.modules.tableGenerator.generate());
+    $table = $tableContainer.find('#pjax-table');
+    // console.log($table);
   });
 
-  describe('Method check', function() {
-    var methods = ['applyPlugins', 'getAllRecords', 'getNumColumns', 'getNumSelected', 'getParameters', 'getSelected', 'getSelectedIds',
-    'getTotalRows', 'getUrl', 'hasSelected', 'refresh', 'refreshPlugins', 'removeParameters', 'update', 'updateParameters', 'updateRow'
+  it('should be a method on $.fn', function() {
+    expect($.fn.pjaxTable).toBeDefined();
+    expect(typeof $.fn.pjaxTable === 'function').toBe(true);
+  });
+
+  it('should be able to be instantiated', function() {
+    var table = $table.pjaxTable({});
+    expect(table).toBeDefined();
+    expect(typeof table === 'object').toBe(true);
+  });
+
+  it('should expose a list of allowed methods', function() {
+    var table = $table.pjaxTable({});
+    var allowedMethods = [
+      'update',
+      'refresh',
+      'refreshPlugins',
+      'getUrl',
+      'updateParameters',
+      'removeParameters',
+      'getParameters',
+      'getNumRecords',
+      'getNumColumns',
+      'hasSelected',
+      'getNumSelected',
+      'getSelected',
+      'getSelectedIds',
+      'getAllRecords',
+      'updateRow',
+      'getTotalRows'
     ];
 
-    methods.forEach(function(method) {
-      it('should have a ' + method + ' method', function() {
-        expect(fiftyTable[method]).toBeDefined();
-      });
+    allowedMethods.forEach(function(method) {
+      spyOn(table, method);
+      $table.pjaxTable(method);
+      expect(table[method]).toHaveBeenCalled();
     });
   });
 
-  describe('Events check', function() {
-    var events = ['load.table', 'sort.table', 'page.table', 'perpage.table', 'nextpage.table', 'prevpage.table', 'select.table',
-    'deselect.table', 'select_all.table', 'deselect_all.table', 'search.table', 'clear_search.table'
-    ];
-    var eventSpies = {};
-    var contentType = {
-      "Content-Type": "text/html"
-    };
-    var htmlString = String(Fifty.modules.tableGenerator.generate());
+  // it('should be configurable', function() {
 
-    //Setup a spy on each event
-    events.forEach(function(event) {
-      var spyName = event.split('.')[0] + 'Spy';
-      eventSpies[spyName] = jasmine.createSpy(spyName);;
+  // });
 
-      //set the spies' identities to any data that is sent with the event trigger
-      $('document').on(event, function(e, data) {
-        eventSpies[spyName](data)
-      });
-    });
+  // describe('Events check', function() {
+  //   var events = ['load.table', 'sort.table', 'page.table', 'perpage.table', 'nextpage.table', 'prevpage.table', 'select.table',
+  //   'deselect.table', 'select_all.table', 'deselect_all.table', 'search.table', 'clear_search.table'
+  //   ];
+  //   var eventSpies = {};
+  //   var contentType = {
+  //     "Content-Type": "text/html"
+  //   };
+  //   var htmlString = String(Fifty.modules.tableGenerator.generate());
+
+  //   //Setup a spy on each event
+  //   events.forEach(function(event) {
+  //     var spyName = event.split('.')[0] + 'Spy';
+  //     eventSpies[spyName] = jasmine.createSpy(spyName);;
+
+  //     //set the spies' identities to any data that is sent with the event trigger
+  //     $('document').on(event, function(e, data) {
+  //       eventSpies[spyName](data)
+  //     });
+  //   });
 
     // describe('Sorting tests', function() {
     //   var server;
@@ -98,15 +129,15 @@ describe('pjax table test', function() {
     //   });
     // });
 
-    describe('Selection tests', function() {
-      //select.table
-      //deselect.table
-      //select_all.table
-      //deselect_all.table
-      //getSelected
-      //getSelectedIds
-      //getNumSelected
-    });
+    // describe('Selection tests', function() {
+    //   //select.table
+    //   //deselect.table
+    //   //select_all.table
+    //   //deselect_all.table
+    //   //getSelected
+    //   //getSelectedIds
+    //   //getNumSelected
+    // });
 
     // describe('Sorting tests', function() {
     //   var server;
@@ -137,39 +168,28 @@ describe('pjax table test', function() {
     //   });
     // });
 
+    // describe('getURL functionality', function() {
+    //   var url = fiftyTable.getUrl();
+    //   it('should be ...', function() {
+    //     expect(url).toEqual('/context.html'); //TODO: May want to change this
+    //   });
+    // });
 
-    describe('getURL functionality', function() {
-      var url = fiftyTable.getUrl();
-      it('should be ...', function() {
-        expect(url).toEqual('/context.html'); //TODO: May want to change this
-      });
-    });
+    // describe('getAllRecords functionality', function() {
+    //   var records = fiftyTable.getAllRecords();
+    //   it('should return 50 records', function() {
+    //     expect(records.length).toEqual(50);
+    //   });
+    //   it('should return objects with specific properties', function() {
+    //     var properties = Object.keys(records[0]);
+    //     expect(properties.indexOf('Heroes')).not.toBe(-1);
+    //     expect(properties.indexOf('Nationality')).not.toBe(-1);
+    //     expect(properties.indexOf('Email')).not.toBe(-1);
 
-    describe('getAllRecords functionality', function() {
-      var records = fiftyTable.getAllRecords();
-      it('should return 50 records', function() {
-        expect(records.length).toEqual(50);
-      });
-      it('should return objects with specific properties', function() {
-        var properties = Object.keys(records[0]);
-        expect(properties.indexOf('Heroes')).not.toBe(-1);
-        expect(properties.indexOf('Nationality')).not.toBe(-1);
-        expect(properties.indexOf('Email')).not.toBe(-1);
-
-        properties = Object.keys(records[33]);
-        expect(properties.indexOf('Heroes')).not.toEqual(-1);
-        expect(properties.indexOf('Nationality')).not.toEqual(-1);
-        expect(properties.indexOf('Email')).not.toEqual(-1);
-      });
-    });
-
-    //update
-    //refresh
-    //refreshPlugins
-    //updateParameters
-    //removeParameters
-    //hasSelected
-    //applyPlugins
-    //updateRow
-  });
+    //     properties = Object.keys(records[33]);
+    //     expect(properties.indexOf('Heroes')).not.toEqual(-1);
+    //     expect(properties.indexOf('Nationality')).not.toEqual(-1);
+    //     expect(properties.indexOf('Email')).not.toEqual(-1);
+    //   });
+    // });
 });
