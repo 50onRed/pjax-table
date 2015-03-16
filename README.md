@@ -60,6 +60,11 @@ data-attribute | default | description
 `data-push-state` | true | a flag to pass as the pushState option to pjax
 `data-pjax-container` | element.id | the container to be used for loading pjax, defaults to the initializing element's id
 `data-search-id` | none | the id selector of a search box to be used
+`data-sort-query-key` | `order` | the string key to be used in building the search query
+`data-page-query-key` | `page` | the string key to be used in building the page query
+`data-perpage-query-key` | `perpage` | the string key to be used in building the perpage query
+`data-search-query-key` | `q` | the string key to be used in building the search query
+
 
 ### table data attributes
 data-attribute | default | description
@@ -208,20 +213,20 @@ The search implementation also fires it's own events which are wrapped by the ta
 
 name | arguments | description
 ---- | --------- | -----------
-`table:load` | none | triggered any time the table has finished loaded, on pjax success for initial load, update, and refresh
-`table:sort` | `{object} sortQuery` | triggered when a column is sorted, includes direction and property
-`table:page` | `{object} page query` | triggered when a specific page has been chosen to jump to
-`table:perpage` | `{object} per page query` | triggered when perpage dropdown selection has changed
-`table:nextpage` | `{object} next page query` | triggered when next page in pagination clicked
-`table:prevpage` | `{object} prev page query` | triggered when prev page in pagination clicked
-`table:search` | {object} search query | triggered when a search query is used to filter the table
-`table:search:clear` | none | triggered when a search query is cleared
-`table:select` | `{object} record` | triggered when a row is selected, passing the record object
-`table:deselect` | `{object} record` | triggered when a row is deselected, passing the record object
-`table:select:all` | none | triggered when all records are selected
-`table:deselect:all` | none | triggered when all records are deselected
-`table:error` | none | triggered when a pjax / ajax error occurs
-`table:timeout` | none |  triggered when pjax times out
+`table:load` | none | any time the table has finished loaded, on pjax success for initial load, update, and refresh
+`table:sort` | `{object} sortQuery` | when a column is sorted, includes direction and property
+`table:page` | `{object} page query` | when a specific page has been chosen to jump to
+`table:perpage` | `{object} per page query` | when perpage dropdown selection has changed
+`table:nextpage` | `{object} next page query` | when next page in pagination clicked
+`table:prevpage` | `{object} prev page query` | when prev page in pagination clicked
+`table:search` | `{object} search query` | when a search query is used to filter the table
+`table:search:clear` | none | when a search query is cleared
+`table:select` | `{object} record` | when a row is selected, passing the record object
+`table:deselect` | `{object} record` | when a row is deselected, passing the record object
+`table:select:all` | none | when all records are selected
+`table:deselect:all` | none | when all records are deselected
+`table:error` | none | when a pjax / ajax error occurs
+`table:timeout` | none |  when pjax times out
 
 
 ### Dependencies
