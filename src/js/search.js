@@ -75,5 +75,7 @@
     }
   };
   
-  $('[data-pjax-table-search][data-auto-init]').pjaxTableSearch({});
+  $(function() {
+    $('[data-pjax-table-search][data-auto-init]').pjaxTableSearch({});
+  });
 })(jQuery);

@@ -4,15 +4,11 @@
 
 ### Features
   - pjax loading with push state
-  - ajax loading fallback
   - sorting
   - pagination
-    - next, prev, and go to page number
   - search filtering
-  - row selection
-  - utilities for accesing row data
-  - utilities for manipulating rows
-  - table cell plugin support
+  - row selection and manipulation
+  - plugin support
 
 ### Defining correct markup for tables
 The app server needs to define correct markup and data attributes 

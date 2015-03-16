@@ -1,6 +1,5 @@
 (function ($, window) {
   'use strict';
-
   var slice = Array.prototype.slice;
   /**
   *   Table implements script controls for pjax table
@@ -133,19 +132,20 @@
     _syncQueryState: function() {
       var $table = this._$el.find('table');
       var $pagination = this._$el.find('.ui-pagination');
+      var page = $pagination.data('current-page');
+      var perpage = $pagination.data('current-perpage');
+      var sortProperty = $table.data('current-sort-property');
+      var sortDirection = $table.data('current-sort-direction');
+      var searchQuery = $table.data('current-search-query');
 
       // Sync Pagination
-      if(this._paginated) {
-        var page = $pagination.data('current-page');
-        var perpage = $pagination.data('current-perpage');
+      if (this._paginated) {
         $.extend(this._queryState, { perpage: perpage });
         $.extend(this._queryState, { page: page });
       }
 
       // Sync Sorting
-      var sortProperty = $table.data('current-sort-property');
-      var sortDirection = $table.data('current-sort-direction');
-      if(sortProperty) {
+      if (sortProperty) {
         $.extend(this._queryState, this._createSortQuery(sortProperty, sortDirection));
       } else {
         // Remove the sort property/direction from the current query state
@@ -153,7 +153,6 @@
       }
 
       //Sync Search
-      var searchQuery = $table.data('current-search-query');
       if (searchQuery) {
         $.extend(this._queryState, { q: searchQuery });
       }
@@ -165,12 +164,13 @@
 
     _onTableLoaded: function() {
       // create this shortcut whenever the table loads
-      this._totalRows = this._$el.find('table').data('total-rows');
       this._$tbody = this._$el.find('tbody');
-      
-      var numColumns = this.getNumColumns();
-      if (!this._totalRows) {
-        this._$tbody.html(this._noDataTemplate(numColumns));
+
+      var totalRows = this._$el.find('table').data('total-rows');
+      this._totalRows = !isNaN(totalRows) ? parseInt(totalRows) : 0;
+
+      if (this._totalRows === 0) {
+        this._$tbody.html(this._noDataTemplate(this.getNumColumns()));
       }
 
       this._$el.trigger('table:load');
@@ -287,7 +287,7 @@
       this._$el.data('last_selected', record.id);
 
       // ignore header check all input for selected state
-      if($checkbox.prop('checked')) {
+      if ($checkbox.prop('checked')) {
         $tr.addClass('ui-selected');
         this._$el.trigger('table:select', record);
       } else {
@@ -307,9 +307,9 @@
       
       // if selecting from top down, don't process the first one
       if (lastSelectedIndex < currentSelectedIndex && $lastSelectedTr.hasClass('ui-selected')) {
-        start += 1;
+        ++start;
       } else {
-        end +=1;
+        ++end;
       }
 
       $allVisibleRows.slice(start, end).each(function() {
@@ -517,7 +517,7 @@
     *  @return {Object} _this, the module instance object
     */
     updateParameters: function(data) {
-      for(var key in data) {
+      for (var key in data) {
         if(typeof data[key] === 'undefined' || data[key] === null){
           delete this._queryState[key];
         } else {
@@ -688,7 +688,7 @@
       }
 
       // execute methods and return the method return or this element for chaining
-      if (typeof options == 'string' && widget) {
+      if (typeof options === 'string' && widget) {
         // special case for resetting widgets, cleanup and reset
         if (options === 'destroy') {
           if (typeof widget.destroy === 'function') {
