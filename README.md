@@ -19,47 +19,30 @@ to enable features of pjax tables. Some are required, others optional.
 #### Base Markup
 The standard pjax table markup and required data attributes.
 ```
-  <!-- the container that the fifty table script will attach to and replace the contents of with pjax -->
-  <div id="my-primary-id" 
-    data-pjax-table
-    data-pjax-container="#my-primary-id">
-    <!-- the table element what the app server should return when the [X-PJAX] request header is present -->
-    <!-- total-rows, current-sort-property and current-sort-direction can be provided to sync with table state -->
-      <table class="table"
-        data-total-rows="{{ total_rows }}" 
-        data-current-sort-property="{{ current_sort }}"
-        data-current-sort-direction="{{ current_page }}">
-        <thead>
-          <tr>
-            <!-- each cell, if defining sortable="true" should include the property name, current, and default sort directions -->
-            <th data-sortable="true"
-              data-property="{{ property }}" 
-              data-current-sort-direction="{{ current_sort }}" 
-              data-default-sort-direction="asc">
-              {{ cell_display_value }}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <!-- to enable access to table data, each cell must define a data-property and data-value -->
-            <td class="pjax-table-cell" 
-              data-property="{{ property }}" 
-              data-value="{{ value }}">
-              {{ cell_display_value }}
-            </td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr>
-            <td class="pjax-table-footer-static-content" colspan="5">
-              {{ cell_display_value }}
-            </td>
-          </tr>
-        </tfoot>
-      </table>
-    </div>
-  </div>
+<div data-pjax-table data-auto-init="true">
+  <table data-total-rows="{{ total_rows }}" 
+         data-current-sort-property="{{ current_sort_property }}"
+         data-current-sort-order="{{ current_sort_order }}">
+    <thead>
+      <tr>
+        <th data-sortable="true"
+            data-property="{{ property }}"
+            data-current-sort-order="{{ sort_order }}">
+          {{ header_value }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td data-property="{{ property }}"
+            data-value="{{ value }}">
+          {{ value }}
+        </td>
+      </tr>
+    </tbody>
+    <tfoot></tfoot>
+  </table>
+</div>
 ```
 
 #### pjax-table container data attributes
@@ -78,7 +61,7 @@ data-attribute | default | description
 -------------- | ------- | -----------
 `data-total-rows` | 0 | the total number of rows returned by the server
 `data-current-sort-property` | none | the current sort property name
-`data-current-sort-direction` | desc | the current sort property direction (asc/desc)
+`data-current-sort-order` | desc | the current sort property order (asc/desc)
 
 
 #### pjax-table th data attributes
@@ -86,8 +69,8 @@ data-attribute | default | description
 -------------- | ------- | -----------
 `data-sortable` | true | whether or not this column is sortable
 `data-property` | none | the property name to be used in the sort query
-`data-current-sort-direction` | none | the current sort direction of this column
-`data-default-sort-direction` | none | the default sort direction of this column
+`data-current-sort-order` | none | the current sort order of this column
+`data-default-sort-order` | none | the default sort order of this column
 
 
 #### pjax-table td data attributes
@@ -110,38 +93,13 @@ key | default | description
 `ajaxOnly` | `data-ajax-only` or false | see `data-ajax-only` option
 `pushState` | `data-push-state` or true | see `data-push-state` option
 `paginated` | `data-paginated` or true | see `data-paginated` option
-`pjaxContainer` | `data-pjax-container or element.id | see `data-pjax-container` option
+`pjaxContainer` | `data-pjax-container` or `element.id` | see `data-pjax-container` option
 `noDataTemplate` | see source | a function returning the default template to use for no data returned
 `sortQueryKey` | `order` | the query string key for sorting
 `pageQueryKey` | `page` | the query string key for page
 `perPageQueryKey` | `perpage` | the query string key for perpage
 `searchQueryKey` | `q` | the query string key for search
 
-<!-- 
-<div data-pjax-table data-auto-init="true"></div>
-
-<table data-total-rows="{{ total_rows }}" 
-       data-current-sort-property="{{ current_sort }}"
-       data-current-sort-direction="{{ current_page }}">
-  <thead>
-    <tr>
-      <th data-sortable="true"
-          data-property="{{ property }}"
-          data-current-sort-direction="{{ current_sort_direction }}">
-        {{ header_value }}
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td data-property="{{ property }}"
-          data-value="{{ value }}">
-        {{ value }}
-      </td>
-    </tr>
-  </tbody>
-  <tfoot></tfoot>
-</table> -->
 
 #### Pagination
 The current pagination markup makes use of bootstrap 3 classes and structure for buttons and dropdowns.
