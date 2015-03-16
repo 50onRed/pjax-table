@@ -65,7 +65,11 @@
     this._pjaxContainer = this._options.pjaxContainer || this._$el.data('pjax-container') || this._$el.attr('id');
     this._noDataTemplate = this._options.noDataTemplate || this._noDataTemplate;
     this._createSortQuery = this._options.createSortQuery || this._createSortQuery;
-
+    this._destroySortQuery = this._options.destroySortQuery || this._destroySortQuery;
+    this._createPageQuery = this._options.createPageQuery || this._createPageQuery;
+    this._createPerPageQuery = this._options.createPerPageQuery || this._createPerPageQuery;
+    this._createSearchQuery = this._options.createSearchQuery || this._createSearchQuery;
+    this._destroySearchQuery = this._options.destroySortQuery || this._destroySortQuery;
     this._totalRows = null;
     
     var searchId = this._options.searchId || this._$el.data('search-id') || null;
@@ -89,11 +93,44 @@
       ].join('');
     },
 
-    _createSortQuery: function(property, sortDirection) {
-      return {
-        order: property + '__' + sortDirection,
-        page: 1
-      };
+    _createSortQuery: function(property, order) {
+      return { order: property + '__' + order };
+    },
+
+    _destroySortQuery: function() {
+      delete this._queryState.order;
+    },
+
+    _createPageQuery: function(page) {
+      return { page: page };
+    },
+
+    _createPerPageQuery: function(perpage) {
+      return { perpage: perpage };
+    },
+
+    _createSearchQuery: function(searchStr) {
+      return { q: searchStr };
+    },
+
+    _destroySearchQuery: function() {
+      delete this._queryState.q;
+    },
+
+    _syncSort: function(property, order) {
+      $.extend(this._queryState, this._createSortQuery(property, order));
+    },
+
+    _syncPage: function(page) {
+      $.extend(this._queryState, this._createPageQuery(page));
+    },
+
+    _syncPerPage: function(perpage) {
+      $.extend(this._queryState, this._createPerPageQuery(perpage));
+    },
+
+    _syncSearch: function(searchStr) {
+      $.extend(this._queryState, this._createSearchQuery(searchStr));
     },
 
     _load: function() {
@@ -136,31 +173,25 @@
       var page = $pagination.data('current-page');
       var perpage = $pagination.data('current-perpage');
       var sortProperty = $table.data('current-sort-property');
-      var sortDirection = $table.data('current-sort-direction');
-      var searchQuery = $table.data('current-search-query');
+      var sortOrder = $table.data('current-sort-order');
+      var searchStr = $table.data('current-search-str');
 
-      // Sync Pagination
       if (this._paginated) {
-        $.extend(this._queryState, { perpage: perpage });
-        $.extend(this._queryState, { page: page });
+        this._syncPage(page);
+        this._syncPerPage(perpage);
       }
 
-      // Sync Sorting
       if (sortProperty) {
-        $.extend(this._queryState, this._createSortQuery(sortProperty, sortDirection));
+        this._syncSort(sortProperty, sortOrder)
       } else {
-        // Remove the sort property/direction from the current query state
-        delete this._queryState.order;
+        this._destroySortQuery();
       }
 
-      //Sync Search
       if (searchQuery) {
-        $.extend(this._queryState, { q: searchQuery });
+        this._syncSearch(searchStr);
+      } else {
+        this._destroySearchQuery();
       }
-
-      // TODO: this may need to be abstracted in the future, unless we bundle the filter builder
-      // Sync Custom Filters
-      $.extend(this._queryState, $table.data('custom-filters'));
     },
 
     _onTableLoaded: function() {
@@ -226,7 +257,7 @@
     _onPerPageSelect: function (e) {
       var perpage = $(e.currentTarget).data('value');
 
-      this._$el.trigger('table:perpage', { perpage: perpage });
+      this._$el.trigger('table:perpage', this._createPerPageQuery(perpage));
       $.extend(this._queryState, { perpage: perpage, page: 1 }); // reset the page to 1 when changing per page
       this._load();
     },

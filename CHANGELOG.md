@@ -26,12 +26,15 @@ be accessed by referencing the instance directly.
 columns in the table as a param.
 - the createSortQuery function is now configurable, so the application can specify a sort query which appropriately
 matches the server implementation
+- sort-direction is now sort-order
+
 
 ### Removed
 - data-table-id and total-rows attribute on the wrapper. A wrapper is no longer required
 and all data attributes should be defined on the table element.
 - tooltip initialization on load has now been decoupled, and should be done by an initializing
 script on the 'table:load' event.
+- custom-filters query addition removed, use table:load and updateParameters for customization
 
 # [0.2.0] - 2015-3-10
 ## Added

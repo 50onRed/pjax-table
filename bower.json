@@ -1,5 +1,5 @@
 {
-  "name": "pjax_table",
+  "name": "pjax-table",
   "version": "0.2.0",
   "private": true,
   "main": "dist/js/pjax_table.js",
