@@ -48,9 +48,34 @@ describe('pjax table', function() {
     });
   });
 
-  // it('should be configurable', function() {
-
-  // });
+  it('should be configurable', function() {
+    // configurations just to test variables set
+    var table = $table.pjaxTable({
+      url: 'test url string',
+      ajaxOnly: true,
+      pushState: false,
+      paginated: true,
+      pjaxContainer: '#my-test-id',
+      noDataTemplate: function() { return 'test template'; },
+      sortQueryKey: 'test sort key',
+      pageQueryKey: 'test page key',
+      perPageQueryKey: 'test per page key',
+      searchQueryKey: 'test search key',
+      searchId: '#test-search-id'
+    });
+    
+    expect(table._url).toEqual('test url string');
+    expect(table._ajaxOnly).toEqual(true);
+    expect(table._pushState).toEqual(false);
+    expect(table._paginated).toEqual(true);
+    expect(table._pjaxContainer).toEqual('#my-test-id');
+    expect(table._noDataTemplate()).toEqual('test template');
+    expect(table._sortQueryKey).toEqual('test sort key');
+    expect(table._pageQueryKey).toEqual('test page key');
+    expect(table._perPageQueryKey).toEqual('test per page key');
+    expect(table._searchQueryKey).toEqual('test search key');
+    expect(table._$searchBox).toBeDefined();
+  });
 
   // describe('Events check', function() {
   //   var events = ['load.table', 'sort.table', 'page.table', 'perpage.table', 'nextpage.table', 'prevpage.table', 'select.table',

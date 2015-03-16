@@ -68,9 +68,23 @@
     this._$tbody = null;
 
     this._url = this._options.url || this._$el.data('url') || window.location.href;
-    this._ajaxOnly = this._options.ajaxOnly || this._$el.data('ajax-only') || false;
-    this._pushState = this._options.pushState || this._$el.data('push-state') || true;
-    this._paginated = this._options.paginated || this._$el.data('paginated') || true;
+    
+    if (typeof this._options.ajaxOnly !== 'undefined') {
+      this._ajaxOnly = this._options.ajaxOnly;
+    } else {
+      this._ajaxOnly = this._$el.data('ajax-only') || false;
+    }
+    if (typeof this._options.pushState !== 'undefined') {
+      this._pushState = this._options.pushState;
+    } else {
+      this._pushState = this._$el.data('push-state') || true;
+    }
+    if (typeof this._options.paginated !== 'undefined') {
+      this._paginated = this._options.paginated
+    } else {
+      this._paginated = this._$el.data('paginated') || true;
+    }
+
     this._pjaxContainer = this._options.pjaxContainer || this._$el.data('pjax-container') || this._$el.attr('id');
     this._noDataTemplate = this._options.noDataTemplate || this._noDataTemplate;
     this._sortQueryKey = this._options.sortQueryKey || this._$el.data('sort-query-key') || 'order';
