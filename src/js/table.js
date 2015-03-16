@@ -10,6 +10,7 @@
   *
   *   @param {object} el is the table container element the module is being initialized with
   *   @param {object} options
+  *     @param {string} options.url the url to be used for fetching table markup
   *     @param {Array<object>} options.refreshEvents a list of delegated event configurations that should trigger a table refresh.
   *       event listeners are attached at the table container element level, filters are optional.
   *       config example: [{ eventName: 'click', filter: '.my-class-selector' }]
@@ -22,17 +23,24 @@
   *     @param {string} options.pjaxContainer ID Selector for the pjax container, defaults to the initializing
   *       element's id attribute
   *     @param {Function} options.noDataTemplate A function to be used for creating the no data message
-  *     @param {Function} options.createSortQuery A function to be used for creating a sort query
-  *     @param {string} options.searchId  A selector for a search box to be used with the table. 
+  *     @param {string} options.searchId  A selector for a search box to be used with the table.
+  *     @param {string} sortQueryKey The key to be used in creating the sort query string
+  *     @param {string} pageQueryKey The key to be used in creating the page query string
+  *     @param {string} perPageQueryKey The key to be used in creating the per page query string
+  *     @param {string} searchQueryKey The key to be used in creating the search query string
   *
   *   Data Attribute Params, parameters expected to be included on the table container element for initialization
-  *   @param {string}  data-table-id the table id
-  *   @param {string}  data-pjax-url the url to be used for loading the table with pjax
+  *   @param {string}  data-url the url to be used for fetching table markup
   *   @param {string}  data-pjax-container the selector for the container to be passed to pjax requests
-  *   @param {boolean} data-push-state-enabled a flag for whether or not to enable pjax push state
+  *   @param {boolean} data-ajax-only whether to not to disable pjax and enable ajax
+  *   @param {boolean} data-push-state a flag for whether or not to enable pjax push state
   *   @param {boolean} data-paginated whether or not pagination is enabled
   *   @param {string}  data-search-id an optional search control element id
-  *   
+  *   @param {string}  data-sort-query-key the string key to be used in building the search query
+  *   @param {string}  data-page-query-key the string key to be used in building the page query
+  *   @param {string}  data-perpage-query-key the string key to be used in building the perpage query
+  *   @param {string}  data-search-query-key the string key to be used in building the search query
+  *
   *   Notes on search module: 
   *     Events which are registered within the table
   *     search:submit triggers a table search query when triggered by the element specified in options.search_id
@@ -41,33 +49,34 @@
   *   Events, triggered by the table on the table container element
   *     table:load triggered any time the table has finished loaded, on pjax success for initial load, update, and refresh
   *     table:sort {object}, triggered when a column is sorted, includes direction and property
-  *     table:page {number}, triggered when a specific page has been chosen to jump to
-  *     table:perpage {number}, triggered when perpage dropdown selection has changed
-  *     table:nextpage {number}, triggered when next page in pagination clicked
-  *     table:prevpage {number}, triggered when prev page in pagination clicked
+  *     table:page {object}, triggered when a specific page has been chosen to jump to
+  *     table:perpage {object}, triggered when perpage dropdown selection has changed
+  *     table:nextpage {object}, triggered when next page in pagination clicked
+  *     table:prevpage {object}, triggered when prev page in pagination clicked
   *     table:select {object}, triggered when a row is selected, passing the record object
   *     table:deselect {object}, triggered when a row is deselected, passing the record object
   *     table:select:all {}, triggered when all records are selected using the check all box
   *     table:deselect:all {}, triggered when all records are deselected using the check all box
   *     table:search {object}, triggered when a search query is used to filter the table
   *     table:search:clear {}, triggered when a search query is cleared
-  *     table:error, triggered when a pjax / ajax error occurs
-  *     table:timeout, triggered when pjax times out
+  *     table:error {}, triggered when a pjax / ajax error occurs
+  *     table:timeout {}, triggered when pjax times out
   */
   function PjaxTable(el, options) {
     this._options = options || {};
     this._$el = $(el);
     this._$tbody = null;
 
+    this._url = this._options.url || this._$el.data('url') || window.location.href;
     this._ajaxOnly = this._options.ajaxOnly || this._$el.data('ajax-only') || false;
     this._pushState = this._options.pushState || this._$el.data('push-state') || true;
     this._paginated = this._options.paginated || this._$el.data('paginated') || true;
     this._pjaxContainer = this._options.pjaxContainer || this._$el.data('pjax-container') || this._$el.attr('id');
     this._noDataTemplate = this._options.noDataTemplate || this._noDataTemplate;
-    this._sortQueryKey = this._options.sortQueryKey || 'order';
-    this._pageQueryKey = this._options.pageQueryKey || 'page';
-    this._perPageQueryKey = this._options.perPageQueryKey || 'perpage';
-    this._searchQueryKey = this._options.searchQueryKey || 'q';
+    this._sortQueryKey = this._options.sortQueryKey || this._$el.data('sort-query-key') || 'order';
+    this._pageQueryKey = this._options.pageQueryKey || this._$el.data('page-query-key') || 'page';
+    this._perPageQueryKey = this._options.perPageQueryKey || this._$el.data('perpage-query-key') || 'perpage';
+    this._searchQueryKey = this._options.searchQueryKey || this._$el.data('search-query-key') || 'q';
     
     this._totalRows = null;
     

@@ -1,10 +1,10 @@
 # pjax-table
 
-### Introduction
+## Introduction
 pjax-table is a jQuery plugin that uses [jquery-pjax](https://github.com/defunkt/jquery-pjax) to load server rendered tables and
 provides table controls for sorting, pagination, row selection, and more.
 
-### Features
+## Features
   - pjax loading with push state
   - sorting
   - pagination
@@ -12,12 +12,14 @@ provides table controls for sorting, pagination, row selection, and more.
   - row selection and manipulation
   - plugin support
 
-### Defining correct markup for tables
+
+# Base Markup
 The app server needs to define correct markup and data attributes 
 to enable features of pjax tables. Some are required, others optional.
+See [fifty-tables](https://bitbucket.org/50onred/fifty-tables) for a
+python flask implementation that works with pjax-table.
 
-#### Base Markup
-The standard pjax table markup and required data attributes.
+Example of standard table markup with data attributes:
 ```
 <div data-pjax-table data-auto-init="true">
   <table data-total-rows="{{ total_rows }}" 
@@ -30,6 +32,7 @@ The standard pjax table markup and required data attributes.
             data-current-sort-order="{{ sort_order }}">
           {{ header_value }}
         </th>
+        <!-- ... -->
       </tr>
     </thead>
     <tbody>
@@ -38,6 +41,7 @@ The standard pjax table markup and required data attributes.
             data-value="{{ value }}">
           {{ value }}
         </td>
+        <!-- ... -->
       </tr>
     </tbody>
     <tfoot></tfoot>
@@ -45,18 +49,19 @@ The standard pjax table markup and required data attributes.
 </div>
 ```
 
-### pjax-table container data attributes
+### container data attributes
 data-attribute | default | description
 -------------- | ------- | -----------
 `data-pjax-table` | none | the default selector for initializing tables (only used for init)
 `data-auto-init` | false | a flag (only used for init)
+`data-url` | window.location.href | the url to be used for fetching table markup
 `data-paginated` | true | a flag to enable/disable pagination controls
 `data-ajax-only` | false | a flag to use ajax instead of pjax
 `data-push-state` | true | a flag to pass as the pushState option to pjax
 `data-pjax-container` | element.id | the container to be used for loading pjax, defaults to the initializing element's id
 `data-search-id` | none | the id selector of a search box to be used
 
-### pjax-table table data attributes
+### table data attributes
 data-attribute | default | description
 -------------- | ------- | -----------
 `data-total-rows` | 0 | the total number of rows returned by the server
@@ -64,7 +69,7 @@ data-attribute | default | description
 `data-current-sort-order` | desc | the current sort property order (asc/desc)
 
 
-### pjax-table th data attributes
+### th data attributes
 data-attribute | default | description
 -------------- | ------- | -----------
 `data-sortable` | true | whether or not this column is sortable
@@ -73,7 +78,7 @@ data-attribute | default | description
 `data-default-sort-order` | none | the default sort order of this column
 
 
-### pjax-table td data attributes
+### td data attributes
 data-attribute | default | description
 -------------- | ------- | -----------
 `data-property` | none | the property name for this cell
@@ -83,6 +88,7 @@ data-attribute | default | description
 ### js options
 key | default | description
 --- | ------- | -----------
+`url` | `data-url` or `window.location.href` | see `data-url` option
 `ajaxOnly` | `data-ajax-only` or false | see `data-ajax-only` option
 `pushState` | `data-push-state` or true | see `data-push-state` option
 `paginated` | `data-paginated` or true | see `data-paginated` option
@@ -94,7 +100,7 @@ key | default | description
 `searchQueryKey` | `q` | the query string key for search
 
 
-## Pagination
+# Pagination
 ### pagination container data attributes
 data-attribute | default | description
 -------------- | ------- | -----------
@@ -120,8 +126,8 @@ class | required children | description
 `ui-pagination` | n/a | the pagination container with `data-current-page` and `data-current-perpage`
 `ui-perpage-dropdown` | `li` with `data-value` | the list element of perpage options
 `ui-page-select-dropdown` | `li` with `data-value` | the list element of page options
-`ui-prev-page` | the prev page button
-`ui-next-page` | the next page button
+`ui-prev-page` | n/a | the prev page button
+`ui-next-page` | n/a | the next page button
 
 ### Example pagination markup
 *The example below uses BS3 classes and markup, but only the classes and structure listed above are required. A base set of styles to make these functional without BS3 may soon be applied. Ideas are welcome.*
@@ -179,6 +185,44 @@ class | required children | description
     </div>
   </div>
 ```
+
+# Row Selection
+To enable row selection, which includes select/deselect all, you can specify a table header cell and a column of table cells with `data-property="id"`. These cells also need to contain a checkbox for managing selection state.
+
+Example table header and body cells which enable row selection:
+```
+<!-- in thead > tr -->
+<th data-select-all-enabled="true" data-property="id">
+  <input type="checkbox">
+</th>
+
+<!-- in tbody > tr -->
+<th data-property="id" data-value="1">
+  <input type="checkbox">
+</th>
+```
+
+## Events
+Most named events are triggered from the container element, with the exception of any plugins which fire events.
+The search implementation also fires it's own events which are wrapped by the table.
+
+name | arguments | description
+---- | --------- | -----------
+`table:load` | none | triggered any time the table has finished loaded, on pjax success for initial load, update, and refresh
+`table:sort` | `{object} sortQuery` | triggered when a column is sorted, includes direction and property
+`table:page` | `{object} page query` | triggered when a specific page has been chosen to jump to
+`table:perpage` | `{object} per page query` | triggered when perpage dropdown selection has changed
+`table:nextpage` | `{object} next page query` | triggered when next page in pagination clicked
+`table:prevpage` | `{object} prev page query` | triggered when prev page in pagination clicked
+`table:search` | {object} search query | triggered when a search query is used to filter the table
+`table:search:clear` | none | triggered when a search query is cleared
+`table:select` | `{object} record` | triggered when a row is selected, passing the record object
+`table:deselect` | `{object} record` | triggered when a row is deselected, passing the record object
+`table:select:all` | none | triggered when all records are selected
+`table:deselect:all` | none | triggered when all records are deselected
+`table:error` | none | triggered when a pjax / ajax error occurs
+`table:timeout` | none |  triggered when pjax times out
+
 
 ### Dependencies
   - [jQuery 1.11.1](http://jquery.com/)

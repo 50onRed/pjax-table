@@ -10,6 +10,7 @@
   *
   *   @param {object} el is the table container element the module is being initialized with
   *   @param {object} options
+  *     @param {string} options.url the url to be used for fetching table markup
   *     @param {Array<object>} options.refreshEvents a list of delegated event configurations that should trigger a table refresh.
   *       event listeners are attached at the table container element level, filters are optional.
   *       config example: [{ eventName: 'click', filter: '.my-class-selector' }]
@@ -22,17 +23,24 @@
   *     @param {string} options.pjaxContainer ID Selector for the pjax container, defaults to the initializing
   *       element's id attribute
   *     @param {Function} options.noDataTemplate A function to be used for creating the no data message
-  *     @param {Function} options.createSortQuery A function to be used for creating a sort query
-  *     @param {string} options.searchId  A selector for a search box to be used with the table. 
+  *     @param {string} options.searchId  A selector for a search box to be used with the table.
+  *     @param {string} sortQueryKey The key to be used in creating the sort query string
+  *     @param {string} pageQueryKey The key to be used in creating the page query string
+  *     @param {string} perPageQueryKey The key to be used in creating the per page query string
+  *     @param {string} searchQueryKey The key to be used in creating the search query string
   *
   *   Data Attribute Params, parameters expected to be included on the table container element for initialization
-  *   @param {string}  data-table-id the table id
-  *   @param {string}  data-pjax-url the url to be used for loading the table with pjax
+  *   @param {string}  data-url the url to be used for fetching table markup
   *   @param {string}  data-pjax-container the selector for the container to be passed to pjax requests
-  *   @param {boolean} data-push-state-enabled a flag for whether or not to enable pjax push state
+  *   @param {boolean} data-ajax-only whether to not to disable pjax and enable ajax
+  *   @param {boolean} data-push-state a flag for whether or not to enable pjax push state
   *   @param {boolean} data-paginated whether or not pagination is enabled
   *   @param {string}  data-search-id an optional search control element id
-  *   
+  *   @param {string}  data-sort-query-key the string key to be used in building the search query
+  *   @param {string}  data-page-query-key the string key to be used in building the page query
+  *   @param {string}  data-perpage-query-key the string key to be used in building the perpage query
+  *   @param {string}  data-search-query-key the string key to be used in building the search query
+  *
   *   Notes on search module: 
   *     Events which are registered within the table
   *     search:submit triggers a table search query when triggered by the element specified in options.search_id
@@ -41,31 +49,35 @@
   *   Events, triggered by the table on the table container element
   *     table:load triggered any time the table has finished loaded, on pjax success for initial load, update, and refresh
   *     table:sort {object}, triggered when a column is sorted, includes direction and property
-  *     table:page {number}, triggered when a specific page has been chosen to jump to
-  *     table:perpage {number}, triggered when perpage dropdown selection has changed
-  *     table:nextpage {number}, triggered when next page in pagination clicked
-  *     table:prevpage {number}, triggered when prev page in pagination clicked
+  *     table:page {object}, triggered when a specific page has been chosen to jump to
+  *     table:perpage {object}, triggered when perpage dropdown selection has changed
+  *     table:nextpage {object}, triggered when next page in pagination clicked
+  *     table:prevpage {object}, triggered when prev page in pagination clicked
   *     table:select {object}, triggered when a row is selected, passing the record object
   *     table:deselect {object}, triggered when a row is deselected, passing the record object
   *     table:select:all {}, triggered when all records are selected using the check all box
   *     table:deselect:all {}, triggered when all records are deselected using the check all box
   *     table:search {object}, triggered when a search query is used to filter the table
   *     table:search:clear {}, triggered when a search query is cleared
-  *     table:error, triggered when a pjax / ajax error occurs
-  *     table:timeout, triggered when pjax times out
+  *     table:error {}, triggered when a pjax / ajax error occurs
+  *     table:timeout {}, triggered when pjax times out
   */
   function PjaxTable(el, options) {
     this._options = options || {};
     this._$el = $(el);
     this._$tbody = null;
 
+    this._url = this._options.url || this._$el.data('url') || window.location.href;
     this._ajaxOnly = this._options.ajaxOnly || this._$el.data('ajax-only') || false;
     this._pushState = this._options.pushState || this._$el.data('push-state') || true;
     this._paginated = this._options.paginated || this._$el.data('paginated') || true;
     this._pjaxContainer = this._options.pjaxContainer || this._$el.data('pjax-container') || this._$el.attr('id');
     this._noDataTemplate = this._options.noDataTemplate || this._noDataTemplate;
-    this._createSortQuery = this._options.createSortQuery || this._createSortQuery;
-
+    this._sortQueryKey = this._options.sortQueryKey || this._$el.data('sort-query-key') || 'order';
+    this._pageQueryKey = this._options.pageQueryKey || this._$el.data('page-query-key') || 'page';
+    this._perPageQueryKey = this._options.perPageQueryKey || this._$el.data('perpage-query-key') || 'perpage';
+    this._searchQueryKey = this._options.searchQueryKey || this._$el.data('search-query-key') || 'q';
+    
     this._totalRows = null;
     
     var searchId = this._options.searchId || this._$el.data('search-id') || null;
@@ -89,11 +101,52 @@
       ].join('');
     },
 
-    _createSortQuery: function(property, sortDirection) {
-      return {
-        order: property + '__' + sortDirection,
-        page: 1
-      };
+    _createSortQuery: function(property, order) {
+      var query = {};
+      query[this._sortQueryKey] = property + '__' + order;
+      return query;
+    },
+
+    _desyncSort: function() {
+      delete this._queryState[this._sortQueryKey];
+    },
+
+    _createPageQuery: function(page) {
+      var query = {};
+      query[this._pageQueryKey] = page;
+      return query;
+    },
+
+    _createPerPageQuery: function(perpage) {
+      var query = {};
+      query[this._perPageQueryKey] = perpage;
+      return query;
+    },
+
+    _createSearchQuery: function(searchStr) {
+      var query = {};
+      query[this._searchQueryKey] = searchStr;
+      return query;
+    },
+
+    _desyncSearch: function() {
+      delete this._queryState[this._searchQueryKey];
+    },
+
+    _syncSort: function(property, order) {
+      $.extend(this._queryState, this._createSortQuery(property, order));
+    },
+
+    _syncPage: function(page) {
+      $.extend(this._queryState, this._createPageQuery(page));
+    },
+
+    _syncPerPage: function(perpage) {
+      $.extend(this._queryState, this._createPerPageQuery(perpage));
+    },
+
+    _syncSearch: function(searchStr) {
+      $.extend(this._queryState, this._createSearchQuery(searchStr));
     },
 
     _load: function() {
@@ -136,31 +189,25 @@
       var page = $pagination.data('current-page');
       var perpage = $pagination.data('current-perpage');
       var sortProperty = $table.data('current-sort-property');
-      var sortDirection = $table.data('current-sort-direction');
-      var searchQuery = $table.data('current-search-query');
+      var sortOrder = $table.data('current-sort-order');
+      var searchStr = $table.data('current-search-str');
 
-      // Sync Pagination
       if (this._paginated) {
-        $.extend(this._queryState, { perpage: perpage });
-        $.extend(this._queryState, { page: page });
+        this._syncPage(page);
+        this._syncPerPage(perpage);
       }
 
-      // Sync Sorting
       if (sortProperty) {
-        $.extend(this._queryState, this._createSortQuery(sortProperty, sortDirection));
+        this._syncSort(sortProperty, sortOrder)
       } else {
-        // Remove the sort property/direction from the current query state
-        delete this._queryState.order;
+        this._desyncSort();
       }
 
-      //Sync Search
       if (searchQuery) {
-        $.extend(this._queryState, { q: searchQuery });
+        this._syncSearch(searchStr);
+      } else {
+        this._desyncSearch();
       }
-
-      // TODO: this may need to be abstracted in the future, unless we bundle the filter builder
-      // Sync Custom Filters
-      $.extend(this._queryState, $table.data('custom-filters'));
     },
 
     _onTableLoaded: function() {
@@ -216,42 +263,45 @@
     _onClickSortable: function (e) {
       var $sortable = $(e.target).closest('th[data-sortable="true"]');
       var property = $sortable.data('property');
-      var sortDirection = this._sortMap[$sortable.data('current-sort-direction')] || $sortable.data('default-sort-direction');
+      var order = this._sortMap[$sortable.data('current-sort-order')] || $sortable.data('default-sort-order');
 
-      this._$el.trigger('table:sort', { direction: sortDirection, property: property });
-      $.extend(this._queryState, this._createSortQuery(property, sortDirection));
+      this._$el.trigger('table:sort', this._createSortQuery(property, order));
+      this._syncSort(property, order);
       this._load();
     },
 
     _onPerPageSelect: function (e) {
       var perpage = $(e.currentTarget).data('value');
 
-      this._$el.trigger('table:perpage', { perpage: perpage });
-      $.extend(this._queryState, { perpage: perpage, page: 1 }); // reset the page to 1 when changing per page
+      this._$el.trigger('table:perpage', this._createPerPageQuery(perpage));
+      this._syncPerPage(perpage);
+      this._syncPage(1); // reset the page to 1 when changing per page
       this._load();
     },
 
     _onPageSelect: function (e) {
       var pageIndex = $(e.currentTarget).data('value');
 
-      this._$el.trigger('table:page', { page: pageIndex });
-      $.extend(this._queryState, { page: pageIndex });
+      this._$el.trigger('table:page', this._createPageQuery(pageIndex));
+      this._syncPage(pageIndex);
       this._load();
     },
 
     _onPrevPageSelect: function (e) {
       var pageIndex = parseInt($el.find('.ui-pagination').data('current-page'));
+      var prevPageIndex = pageIndex - 1;
 
-      this._$el.trigger('table:prevpage', { page: pageIndex - 1 });
-      $.extend(this._queryState, { page: pageIndex - 1 });
+      this._$el.trigger('table:prevpage', this._createPageQuery(prevPageIndex));
+      this._syncPage(prevPageIndex);
       this._load();
     },
 
     _onNextPageSelect: function (e) {
       var pageIndex = parseInt($el.find('.ui-pagination').data('current-page'));
+      var nextPageIndex = pageIndex + 1;
 
-      this._$el.trigger('table:nextpage', { page: pageIndex + 1 });
-      $.extend(this._queryState, { page: pageIndex + 1 });
+      this._$el.trigger('table:nextpage', this._createPageQuery(nextPageIndex));
+      this._syncPage(nextPageIndex);
       this._load();
     },
 
@@ -323,15 +373,17 @@
       });
     },
 
-    _onSubmitSearch: function(e, query) {
-      this._$el.trigger('table:search', { query: query });
-      $.extend(this._queryState, { q: query, page: 1 });
+    _onSubmitSearch: function(e, searchStr) {
+      this._$el.trigger('table:search', this._createSearchQuery(searchStr));
+      this._syncSearch(searchStr);
+      this._syncPage(1);
       this._load();
     },
 
     _onClearSearch: function(e) {
       this._$el.trigger('table:search:clear');
-      $.extend(this._queryState, { q: '', page: 1});
+      this._desyncSearch();
+      this._syncPage(1);
       this._load();
     },
 
@@ -536,14 +588,14 @@
     *   Returning true from a filter function will delete the current key in iteration
     */
     removeParameters: function(options) {
-      if(!options){
+      if (!options) {
         return this;
       }
 
-      if(typeof options === 'string') {
+      if (typeof options === 'string') {
         // Remove a single item from the queryState
         delete this._queryState[options];
-      } else if(Array.isArray(options)) {
+      } else if (Array.isArray(options)) {
         // Remove all of the items in the array
         for (var i = 0; i < options.length; i++) {
           delete this._queryState[options[i]];
