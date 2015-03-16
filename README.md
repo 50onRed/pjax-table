@@ -51,7 +51,7 @@ Example of standard table markup with data attributes:
 
 ### container data attributes
 data-attribute | type | default | description
--- | - | - | ----
+- | - | - | ---
 `data-pjax-table` | `boolean` | `true` | the default selector for initializing tables (only used for init)
 `data-auto-init` | `boolean` | `false` | a flag (only used for init)
 `data-url` | `string` | window.location.href | the url to be used for fetching table markup
@@ -59,7 +59,7 @@ data-attribute | type | default | description
 `data-ajax-only` | `boolean` | `false` | a flag to use ajax instead of pjax
 `data-push-state` | `boolean` | `true` | a flag to pass as the pushState option to pjax
 `data-pjax-container` | `string` | element.id | the container to be used for loading pjax, defaults to the initializing element's id
-`data-search-id` | `string` | none | the id selector of a search box to be used
+`data-search-id` | `string` | | the id selector of a search box to be used
 `data-sort-query-key` | `string` | `order` | the string key to be used in building the search query
 `data-page-query-key` | `string` | `page` | the string key to be used in building the page query
 `data-perpage-query-key` | `string` | `perpage` | the string key to be used in building the perpage query
@@ -68,31 +68,31 @@ data-attribute | type | default | description
 
 ### table data attributes
 data-attribute | type | default | options | description
--- | - | - | - | ----
+- | - | - | - | ---
 `data-total-rows` | `number` | `0` | | the total number of rows returned by the server
-`data-current-sort-property` | `string` | none | | the current sort property name
+`data-current-sort-property` | `string` | | | the current sort property name
 `data-current-sort-order` | `string` | `desc` | `asc` or `desc` | the current sort property order (asc/desc)
 
 
 ### th data attributes
 data-attribute | type | default | options | description
--- | - | - | - | ----
+- | - | - | - | ---
 `data-sortable` | `boolean` | `true` | | whether or not this column is sortable
-`data-property` | `string` | none | | the property name to be used in the sort query
-`data-current-sort-order` | `string` | none | `asc` or `desc` | the current sort order of this column
-`data-default-sort-order` | `string` | none | `asc` or `desc` | the default sort order of this column
+`data-property` | `string` | | | the property name to be used in the sort query
+`data-current-sort-order` | `string` | | `asc` or `desc` | the current sort order of this column
+`data-default-sort-order` | `string` | | `asc` or `desc` | the default sort order of this column
 
 
 ### td data attributes
 data-attribute | type | default | description
--- | - | - | ----
-`data-property` | `string` | none | the property name for this cell
-`data-value` | `string` or `number` | none | the value for this cell
+- | - | - | ---
+`data-property` | `string` | | the property name for this cell
+`data-value` | `string` or `number` | | the value for this cell
 
 
 ### js options
 key | type | default | description
--- | - | - | ----
+- | - | - | ---
 `url` | `string` | `data-url` or `window.location.href` | see `data-url` option
 `ajaxOnly` | `boolean` | `data-ajax-only` or `false` | see `data-ajax-only` option
 `pushState` | `boolean` | `data-push-state` or `true` | see `data-push-state` option
@@ -108,26 +108,26 @@ key | type | default | description
 # Pagination
 ### pagination container data attributes
 data-attribute | type | default | description
--- | - | - | ----
+- | - | - | ---
 `data-current-page` | `number` | defined by pagination markup | the current page 
 `data-current-perpage` | `number` | defined by pagination markup | the current perpage 
 
 
 ### pagination perpage data attributes
 data-attribute | type | default | description
--- | - | - | ----
-`data-value` | `number` | none | the number value of records per page
+- | - | - | ---
+`data-value` | `number` | | the number value of records per page
 
 
 ### pagination page data attributes
 data-attribute | type | default | description
--- | - | - | ----
-`data-value` | `number` | none | the number value of the page
+- | - | - | ---
+`data-value` | `number` | | the number value of the page
 
 
 ### required pagination classes
 class | required children | description
--- | -- | ----
+- | - | ---
 `ui-pagination` | n/a | the pagination container with `data-current-page` and `data-current-perpage`
 `ui-perpage-dropdown` | `li` with `data-value` | the list element of perpage options
 `ui-page-select-dropdown` | `li` with `data-value` | the list element of page options
@@ -212,21 +212,21 @@ Most named events are triggered from the container element, with the exception o
 The search implementation also fires it's own events which are wrapped by the table.
 
 name | type | arguments | description
--- | - | - | ----
-`table:load` | none | none | any time the table has finished loaded, on pjax success for initial load, update, and refresh
+- | - | - | ---
+`table:load` | | | any time the table has finished loaded, on pjax success for initial load, update, and refresh
 `table:sort` | `object` | `sortQuery` | when a column is sorted, includes direction and property
 `table:page` | `object` | `pageQuery` | when a specific page has been chosen to jump to
 `table:perpage` | `object` | `perPageQuery` | when perpage dropdown selection has changed
 `table:nextpage` | `object` | `nextPageQuery` | when next page in pagination clicked
 `table:prevpage` | `object` | `prevPageQuery` | when prev page in pagination clicked
 `table:search` | `object` | `searchQuery` | when a search query is used to filter the table
-`table:search:clear` | none | none | when a search query is cleared
+`table:search:clear` | | | when a search query is cleared
 `table:select` | `object` | `record` | when a row is selected, passing the record object
 `table:deselect` | `object` | `record` | when a row is deselected, passing the record object
-`table:select:all` | none | none | when all records are selected
-`table:deselect:all` | none | none | when all records are deselected
-`table:error` | none | none | when a pjax / ajax error occurs
-`table:timeout` | none | none |  when pjax times out
+`table:select:all` | | | when all records are selected
+`table:deselect:all` | | | when all records are deselected
+`table:error` | | | when a pjax / ajax error occurs
+`table:timeout` | | |  when pjax times out
 
 
 ### Dependencies
