@@ -537,7 +537,7 @@
     */
     _findRowById: function(id) {
       return this._$tbody.find('tr').filter(function (index, rowElement) {
-        if (this._getRecord(this).id === id) {
+        if (this._getRecord(rowElement).id === id) {
           return true;
         }
         return false;

@@ -509,12 +509,123 @@ describe('pjax table protected methods', function() {
 
     expect(spy).toHaveBeenCalled();
   });
-  
-  it('should handle search submission', function() {
 
+  // search tested outside the search plugin for now
+  it('should handle search submission', function() {
+    var table = $table.pjaxTable({});
+    expect(typeof table._onSubmitSearch === 'function').toBe(true);
+
+    var searchSpy = jasmine.createSpy();
+    $table.on('table:search', searchSpy);
+    spyOn(table, '_createSearchQuery').and.callThrough();
+    spyOn(table, '_syncSearch').and.callThrough();
+    spyOn(table, '_syncPage').and.callThrough();
+    spyOn(table, '_load').and.callThrough();
+
+    table._onSubmitSearch(null, 'testSearchStr');
+
+    expect(searchSpy).toHaveBeenCalled();
+    expect(table._createSearchQuery).toHaveBeenCalled();
+    expect(table._syncSearch).toHaveBeenCalled();
+    expect(table._syncPage).toHaveBeenCalled();
+    expect(table._load).toHaveBeenCalled();
+    expect(table._queryState[table._searchQueryKey]).toEqual('testSearchStr');
   });
 
   it('should handle search clearing', function() {
+    var table = $table.pjaxTable({});
+    expect(typeof table._onClearSearch === 'function').toBe(true);
+    
+    var searchSpy = jasmine.createSpy();
+    $table.on('table:search:clear', searchSpy);
+    spyOn(table, '_desyncSearch').and.callThrough();
+    spyOn(table, '_syncPage').and.callThrough();
+    spyOn(table, '_load').and.callThrough();
 
+    table._syncSearch('testSearchStr');
+    table._onClearSearch(null);
+
+    expect(searchSpy).toHaveBeenCalled();
+    expect(table._desyncSearch).toHaveBeenCalled();
+    expect(table._syncPage).toHaveBeenCalled();
+    expect(table._load).toHaveBeenCalled();
+    expect(table._queryState[table._searchQueryKey]).toBeUndefined();
+  });
+
+  // TODO: _applyPlugins, _onpluginRefreshEvent, _initPluginRefreshEvents
+  // it('should apply plugins based on a correctly structured definition', function() {
+  //   var table = $table.pjaxTable({});
+  //   expect(typeof table._applyPlugins === 'function').toBe(true);
+
+  //   // define a plugin to be instanitated on click
+  //   // the plugin lifecycle should be testable
+  //   // { target: '[data-fifty-editable]', constructorName: 'fiftyEditable' }
+  // });
+    
+  // TODO: consider checks for selectors used
+  it('should do initialization', function() {
+    // NOTE: init is called on construction by default
+    // calling it again should add duplicate event listeners
+    var table = $table.pjaxTable({});
+    expect(typeof table._init === 'function').toBe(true);
+    
+    spyOn(table, '_syncQueryState').and.callThrough();
+    spyOn(table, '_onTableLoaded').and.callThrough();
+    spyOn(table, '_enableRowCheckboxChangeHandling').and.callThrough();
+    spyOn(table, 'refreshPlugins');
+    spyOn(table, '_initPluginRefreshEvents');
+
+    table._init();
+
+    expect(table._syncQueryState).toHaveBeenCalled();
+    expect(table._onTableLoaded).toHaveBeenCalled();
+    expect(table._enableRowCheckboxChangeHandling).toHaveBeenCalled();
+    expect(table._enableRowCheckboxChangeHandling).toHaveBeenCalled();
+    expect(table.refreshPlugins).toHaveBeenCalled();
+    expect(table._initPluginRefreshEvents).toHaveBeenCalled();
+  });
+
+  it('should provide access to record objects by pulling data attributes from cells', function() {
+    var table = $table.pjaxTable({});
+    expect(typeof table._getRecord === 'function').toBe(true);
+
+    var record = table._getRecord(table._$tbody.find('tr').first().get(0));
+    expect(record).toBeDefined();
+    expect(Object.keys(record).length).toEqual(7);
+    expect(typeof record['additionalFields'] === 'object').toBe(true);
+    expect(Object.keys(record['additionalFields']).length).toEqual(0);
+    expect(record['id']).toEqual(0);
+    expect(record['Heroes']).toEqual('Griffith Shaffer');
+    expect(record['Nemeses']).toEqual('Anika M. Gilliam');
+    expect(record['Nationality']).toEqual('Malawi');
+    expect(record['Cost to corrupt']).toEqual('$38,426');
+    expect(record['Email']).toEqual('nec.cursus@magna.ca');
+  });
+
+  // TODO: test for additional field inclusion
+  // it('should access additional data attribute fields', function() {});
+  
+  // assumes use of data-property="id" column
+  it('should provide a way to find row by id', function() {
+    var table = $table.pjaxTable({});
+    expect(typeof table._findRowById === 'function').toBe(true);
+
+    spyOn(table, '_getRecord').and.callThrough();
+
+    var rowEl = table._findRowById(0);
+    expect(rowEl).toBeDefined();
+    expect(table._$tbody.find('tr').first().is($(rowEl))).toBe(true);
+    expect(table._$tbody.find('tr').index($(rowEl))).toEqual(0);
+    expect(table._getRecord).toHaveBeenCalled();
+
+    var rowEl = table._findRowById(25);
+    expect(rowEl).toBeDefined();
+    expect(table._$tbody.find('tr').index($(rowEl))).toEqual(25);
+    expect(table._getRecord).toHaveBeenCalled();
+
+    var rowEl = table._findRowById(49);
+    expect(rowEl).toBeDefined();
+    expect(table._$tbody.find('tr').index($(rowEl))).toEqual(49);
+    expect(table._getRecord).toHaveBeenCalled();
   });
 });
