@@ -383,7 +383,7 @@
         ++start;
       }
       ++end;
-      
+
       $allVisibleRows.slice(start, end).each(function() {
         var $row = $(this);
         if (!$lastSelectedTr.hasClass('ui-selected')) {

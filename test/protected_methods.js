@@ -628,4 +628,10 @@ describe('pjax table protected methods', function() {
     expect(table._$tbody.find('tr').index($(rowEl))).toEqual(49);
     expect(table._getRecord).toHaveBeenCalled();
   });
+
+  it('should provide a way to update row fields', function() {
+    var table = $table.pjaxTable({});
+    expect(typeof table._updateRowFields === 'function').toBe(true);
+    // TODO
+  });
 });
