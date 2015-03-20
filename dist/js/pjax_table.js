@@ -57,6 +57,7 @@
   *     table:deselect {object}, triggered when a row is deselected, passing the record object
   *     table:select:all {}, triggered when all records are selected using the check all box
   *     table:deselect:all {}, triggered when all records are deselected using the check all box
+  *     table:shiftselect {}, triggered when a shift select is completed
   *     table:search {object}, triggered when a search query is used to filter the table
   *     table:search:clear {}, triggered when a search query is cleared
   *     table:error {}, triggered when a pjax / ajax error occurs
@@ -163,7 +164,7 @@
       $.extend(this._queryState, this._createSearchQuery(searchStr));
     },
 
-    _load: function() {
+    _load: function(params) {
       if (!this._ajaxOnly) {
         return $.pjax({
           url: this._url,
@@ -174,13 +175,13 @@
       }
 
       this._addLoadMask();
-      return $.ajax($.extend({
+      return $.ajax({
         type: 'GET',
         url: this._url,
         data: this._queryState,
         context: this
-      }, params))
-      .done(this._onAjaxSucces)
+      })
+      .done(this._onAjaxSuccess)
       .fail(this._onAjaxError);
     },
 
@@ -188,7 +189,7 @@
       var $loadMask = $('<div class="ui-load-mask">');
       this._$el.css({ position: 'relative' });
       this._$el.append($loadMask);
-      $loadMask.spin(options.loadMaskConfig || 'small');
+      $loadMask.spin(this._options.loadMaskConfig || 'small');
     },
     
     _removeLoadMask: function() {
@@ -238,7 +239,7 @@
       this._$el.trigger('table:load');
     },
 
-    _onAjaxSucces: function(data, textStatus, jqXHR) {
+    _onAjaxSuccess: function(data, textStatus, jqXHR) {
       this._$el.html(data);
       this._onTableLoaded();
       this._removeLoadMask();
@@ -302,7 +303,7 @@
     },
 
     _onPrevPageSelect: function (e) {
-      var pageIndex = parseInt($el.find('.ui-pagination').data('current-page'));
+      var pageIndex = parseInt(this._$el.find('.ui-pagination').data('current-page'));
       var prevPageIndex = pageIndex - 1;
 
       this._$el.trigger('table:prevpage', this._createPageQuery(prevPageIndex));
@@ -311,7 +312,7 @@
     },
 
     _onNextPageSelect: function (e) {
-      var pageIndex = parseInt($el.find('.ui-pagination').data('current-page'));
+      var pageIndex = parseInt(this._$el.find('.ui-pagination').data('current-page'));
       var nextPageIndex = pageIndex + 1;
 
       this._$el.trigger('table:nextpage', this._createPageQuery(nextPageIndex));
@@ -319,19 +320,23 @@
       this._load();
     },
 
-    _onRowCheckboxSelect: function (e) {
-      var $checkbox = $(this);
+    _onHeaderCheckboxChange: function (e) {
+      var $checkbox = $(e.currentTarget);
       var property = $checkbox.parent('th').data('property');
+
+      this._disableRowCheckboxChangeHandling();
 
       if ($checkbox.prop('checked')) {
         this._$el.find('td[data-property=' + property + '] input[type="checkbox"]').prop('checked', true);
         this._$tbody.find('tr').addClass('ui-selected');
-        this._$el.trigger('select_all:table');
+        this._$el.trigger('table:select:all');
       } else {
         this._$el.find('td[data-property=' + property + '] input[type="checkbox"]').prop('checked', false);
         this._$tbody.find('tr').removeClass('ui-selected');
-        this._$el.trigger('deselect_all:table');
+        this._$el.trigger('table:deselect:all');
       }
+
+      this._enableRowCheckboxChangeHandling();
     },
 
     _onClickIdColumn: function(e) {
@@ -339,15 +344,18 @@
     },
 
     _onRowCheckboxChange: function (e) {
-      var $checkbox = $(this);
-      var $tr = $(this).closest('tr');
-      var record = getRecord($tr.get(0));
+      var $checkbox = $(e.currentTarget);
+      var $tr = $(e.currentTarget).closest('tr');
+      var record = this._getRecord($tr.get(0));
       var shiftClickId = this._$el.data('last_selected');
 
       // handle shift click by selecting everything inbetween
       if (shiftClickId && $tr.data('shiftKey')) {
+        this._disableRowCheckboxChangeHandling();
         this._shiftSelectRows($tr, shiftClickId);
+        this._enableRowCheckboxChangeHandling();
       }
+
       // always set last selected, whether or not it was checked on or off
       this._$el.data('last_selected', record.id);
 
@@ -363,7 +371,7 @@
     },
 
     _shiftSelectRows: function($tr, shiftClickId) {
-      var $lastSelectedTr = this._$tbody.find('td[data-value="' + shiftClickId + '"]').parent();
+      var $lastSelectedTr = this._$tbody.find('td[data-property="id"][data-value="' + shiftClickId + '"]').parent();
       var $allVisibleRows = this._$tbody.find('tr');
       var currentSelectedIndex = $allVisibleRows.index($tr);
       var lastSelectedIndex = $allVisibleRows.index($lastSelectedTr);
@@ -373,10 +381,9 @@
       // if selecting from top down, don't process the first one
       if (lastSelectedIndex < currentSelectedIndex && $lastSelectedTr.hasClass('ui-selected')) {
         ++start;
-      } else {
-        ++end;
       }
-
+      ++end;
+      
       $allVisibleRows.slice(start, end).each(function() {
         var $row = $(this);
         if (!$lastSelectedTr.hasClass('ui-selected')) {
@@ -385,6 +392,8 @@
           $row.addClass('ui-selected').children().first().find('input').prop('checked', true);
         }
       });
+
+      this._$el.trigger('table:shiftselect');
     },
 
     _onSubmitSearch: function(e, searchStr) {
@@ -451,6 +460,18 @@
       }
     },
 
+    // enable / disable change handling is used by select all to prevent additional
+    // events from being handled
+    _enableRowCheckboxChangeHandling: function() {
+      this._checkboxChangeHandler = this._onRowCheckboxChange.bind(this);
+      this._$el.on('change', 'td[data-property="id"] input[type="checkbox"]', this._checkboxChangeHandler);
+    },
+
+    _disableRowCheckboxChangeHandling: function() {
+      this._$el.off('change', 'td[data-property="id"] input[type="checkbox"]', this._checkboxChangeHandler);
+      this._checkboxChangeHandler = null;
+    },
+
     _init: function() {
       this._syncQueryState();
       this._onTableLoaded();
@@ -469,10 +490,10 @@
       this._$el.on('click', '.ui-next-page', this._onNextPageSelect.bind(this));
       this._$el.on('change', 
         'th[data-select-all-enabled="true"] input[type="checkbox"]',
-        this._onRowCheckboxSelect.bind(this)
+        this._onHeaderCheckboxChange.bind(this)
       );
+      this._enableRowCheckboxChangeHandling();
       this._$el.on('click', 'td[data-property="id"]', this._onClickIdColumn.bind(this));
-      this._$el.on('change', 'input[type="checkbox"]', this._onRowCheckboxChange.bind(this));
 
       if (this._$searchBox) {
         this._$searchBox.on('search:submit', this._onSubmitSearch.bind(this));

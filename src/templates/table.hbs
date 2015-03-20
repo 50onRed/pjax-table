@@ -1,7 +1,11 @@
 <div id="pjax-table"
   data-pjax-table 
   data-pjax-container="#pjax-table">
-  <table class="table pjax-table" data-total-rows="{{ total_rows }}">
+  <table class="table pjax-table"
+    data-total-rows="{{ total_rows }}"
+    data-current-sort-property="{{ sort_property }}"
+    data-current-sort-order="{{ sort_order }}"
+    data-current-search-str="{{ current_search_str }}">
     <thead>
       {{{ header_rows }}}
     </thead>
@@ -13,6 +17,6 @@
     </tfoot>
   </table>
   <div>
-    {{ pagination }}
+    {{{ pagination }}}
   </div>
 </div>

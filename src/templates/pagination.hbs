@@ -1,8 +1,10 @@
-<div class="fifty-table-pagination ui-pagination" data-current-page="{{ current_page }}" data-current-perpage="{{ per_page }}">
+<div class="fifty-table-pagination ui-pagination" 
+  data-current-page="{{ current_page }}"
+  data-current-perpage="{{ current_perpage }}">
   <div class="pull-left btn-toolbar">
     <div class="dropdown btn-group" data-per-page="{{ $perpage }}">
       <button data-toggle="dropdown" class="btn btn-default btn-sm dropdown-toggle">
-        <span class="dropdown-label">Per Page {{ per_page }}</span>
+        <span class="dropdown-label">Per Page {{ current_perpage }}</span>
         <span class="fa fa-angle-down"></span>
       </button>
       <ul class="dropdown-menu open-up ui-perpage-dropdown">
@@ -30,7 +32,7 @@
           <i class="fa fa-angle-down"></i>
         </button>
         <ul class="dropdown-menu open-up ui-page-select-dropdown">
-          {{ page_items }}
+          {{{ page_items }}}
         </ul>
       </div>
     </div>

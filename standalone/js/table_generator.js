@@ -1,8 +1,10 @@
 (function(Fifty, data) {
   var templates = Fifty.templates;
   var body_cell = templates.body_cell;
+  var body_checkbox_cell = templates.body_checkbox_cell;
   var body_row = templates.body_row;
   var header_cell = templates.header_cell;
+  var header_checkbox_cell = templates.header_checkbox_cell;
   var header_row = templates.header_row;
   var pagination = templates.pagination;
   var pagination_page_item = templates.pagination_page_item;
@@ -49,25 +51,38 @@
     var table_data = generateData();
     
     var header_row_html = header_row({ 
-      cells: $.map(table_data.header, function(cell_data, index) { 
+      cells: [header_checkbox_cell()].concat($.map(table_data.header, function(cell_data, index) { 
         return header_cell(cell_data); 
-      }).join('')
+      })).join('')
     });
 
     var body_row_html = $.map(table_data.body, function(row_data, index) {
       return body_row({
-        cells: $.map(row_data, function(cell_data, index) {
+        cells: [body_checkbox_cell({ value: index })].concat($.map(row_data, function(cell_data, index) {
           return body_cell(cell_data);
-        }).join('')
+        })).join('')
       });
     }).join('');
     
+    var pagination_html = pagination({
+      current_page: 1,
+      current_perpage: table_data.body.length,
+      from: 1,
+      to: table_data.body.length,
+      total: table_data.body.length,
+      on_last_page: true,
+      page_items: pagination_page_item({ index: 1, active: true })
+    });
+
     var table_html = table({
       header_rows: header_row_html,
       body_rows: body_row_html,
       footer_rows: '',
-      pagination: '',
-      total_rows: table_data.body.length
+      pagination: pagination_html,
+      total_rows: table_data.body.length,
+      sort_property: 'testProp',
+      sort_order: 'desc',
+      current_search_str: 'testSearchStr'
     });
     return table_html;
   }

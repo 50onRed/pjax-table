@@ -5,7 +5,7 @@ module.exports = function(config) {
   config.set({
 
     // base path, that will be used to resolve files and exclude
-    basePath: '',
+    basePath: './',
 
     // frameworks to use
     frameworks: ['jasmine', 'sinon'],
@@ -22,7 +22,6 @@ module.exports = function(config) {
       'test/bind_polyfill.js',
       'test/**/*.js'
     ],
-
 
     // list of files to exclude
     exclude: [],

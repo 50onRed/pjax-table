@@ -20,7 +20,7 @@
     "gulp-watch": "1.1.0",
     "gulp-wrap": "*",
     "gulp-jsvalidate": "2.0.0",
-    "karma": "0.12.24",
+    "karma": "0.12.31",
     "karma-jasmine": "0.2.3",
     "karma-nyan-reporter": "0.0.49",
     "karma-phantomjs-launcher": "0.1.4",
