@@ -632,6 +632,49 @@ describe('pjax table protected methods', function() {
   it('should provide a way to update row fields', function() {
     var table = $table.pjaxTable({});
     expect(typeof table._updateRowFields === 'function').toBe(true);
-    // TODO
+
+    var rowEl = table._findRowById(0);
+    var record = table._getRecord(rowEl);
+
+    // does not test additional fields or id updating
+    expect(record['Heroes']).toEqual('Griffith Shaffer');
+    expect(record['Nemeses']).toEqual('Anika M. Gilliam');
+    expect(record['Nationality']).toEqual('Malawi');
+    expect(record['Cost to corrupt']).toEqual('$38,426');
+    expect(record['Email']).toEqual('nec.cursus@magna.ca');
+
+    // single key
+    table._updateRowFields(rowEl, { Heroes: 'Test Single Key Update' });
+    expect(table._getRecord(rowEl)['Heroes']).toEqual('Test Single Key Update');
+
+    // multi key
+    table._updateRowFields(rowEl, {
+      Heroes: 'Test Heroes',
+      Nemeses: 'Test Nemeses',
+      Nationality: 'Test Nationality',
+      'Cost to corrupt': 'Test Corrupt',
+      Email: 'Test Email'
+    });
+    expect(table._getRecord(rowEl)['Heroes']).toEqual('Test Heroes');
+    expect(table._getRecord(rowEl)['Nemeses']).toEqual('Test Nemeses');
+    expect(table._getRecord(rowEl)['Nationality']).toEqual('Test Nationality');
+    expect(table._getRecord(rowEl)['Cost to corrupt']).toEqual('Test Corrupt');
+    expect(table._getRecord(rowEl)['Email']).toEqual('Test Email');
+
+    // with callback
+    table._updateRowFields(rowEl, { Heroes: 'Some Value' }, function($cell, key, value) {
+      $cell.data('doubleCheck', value);
+    });
+    expect(table._getRecord(rowEl)['Heroes']).toEqual('Some Value');
+    expect(table._getRecord(rowEl)['additionalFields']['doubleCheck']).toEqual('Some Value');
+
+    // check display-target
+    $(rowEl)
+      .find('td[data-property="Heroes"]')
+      .data('display-target', '#test-cell-target')
+      .append('<div id="test-cell-target"></div>');
+
+    table._updateRowFields(rowEl, { Heroes: 'Some Value' });
+    expect($(rowEl).find('#test-cell-target').text()).toEqual('Some Value');
   });
 });

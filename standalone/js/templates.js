@@ -112,7 +112,7 @@ this["Fifty"]["templates"]["pagination_page_item"] = Handlebars.template({"1":fu
     + "</a>\n</li>";
 },"useData":true});
 this["Fifty"]["templates"]["table"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, buffer = "<div id=\"pjax-table\"\n  data-pjax-table \n  data-pjax-container=\"#pjax-table\">\n  <table class=\"table pjax-table\"\n    data-total-rows=\""
+  var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, buffer = "<div id=\"pjax-table\"\n  data-pjax-table \n  data-pjax-container=\"#pjax-table\"\n  data-url=\"/\" >\n  <table class=\"table pjax-table\"\n    data-total-rows=\""
     + escapeExpression(((helper = (helper = helpers.total_rows || (depth0 != null ? depth0.total_rows : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"total_rows","hash":{},"data":data}) : helper)))
     + "\"\n    data-current-sort-property=\""
     + escapeExpression(((helper = (helper = helpers.sort_property || (depth0 != null ? depth0.sort_property : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"sort_property","hash":{},"data":data}) : helper)))

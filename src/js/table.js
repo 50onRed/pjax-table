@@ -514,7 +514,6 @@
       $(rowEl).children().each(function () {
         var $cell = $(this);
         var data = $cell.data();
-
         record[data.property] = data.value;
 
         // add additional fields, ignore constructures and objects / arrays, allow primitives
@@ -555,7 +554,7 @@
 
       $.each(data, function (key, value) {
         var $cell = $row.find('td[data-property="' + key + '"]');
-        $cell.data(key, value);
+        $cell.data('value', value);
         $cell.find($cell.data('display-target')).text(value);
 
         if (typeof callback === 'function') {
@@ -642,8 +641,6 @@
             delete this._queryState[key];
           }
         }.bind(this));
-      } else {
-        throw new Error('Must provide a string or array');
       }
 
       return this;
@@ -686,42 +683,42 @@
     /**
     *   @return {boolean} has any selected values
     */
-    hasSelected: function() {
+    hasSelectedRecords: function() {
       return this._$tbody.find('tr.ui-selected').length > 0;
     },
 
     /**
     *   @return {number} number of selected rows
     */
-    getNumSelected: function() {
+    getNumSelectedRecords: function() {
       return this._$tbody.find('tr.ui-selected').length;
     },
 
     /**
     *   @return {Array.<object>} selected records
     */
-    getSelected: function(formatFn) {
+    getSelectedRecords: function(formatFn) {
       return this._$tbody.find('tr.ui-selected').map(function (index, rowElement) {
         if (typeof formatFn === 'function') {
-          return formatFn(this._getRecord(this));
+          return formatFn(this._getRecord(rowElement));
         }
-        return this._getRecord(this);
+        return this._getRecord(rowElement);
       }.bind(this)).get();
     },
 
     /**
     * @return {Array.<Numbers>} selected records
     */
-    getSelectedIds: function() {
-      return this.getSelected().map(function(record) { return record.id; });
+    getSelectedRecordIds: function() {
+      return this.getSelectedRecords(function(record) { return record.id; });
     },
 
     /**
     *   @return {Array.<object>} all records
     */
-    getAllRecords: function() {
+    getRecords: function() {
       return this._$tbody.find('tr').map(function (index, rowElement) {
-        return this._getRecord(this);
+        return this._getRecord(rowElement);
       }.bind(this)).get();
     },
 
@@ -738,7 +735,7 @@
       this._updateRowFields(this._findRowById(id), data, callback);
     },
 
-    getTotalRows: function() {
+    getNumTotalRows: function() {
       return this._totalRows;
     }
   });
@@ -755,13 +752,13 @@
       'getParameters',
       'getNumRecords',
       'getNumColumns',
-      'hasSelected',
-      'getNumSelected',
-      'getSelected',
-      'getSelectedIds',
-      'getAllRecords',
+      'hasSelectedRecords',
+      'getNumSelectedRecords',
+      'getSelectedRecords',
+      'getSelectedRecordIds',
+      'getRecords',
       'updateRow',
-      'getTotalRows'
+      'getNumTotalRows'
     ];
     var values = []; // return values
 
@@ -786,7 +783,7 @@
         } else if (allowedMethods.indexOf(options) === -1) {
           throw new Error('Invalid method: ' + options);
         } else {
-          methodReturn = widget[options].apply(this, args.slice(1, args.length));
+          methodReturn = widget[options].apply(widget, args.slice(1, args.length));
           values.push(methodReturn);
         }
       } else {
