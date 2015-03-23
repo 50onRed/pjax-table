@@ -7,7 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 # [1.0.0]  {date}
 ### Added
-- pjax table now defines it's own plugin code
+- pjax table now defines its own plugin code
 - calling methods through jquery, i.e. $el.pjaxTable('update') only allows
 methods defined in the allowedMethods array. All method calls can otherwise 
 be accessed by referencing the instance directly.
