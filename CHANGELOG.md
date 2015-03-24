@@ -5,7 +5,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased][unreleased]
 - base ajax plugin in consideration
 
-# [1.0.0]  {date}
+# [1.0.1] - 2015-3-24
+### Removed
+- remove min-height from table-cell-wrapper class
+
+# [1.0.0] - 2015-3-24
 ### Added
 - pjax table now defines its own plugin code
 - calling methods through jquery, i.e. $el.pjaxTable('update') only allows
