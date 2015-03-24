@@ -211,7 +211,7 @@ Example table header and body cells which enable row selection:
 Most named events are triggered from the container element, with the exception of any plugins which fire events.
 The search implementation also fires it's own events which are wrapped by the table.
 
-name | type | arguments | description
+name | type | arguments | trigger
 - | - | - | ---
 `table:load` | | | any time the table has finished loaded, on pjax success for initial load, update, and refresh
 `table:sort` | `object` | `sortQuery` | when a column is sorted, includes direction and property
