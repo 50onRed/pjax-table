@@ -2,7 +2,7 @@
   "name": "pjax_table",
   "version": "0.2.0",
   "private": true,
-  "description": "Fifty's PJAX Table JS",
+  "description": "PJAX Table JS",
   "devDependencies": {
     "bower": "1.3.12",
     "del": "0.1.3",
