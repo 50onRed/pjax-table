@@ -8,13 +8,14 @@ var header = require('gulp-header');
 var handlebars = require('gulp-handlebars');
 var wrap = require('gulp-wrap');
 var declare = require('gulp-declare');
+var jsValidate = require('gulp-jsvalidate');
 var uglify = require('gulp-uglify');
 var del = require('del');
 var runSequence = require('run-sequence');
 
 var pkg = require('./package.json');
 var banner = ['/*!',
-  ' * 50onRed - Fifty PJAX Table v<%= pkg.version %> (<%= pkg.homepage %>)',
+  ' * 50onRed - PJAX Table v<%= pkg.version %> (<%= pkg.homepage %>)',
   ' * Copyright ' + (new Date()).getFullYear(),
   ' * <%= pkg.author %>',
   ' */\n'
@@ -22,9 +23,9 @@ var banner = ['/*!',
 
 var output_names = {
   standalone_vendor_js: 'standalone_vendor.js',
-  less: 'fifty_pjax_table.css',
-  lessmin: 'fifty_pjax_table.min.css',
-  js: 'fifty_pjax_table.js'
+  less: 'pjax_table.css',
+  lessmin: 'pjax_table.min.css',
+  js: 'pjax_table.js'
 };
 
 var paths = {
@@ -47,7 +48,6 @@ var paths = {
     './bower_components/jquery-pjax/jquery.pjax.js',
     './bower_components/spin.js/spin.js',
     './bower_components/spin.js/jquery.spin.js',
-    './bower_components/fifty-widget/dist/fifty_widget.js',
     './bower_components/chance/chance.js',
     './bower_components/handlebars/handlebars.runtime.js'
   ],
@@ -94,12 +94,14 @@ gulp.task('standalone_vendor_fonts', function() {
 
 gulp.task('js', function() {
   return gulp.src(paths.js)
+    .pipe(jsValidate())
     .pipe(concat(output_names.js))
     .pipe(gulp.dest('./dist/js'));
 });
 
 gulp.task('js_min', function() {
   return gulp.src(paths.js)
+    .pipe(jsValidate())
     .pipe(concat(output_names.js))
     .pipe(uglify({ preserveComments: 'some' }))
     .pipe(header(banner, { pkg: pkg }))
@@ -133,7 +135,7 @@ gulp.task('default', function(callback){
   runSequence('clean', [
     'js', 
     'js_min',
-    'less', 
+    'less',
     'lessmin',
     'less_copy',
     'templates', 

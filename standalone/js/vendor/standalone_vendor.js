@@ -11288,17 +11288,6 @@ $.support.pjax ? enable() : disable()
   }
 
   /**
-   * Returns the absolute page-offset of the given element.
-   */
-  function pos(el) {
-    var o = { x:el.offsetLeft, y:el.offsetTop }
-    while((el = el.offsetParent))
-      o.x+=el.offsetLeft, o.y+=el.offsetTop
-
-    return o
-  }
-
-  /**
    * Returns the line color from the given string or array.
    */
   function getColor(color, idx) {
@@ -11348,7 +11337,6 @@ $.support.pjax ? enable() : disable()
       var self = this
         , o = self.opts
         , el = self.el = css(createEl(0, {className: o.className}), {position: o.position, width: 0, zIndex: o.zIndex})
-        , mid = o.radius+o.length+o.width
 
       css(el, {
         left: o.left,
@@ -11543,9 +11531,9 @@ Adding a custom preset:
 =======================
 
 $.fn.spin.presets.flower = {
-  lines: 9
-  length: 10
-  width: 20
+  lines: 9,
+  length: 10,
+  width: 20,
   radius: 0
 }
 
@@ -11557,7 +11545,7 @@ $('#el').spin('flower', 'red');
 
   if (typeof exports == 'object') {
     // CommonJS
-    factory(require('jquery'), require('spin'))
+    factory(require('jquery'), require('spin.js'))
   }
   else if (typeof define == 'function' && define.amd) {
     // AMD, register as anonymous module
@@ -11598,110 +11586,6 @@ $('#el').spin('flower', 'red');
   }
 
 }));
-
-(function($, Fifty) {
-  'use strict';
-  var slice = Array.prototype.slice;
-
-  /**
-  *   @constructor
-  *   defaults to prototype based widget construction with new
-  *   supports module pattern through a flag
-  *   
-  *   @param {string} name the name or namespace of the widget
-  *   @param {function} widgetConstructor the constructor function for the widget
-  *   @param {boolean} isModule whether this module is defined using the module pattern
-  */
-  function widget(name, widgetConstructor, isModule) {
-    var namespace = $;
-    var names = name.split('.');
-    var finalName = names.pop();
-    var length;
-
-    if (!names.length) {
-      names = ['fifty', 'widget'];
-    }
-
-    length = names.length;
-    for(var i = 0; i < length; i++) {
-      if (!namespace[names[i]]) {
-        namespace[names[i]] = {};
-      }
-      namespace = namespace[names[i]];
-    }
-
-    /**
-    *   builder is the function that is attached to $.fn
-    *   and controls instance construction or method execution
-    *   on a jQuery object's element collection
-    *   
-    *   @param {Object|string|undefined}
-    *     object for configuration of a new instance
-    *     string for method execution on instances in the collection
-    *     undefined/nothing to receive the widget instance(s) in the collection
-    *   
-    *   @return {Object|Array<object>|?|Array<?>} returns
-    *     the widget instance object, and array of instance objects,
-    *     anything returned by an instance method, or 
-    *     any array of any things returned by instance methods
-    */
-    function builder(options) {
-      var args = slice.call(arguments);
-      var values = []; // return values
-
-      $(this).each(function() {
-        // get the current instance or create a new one
-        var $el = $(this);
-        var widget = $el.data(finalName);
-        var methodReturn;
-
-        if (!widget) {
-          if (!isModule) {
-            widget = $el.data(finalName, new widgetConstructor(this, options)).data(finalName);
-          } else {
-            widget = $el.data(finalName, widgetConstructor.apply(this, args)).data(finalName);
-          }
-        }
-
-        // execute methods and return the method return or this element for chaining
-        if (typeof options == 'string' && widget) {
-          // special case for resetting widgets, cleanup and reset
-          if (options === 'destroy') {
-            if (typeof widget.destroy === 'function') {
-              widget.destroy();
-            }
-            
-            delete $el.data()[finalName];
-            $el = null;
-          } else {
-            methodReturn = widget[options].apply(widget, args.slice(1, args.length)); // don't include method name
-            values.push(methodReturn);
-          }
-        } else {
-          values.push(widget);
-        }
-      });
-    
-      // return only 1 value if possible
-      if (values.length > 1) {
-        return values;
-      } else if (values.length === 1) {
-        return values[0];
-      }
-
-      // if no instances found in collection, method will appropriately return undefined
-    };
-
-    if (!$.fn[finalName]) {
-      $.fn[finalName] = builder;
-    }
-    namespace[finalName] = builder;
-
-    return builder;
-  }
-
-  Fifty.widget = widget;
-})(jQuery, window.Fifty = window.Fifty || {});
 
 //  Chance.js 0.6.1
 //  http://chancejs.com

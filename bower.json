@@ -1,12 +1,27 @@
 {
-  "name": "fifty_pjax_table",
+  "name": "pjax-table",
   "version": "0.2.0",
   "private": true,
+  "main": "dist/js/pjax_table.js",
+  "license": "MIT",
+  "authors": [
+    "Matthew Parke <mparke@50onred.com>"
+  ],
+  "homepage": "",
+  "repository": {
+    "type": "git"
+  },
   "ignore": [
     "**/.*",
     "components",
     "bower_components",
     "tests"
+  ],
+  "keywords": [
+    "table",
+    "pjax",
+    "pjax-table",
+    "jquery-pjax"
   ],
   "devDependencies": {
     "chance": "0.6.1",
@@ -16,7 +31,6 @@
   "dependencies": {
     "jquery": "1.11.1",
     "jquery-pjax": "1.9.2",
-    "spin.js": "2.0.1",
-    "fifty-widget": "git@bitbucket.org:50onred/fifty-widget.git#1.0.0"
+    "spin.js": "2.0.2"
   }
 }

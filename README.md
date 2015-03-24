@@ -1,87 +1,150 @@
-# Fifty PJAX Table
+# pjax-table
 
-50's Wrapper for [PJAX](https://github.com/defunkt/jquery-pjax) based tables.
+## Introduction
+pjax-table is a jQuery plugin that uses [jquery-pjax](https://github.com/defunkt/jquery-pjax) to load server rendered tables and
+provides table controls for sorting, pagination, row selection, and more.
 
-*Tables are under active development. When updating to a new version, make sure to reference the change log for any breaking changes*
-
-### Features
+## Features
   - pjax loading with push state
   - sorting
   - pagination
-    - next, prev, and go to page number
   - search filtering
-  - row selection
-  - utilities for accesing row data
-  - utilities for manipulating rows
+  - row selection and manipulation
   - plugin support
 
-### Defining correct markup for tables
+
+# Base Markup
 The app server needs to define correct markup and data attributes 
 to enable features of pjax tables. Some are required, others optional.
+See [fifty-tables](https://bitbucket.org/50onred/fifty-tables) for a
+python flask implementation that works with pjax-table.
 
-* data- attributes are required for functionality
-* ui- prefixed classes are required for relative js controls to function
-* other classes are required for base css
-
-#### Base Markup
-The standard fifity table markup and relative data attributes
+Example of standard table markup with data attributes:
 ```
-  <!-- the container that the fifty table script will attach to and replace the contents of with pjax -->
-  <div id="my-primary-id" 
-    data-pjax-container="#my-primary-id" 
-    data-push-state-enabled="true" 
-    data-paginated="true">
-    <!-- the table wrapper and the table elements are what the app server should return when the [X-PJAX] request header is present -->
-    <!-- total-rows, current-sort-property and current-sort-direction can be provided to sync with table state -->
-    <div class="ui-wrapper" 
-      data-total-rows="{{ total_rows }}" 
-      data-current-sort-property="{{ current_sort }}"
-      data-current-sort-direction="{{ current_page }}">
-      <table class="table">
-        <thead>
-          <tr class="fifty-table-header-row">
-            <!-- each cell, if defining sortable="true" should include the property name, current, and default sort directions -->
-            <th class="fifty-table-header sortable" 
-              data-sortable="true"
-              data-property="{{ property }}" 
-              data-current-sort-direction="{{ current_sort }}" 
-              data-default-sort-direction="asc">
-              {{ cell_display_value }}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="fifty-table-row">
-            <!-- to enable access to table data, each cell must define a data-property and data-value -->
-            <td class="fifty-table-cell" 
-              data-property="{{ property }}" 
-              data-value="{{ value }}">
-              {{ cell_display_value }}
-            </td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr class="fifty-table-footer-row">
-            <td class="fifty-table-footer fifty-table-footer-static-content" colspan="5">
-              {{ cell_display_value }}
-            </td>
-          </tr>
-        </tfoot>
-      </table>
-    </div>
-  </div>
+<div data-pjax-table data-auto-init="true">
+  <table data-total-rows="{{ total_rows }}" 
+         data-current-sort-property="{{ current_sort_property }}"
+         data-current-sort-order="{{ current_sort_order }}">
+    <thead>
+      <tr>
+        <th data-sortable="true"
+            data-property="{{ property }}"
+            data-current-sort-order="{{ sort_order }}">
+          {{ header_value }}
+        </th>
+        <!-- ... -->
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td data-property="{{ property }}"
+            data-value="{{ value }}">
+          {{ value }}
+        </td>
+        <!-- ... -->
+      </tr>
+    </tbody>
+    <tfoot></tfoot>
+  </table>
+</div>
 ```
 
-#### Pagination
-The current pagination markup makes use of bootstrap 3 classes and structure for buttons and dropdowns.
-*BS3 is not currently included as a dependency. A base set of styles to make these functional without BS3 may soon be applied. Ideas are welcome.*
+### container data attributes
+data-attribute | type | default | description
+- | - | - | ---
+`data-pjax-table` | `boolean` | `true` | the default selector for initializing tables (only used for init)
+`data-auto-init` | `boolean` | `false` | a flag (only used for init)
+`data-url` | `string` | window.location.href | the url to be used for fetching table markup
+`data-paginated` | `boolean` | `true` | a flag to enable/disable pagination controls
+`data-ajax-only` | `boolean` | `false` | a flag to use ajax instead of pjax
+`data-push-state` | `boolean` | `true` | a flag to pass as the pushState option to pjax
+`data-pjax-container` | `string` | element.id | the container to be used for loading pjax, defaults to the initializing element's id
+`data-search-id` | `string` | | the id selector of a search box to be used
+`data-sort-query-key` | `string` | `order` | the string key to be used in building the search query
+`data-page-query-key` | `string` | `page` | the string key to be used in building the page query
+`data-perpage-query-key` | `string` | `perpage` | the string key to be used in building the perpage query
+`data-search-query-key` | `string` | `q` | the string key to be used in building the search query
+
+
+### table data attributes
+data-attribute | type | default | options | description
+- | - | - | - | ---
+`data-total-rows` | `number` | `0` | | the total number of rows returned by the server
+`data-current-sort-property` | `string` | | | the current sort property name
+`data-current-sort-order` | `string` | `desc` | `asc` or `desc` | the current sort property order (asc/desc)
+
+
+### th data attributes
+data-attribute | type | default | options | description
+- | - | - | - | ---
+`data-sortable` | `boolean` | `true` | | whether or not this column is sortable
+`data-property` | `string` | | | the property name to be used in the sort query
+`data-current-sort-order` | `string` | | `asc` or `desc` | the current sort order of this column
+`data-default-sort-order` | `string` | | `asc` or `desc` | the default sort order of this column
+
+
+### td data attributes
+data-attribute | type | default | description
+- | - | - | ---
+`data-property` | `string` | | the property name for this cell
+`data-value` | `string` or `number` | | the value for this cell
+
+
+### js options
+JS options override data attributes or the defaults.
+key | type | default | description
+- | - | - | ---
+`url` | `string` | `data-url` or `window.location.href` | see `data-url` option
+`ajaxOnly` | `boolean` | `data-ajax-only` or `false` | see `data-ajax-only` option
+`pushState` | `boolean` | `data-push-state` or `true` | see `data-push-state` option
+`paginated` | `boolean` | `data-paginated` or `true` | see `data-paginated` option
+`pjaxContainer` | `string` | `data-pjax-container` or element.id | see `data-pjax-container` option
+`noDataTemplate` | `function` | see source | a function returning the default template to use for no data returned
+`sortQueryKey` | `string` | `order` | the query string key for sorting
+`pageQueryKey` | `string` | `page` | the query string key for page
+`perPageQueryKey` | `string` | `perpage` | the query string key for perpage
+`searchQueryKey` | `string` | `q` | the query string key for search
+
+
+# Pagination
+### pagination container data attributes
+data-attribute | type | default | description
+- | - | - | ---
+`data-current-page` | `number` | defined by pagination markup | the current page 
+`data-current-perpage` | `number` | defined by pagination markup | the current perpage 
+
+
+### pagination perpage data attributes
+data-attribute | type | default | description
+- | - | - | ---
+`data-value` | `number` | | the number value of records per page
+
+
+### pagination page data attributes
+data-attribute | type | default | description
+- | - | - | ---
+`data-value` | `number` | | the number value of the page
+
+
+### required pagination classes
+class | required children | description
+- | - | ---
+`ui-pagination` | n/a | the pagination container with `data-current-page` and `data-current-perpage`
+`ui-perpage-dropdown` | `li` with `data-value` | the list element of perpage options
+`ui-page-select-dropdown` | `li` with `data-value` | the list element of page options
+`ui-prev-page` | n/a | the prev page button
+`ui-next-page` | n/a | the next page button
+
+### Example pagination markup
+*The example below uses BS3 classes and markup, but only the classes and structure listed above are required. A base set of styles to make these functional without BS3 may soon be applied. Ideas are welcome.*
 ```
-  <div class="fifty-table-pagination ui-pagination" 
-    data-current-page="{{ current_page }}" 
-    data-current-perpage="{{ per_page }}">
-    <!-- -->
+  <div class="pjax-table-pagination ui-pagination" 
+       data-current-page="{{ current_page }}" 
+       data-current-perpage="{{ per_page }}">
+
+    <!-- per page controls -->
     <div class="pull-left btn-toolbar">
-      <div class="dropdown btn-group" data-per-page="{{ $perpage }}">
+      <div class="dropdown btn-group" data-per-page="{{ perpage }}">
         <button data-toggle="dropdown" class="btn btn-default btn-sm dropdown-toggle">
           <span class="dropdown-label">Per Page {{ per_page }}</span>
           <span class="fa fa-angle-down"></span>
@@ -95,7 +158,8 @@ The current pagination markup makes use of bootstrap 3 classes and structure for
       </div>
       <div class="btn-group btn-sm btn-link">From {{ from }} to {{ to }} of {{ total }}</div>
     </div>
-    <!-- -->
+
+    <!-- page, next page, prev page controls -->
     <div class="pull-right btn-toolbar">
       {{#if on_last_page }}
         <div class="btn-group">
@@ -103,9 +167,9 @@ The current pagination markup makes use of bootstrap 3 classes and structure for
             <i class="fa fa-chevron-left"></i>
           </button>
         </div>
-        <!-- -->
+
         <div class="btn-group">
-          <div class="ui-page-index-dropdown dropdown" data-current-page="{{ $current_page }}">
+          <div class="dropdown ui-page-index-dropdown" data-current-page="{{ current_page }}">
             <button class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
               <span class="dropdown-label">Page {{ current_page }}</span>
               <i class="fa fa-angle-down"></i>
@@ -115,7 +179,7 @@ The current pagination markup makes use of bootstrap 3 classes and structure for
             </ul>
           </div>
         </div>
-        <!-- -->
+
         <div class="btn-group">
           <button type="button" class="btn btn-default btn-sm ui-next-page" {{#if on_last_page }}disabled{{/if}}>
             <i class="fa fa-chevron-right"></i>
@@ -128,17 +192,53 @@ The current pagination markup makes use of bootstrap 3 classes and structure for
   </div>
 ```
 
+# Row Selection
+To enable row selection, which includes select/deselect all, you can specify a table header cell and a column of table cells with `data-property="id"`. These cells also need to contain a checkbox for managing selection state.
+
+Example table header and body cells which enable row selection:
+```
+<!-- in thead > tr -->
+<th data-select-all-enabled="true" data-property="id">
+  <input type="checkbox">
+</th>
+
+<!-- in tbody > tr -->
+<th data-property="id" data-value="1">
+  <input type="checkbox">
+</th>
+```
+
+## Events
+Most named events are triggered from the container element, with the exception of any plugins which fire events.
+The search implementation also fires it's own events which are wrapped by the table.
+
+name | type | arguments | trigger
+- | - | - | ---
+`table:load` | | | any time the table has finished loaded, on pjax success for initial load, update, and refresh
+`table:sort` | `object` | `sortQuery` | when a column is sorted, includes direction and property
+`table:page` | `object` | `pageQuery` | when a specific page has been chosen to jump to
+`table:perpage` | `object` | `perPageQuery` | when perpage dropdown selection has changed
+`table:nextpage` | `object` | `nextPageQuery` | when next page in pagination clicked
+`table:prevpage` | `object` | `prevPageQuery` | when prev page in pagination clicked
+`table:search` | `object` | `searchQuery` | when a search query is used to filter the table
+`table:search:clear` | | | when a search query is cleared
+`table:select` | `object` | `record` | when a row is selected, passing the record object
+`table:deselect` | `object` | `record` | when a row is deselected, passing the record object
+`table:select:all` | | | when all records are selected
+`table:deselect:all` | | | when all records are deselected
+`table:error` | | | when a pjax / ajax error occurs
+`table:timeout` | | |  when pjax times out
+
+
 ### Dependencies
   - [jQuery 1.11.1](http://jquery.com/)
-  - [Fifty Widget](https://bitbucket.org/50onred/fifty-widget/overview)
   - [jQuery PJAX 1.9.2](https://github.com/defunkt/jquery-pjax)
-  - [Font Awesome 4.2.0](http://fortawesome.github.io/Font-Awesome/)
+  - [spin.js 2.0.2](http://fgnass.github.io/spin.js/)
 
 ### Testing
-  *coming soon, see [tests](https://bitbucket.org/50onred/fifty-pjax-table/issue/2/add-tests)*
-
+  
 ### Building
-    // install node dependencies, most notably, gulp and gulp plugins
+    // install node dependencies, most notably gulp and gulp plugins
     npm install
 
     // install client dependencies
@@ -147,19 +247,7 @@ The current pagination markup makes use of bootstrap 3 classes and structure for
     // (default task) cleans and then builds standalone and distributable versions
     gulp
 
-    // Not yet included
     // run unit tests against build versions in phantomJS with singleRun=true 
     // Pro Tip: don’t forget the Nyan Reporter
     // karma start ./path/to/karma.conf.js
 
-    // (patch/minor/major) bump package.json and bower.json versions
-    gulp bump-{type}
-
-    // commit the bumped version
-    git commit -m "bump version"
-
-    // tag the bumped version in git
-    git tag v0.0.1
-
-    // push the bumped version with tags
-    git push origin master --tags
