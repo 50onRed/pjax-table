@@ -81,7 +81,7 @@
       this._pushState = this._$el.data('push-state') || true;
     }
     if (typeof this._options.paginated !== 'undefined') {
-      this._paginated = this._options.paginated
+      this._paginated = this._options.paginated;
     } else {
       this._paginated = this._$el.data('paginated') || true;
     }
@@ -213,7 +213,7 @@
       }
 
       if (sortProperty) {
-        this._syncSort(sortProperty, sortOrder)
+        this._syncSort(sortProperty, sortOrder);
       } else {
         this._desyncSort();
       }
@@ -460,8 +460,10 @@
       }
     },
 
-    // enable / disable change handling is used by select all to prevent additional
-    // events from being handled
+    /**
+    *  Enable / Disable change handling methods are used by select all to prevent each 
+    *  individual row from firing change events
+    */
     _enableRowCheckboxChangeHandling: function() {
       this._checkboxChangeHandler = this._onRowCheckboxChange.bind(this);
       this._$el.on('change', 'td[data-property="id"] input[type="checkbox"]', this._checkboxChangeHandler);
@@ -477,7 +479,7 @@
       this._onTableLoaded();
       
       // pjax timing out, we want to cancel the automatic retry
-      // this._$el.on('pjax:timeout', this._onPjaxTimeout.bind(this));
+      this._$el.on('pjax:timeout', this._onPjaxTimeout.bind(this));
       this._$el.on('pjax:success', this._onPjaxSuccess.bind(this));
       this._$el.on('pjax:start', this._onPjaxStart.bind(this));
       this._$el.on('pjax:beforeReplace', this._onPjaxBeforeReplace.bind(this));
@@ -622,7 +624,7 @@
     *   Returning true from a filter function will delete the current key in iteration
     */
     removeParameters: function(options) {
-      if (!options) {
+      if (!options || (Array.isArray(options) && !options.length)) {
         return this;
       }
 
@@ -779,7 +781,7 @@
           if (typeof widget.destroy === 'function') {
             widget.destroy();
           }
-          delete $el.data()['pjaxTable'];
+          delete $el.data().pjaxTable;
         } else if (allowedMethods.indexOf(options) === -1) {
           throw new Error('Invalid method: ' + options);
         } else {

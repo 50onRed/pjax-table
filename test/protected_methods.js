@@ -36,8 +36,8 @@ describe('pjax table protected methods', function() {
     expect(typeof table._desyncSort === 'function').toBe(true);
     expect(table._desyncSort()).toBeUndefined();
 
-    $.extend(table._queryState, table._createSortQuery('testProp', 'testOrder'));
-    expect(table._queryState[table._sortQueryKey]).toEqual('testProp__testOrder');
+    $.extend(table._queryState, table._createSortQuery('testProperty', 'testOrder'));
+    expect(table._queryState[table._sortQueryKey]).toEqual('testProperty__testOrder');
     
     table._desyncSort();
     expect(table._queryState[table._sortQueryKey]).toBeUndefined();
