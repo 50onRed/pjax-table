@@ -91,6 +91,7 @@ data-attribute | type | default | description
 
 
 ### js options
+JS options override data attributes or the defaults.
 key | type | default | description
 - | - | - | ---
 `url` | `string` | `data-url` or `window.location.href` | see `data-url` option
