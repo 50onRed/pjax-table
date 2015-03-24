@@ -47,21 +47,21 @@
   *     search:clear triggers a clearance of the current search query when triggered by the element specified in options.search_id
   *
   *   Events, triggered by the table on the table container element
-  *     table:load triggered any time the table has finished loaded, on pjax success for initial load, update, and refresh
-  *     table:sort {object}, triggered when a column is sorted, includes direction and property
-  *     table:page {object}, triggered when a specific page has been chosen to jump to
-  *     table:perpage {object}, triggered when perpage dropdown selection has changed
-  *     table:nextpage {object}, triggered when next page in pagination clicked
-  *     table:prevpage {object}, triggered when prev page in pagination clicked
-  *     table:select {object}, triggered when a row is selected, passing the record object
-  *     table:deselect {object}, triggered when a row is deselected, passing the record object
-  *     table:select:all {}, triggered when all records are selected using the check all box
-  *     table:deselect:all {}, triggered when all records are deselected using the check all box
-  *     table:shiftselect {}, triggered when a shift select is completed
-  *     table:search {object}, triggered when a search query is used to filter the table
-  *     table:search:clear {}, triggered when a search query is cleared
-  *     table:error {}, triggered when a pjax / ajax error occurs
-  *     table:timeout {}, triggered when pjax times out
+  *   @fires table:load - triggered any time the table has finished loading, including on successful initial load, update, or refresh
+  *   @fires table:sort {object} triggered when a column is sorted, includes direction and property
+  *   @fires table:page {object} triggered when a specific page has been chosen to jump to
+  *   @fires table:perpage {object} triggered when perpage dropdown selection has changed
+  *   @fires table:nextpage {object} triggered when next page in pagination clicked
+  *   @fires table:prevpage {object} triggered when prev page in pagination clicked
+  *   @fires table:select {object} triggered when a row is selected, passing the record object
+  *   @fires table:deselect {object} triggered when a row is deselected, passing the record object
+  *   @fires table:select:all - triggered when all records are selected using the check all box
+  *   @fires table:deselect:all - triggered when all records are deselected using the check all box
+  *   @fires table:shiftselect - triggered when a shift select is completed
+  *   @fires table:search {object} triggered when a search query is used to filter the table
+  *   @fires table:search:clear - triggered when a search query is cleared
+  *   @fires table:error - triggered when a pjax / ajax error occurs
+  *   @fires table:timeout - triggered when pjax times out
   */
   function PjaxTable(el, options) {
     this._options = options || {};
