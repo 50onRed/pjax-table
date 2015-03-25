@@ -1,5 +1,5 @@
 /*!
- * 50onRed - PJAX Table v0.2.0 ()
+ * 50onRed - PJAX Table v1.0.1 ()
  * Copyright 2015
  * 
  */
@@ -27,9 +27,6 @@
 .table tfoot > tr > td {
   border: 1px solid #cecece;
   background: #cecece;
-}
-.pjax-table-cell-wrapper {
-  min-height: 25px;
 }
 .table td .btn-group {
   margin-top: -10px;

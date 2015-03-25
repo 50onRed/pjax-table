@@ -1,4 +1,4 @@
-(function ($, window) {
+(function ($, window, undefined) {
   'use strict';
   var slice = Array.prototype.slice;
   
@@ -70,17 +70,17 @@
 
     this._url = this._options.url || this._$el.data('url') || window.location.href;
     
-    if (typeof this._options.ajaxOnly !== 'undefined') {
+    if (this._options.ajaxOnly !== undefined) {
       this._ajaxOnly = this._options.ajaxOnly;
     } else {
       this._ajaxOnly = this._$el.data('ajax-only') || false;
     }
-    if (typeof this._options.pushState !== 'undefined') {
+    if (this._options.pushState !== undefined) {
       this._pushState = this._options.pushState;
     } else {
       this._pushState = this._$el.data('push-state') || true;
     }
-    if (typeof this._options.paginated !== 'undefined') {
+    if (this._options.paginated !== undefined) {
       this._paginated = this._options.paginated;
     } else {
       this._paginated = this._$el.data('paginated') || true;
@@ -230,7 +230,7 @@
       this._$tbody = this._$el.find('tbody');
 
       var totalRows = this._$el.find('table').data('total-rows');
-      this._totalRows = !isNaN(totalRows) ? parseInt(totalRows) : 0;
+      this._totalRows = totalRows | 0;
 
       if (this._totalRows === 0) {
         this._$tbody.html(this._noDataTemplate(this.getNumColumns()));
@@ -304,7 +304,7 @@
 
     _onPrevPageSelect: function (e) {
       var pageIndex = parseInt(this._$el.find('.ui-pagination').data('current-page'));
-      var prevPageIndex = pageIndex - 1;
+      var prevPageIndex = Math.max(1, pageIndex - 1);
 
       this._$el.trigger('table:prevpage', this._createPageQuery(prevPageIndex));
       this._syncPage(prevPageIndex);
@@ -744,24 +744,6 @@
     
   $.fn.pjaxTable = function(options) {
     var args = slice.call(arguments);
-    var allowedMethods = [
-      'update',
-      'refresh',
-      'refreshPlugins',
-      'getUrl',
-      'updateParameters',
-      'removeParameters',
-      'getParameters',
-      'getNumRecords',
-      'getNumColumns',
-      'hasSelectedRecords',
-      'getNumSelectedRecords',
-      'getSelectedRecords',
-      'getSelectedRecordIds',
-      'getRecords',
-      'updateRow',
-      'getNumTotalRows'
-    ];
     var values = []; // return values
 
     $(this).each(function() {
@@ -782,11 +764,11 @@
             widget.destroy();
           }
           delete $el.data().pjaxTable;
-        } else if (allowedMethods.indexOf(options) === -1) {
-          throw new Error('Invalid method: ' + options);
-        } else {
+        } else if (typeof widget[options] === 'function' && options.charAt(0) !== '_') {
           methodReturn = widget[options].apply(widget, args.slice(1, args.length));
           values.push(methodReturn);
+        } else {
+          throw new Error('Invalid method: ' + options);
         }
       } else {
         values.push(widget);
@@ -794,16 +776,12 @@
     });
     
     // return only 1 value if possible
-    if (values.length > 1) {
-      return values;
-    } else if (values.length === 1) {
-      return values[0];
-    }
+    return values.length > 1 ? values : values[0];
   };
 
   // auto-init tables
   $(function(){ $('[data-pjax-table][data-auto-init]').pjaxTable({}); });
-})(jQuery, window);
+})(jQuery, window, undefined);
 
 (function($) {
   'use strict';

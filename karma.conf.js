@@ -20,7 +20,9 @@ module.exports = function(config) {
       
       // test files
       'test/bind_polyfill.js',
-      'test/**/*.js'
+      'test/pjax_table.js',
+      'test/protected_methods.js',
+      'test/public_methods.js'
     ],
 
     // list of files to exclude

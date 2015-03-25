@@ -308,7 +308,7 @@ describe('pjax table protected methods', function() {
     expect(table._syncPage).toHaveBeenCalled();
     expect(table._load).toHaveBeenCalled();
 
-    expect(table._queryState[table._pageQueryKey]).toEqual(0);
+    expect(table._queryState[table._pageQueryKey]).toEqual(1);
   });
 
   it('should handle next page select', function() {
