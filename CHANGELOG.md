@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased][unreleased]
 - base ajax plugin in consideration
 
+# [1.0.3] - 2015-3-29
+### Changed
+- moved standalone index.html page to the standalone directory and adjusted paths
+
 # [1.0.2] - 2015-3-29
 ### Added
 - undefined reference in closure
