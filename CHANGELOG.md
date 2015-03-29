@@ -5,6 +5,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased][unreleased]
 - base ajax plugin in consideration
 
+# [1.0.2] - 2015-3-29
+### Added
+- undefined reference in closure
+
+### Changed
+- allowed method checking uses charAt instead of an array of strings and indexOf
+- prevPage handler now prevents negative numbers with Math.max
+- total rows parsing now uses bitwise or
+
 # [1.0.1] - 2015-3-24
 ### Removed
 - remove min-height from table-cell-wrapper class
@@ -31,7 +40,6 @@ columns in the table as a param.
 - the createSortQuery function is now configurable, so the application can specify a sort query which appropriately
 matches the server implementation
 - sort-direction is now sort-order
-
 
 ### Removed
 - data-table-id and total-rows attribute on the wrapper. A wrapper is no longer required
