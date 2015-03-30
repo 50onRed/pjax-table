@@ -33,32 +33,32 @@
         <p>
         <pre>
           <code>
-  <div data-pjax-table data-auto-init="true">
-    <table data-total-rows="{{ total_rows }}" 
+  &lt;div data-pjax-table data-auto-init="true"&gt;
+    &lt;table data-total-rows="{{ total_rows }}" 
            data-current-sort-property="{{ current_sort_property }}"
-           data-current-sort-order="{{ current_sort_order }}">
-      <thead>
-        <tr>
-          <th data-sortable="true"
+           data-current-sort-order="{{ current_sort_order }}"&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th data-sortable="true"
               data-property="{{ property }}"
               data-current-sort-order="{{ sort_order }}">
             {{ header_value }}
-          </th>
+          &lt;/th&gt;
           <!-- ... -->
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td data-property="{{ property }}"
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td data-property="{{ property }}"
               data-value="{{ value }}">
             {{ value }}
-          </td>
+          &lt;/td&gt;
           <!-- ... -->
-        </tr>
-      </tbody>
-      <tfoot></tfoot>
-    </table>
-  </div>
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+      &lt;tfoot&gt;&lt;/tfoot&gt;
+    &lt;/table&gt;
+  &lt;/div&gt;
           </code>
         </pre>
       </section>
@@ -454,58 +454,58 @@
         </p>
         <pre>
           <code>
-  <div class="pjax-table-pagination ui-pagination" 
+  &lt;div class="pjax-table-pagination ui-pagination" 
        data-current-page="{{ current_page }}" 
-       data-current-perpage="{{ per_page }}">
+       data-current-perpage="{{ per_page }}"&gt;
 
     <!-- per page controls -->
-    <div class="pull-left btn-toolbar">
-      <div class="dropdown btn-group" data-per-page="{{ perpage }}">
-        <button data-toggle="dropdown" class="btn btn-default btn-sm dropdown-toggle">
-          <span class="dropdown-label">Per Page {{ per_page }}</span>
-          <span class="fa fa-angle-down"></span>
-        </button>
-        <ul class="dropdown-menu open-up ui-perpage-dropdown">
-          <li data-value="10"><a>10</a></li>
-          <li data-value="20"><a>20</a></li>
-          <li data-value="50"><a>50</a></li>
-          <li data-value="100"><a>100</a></li>
-        </ul>
-      </div>
-      <div class="btn-group btn-sm btn-link">From {{ from }} to {{ to }} of {{ total }}</div>
-    </div>
+    &lt;div class="pull-left btn-toolbar"&gt;
+      &lt;div class="dropdown btn-group" data-per-page="{{ perpage }}"&gt;
+        &lt;button data-toggle="dropdown" class="btn btn-default btn-sm dropdown-toggle"&gt;
+          &lt;span class="dropdown-label"&gt;Per Page {{ per_page }}&lt;/span&gt;
+          &lt;span class="fa fa-angle-down"&gt;&lt;/span&gt;
+        &lt;/button&gt;
+        &lt;ul class="dropdown-menu open-up ui-perpage-dropdown">
+          &lt;li data-value="10"&gt;&lt;a&gt;10&lt;/a&gt;&lt;/li&gt;
+          &lt;li data-value="20"&gt;&lt;a&gt;20&lt;/a&gt;&lt;/li&gt;
+          &lt;li data-value="50"&gt;&lt;a&gt;50&lt;/a&gt;&lt;/li&gt;
+          &lt;li data-value="100"&gt;&lt;a&gt;100&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/div&gt;
+      &lt;div class="btn-group btn-sm btn-link"&gt;From {{ from }} to {{ to }} of {{ total }}&lt;/div&gt;
+    &lt;/div&gt;
 
     <!-- page, next page, prev page controls -->
-    <div class="pull-right btn-toolbar">
+    &lt;div class="pull-right btn-toolbar"&gt;
       {{#if on_last_page }}
-        <div class="btn-group">
-          <button type="button" class="btn btn-default btn-sm ui-prev-page" {{#if on_first_page }}disabled{{/if}}>
-            <i class="fa fa-chevron-left"></i>
-          </button>
-        </div>
+        &lt;div class="btn-group"&gt;
+          &lt;button type="button" class="btn btn-default btn-sm ui-prev-page" {{#if on_first_page }}disabled{{/if}}&gt;
+            &lt;i class="fa fa-chevron-left"&gt;&lt;/i&gt;
+          &lt;/button&gt;
+        &lt;/div&gt;
 
-        <div class="btn-group">
-          <div class="dropdown ui-page-index-dropdown" data-current-page="{{ current_page }}">
-            <button class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-              <span class="dropdown-label">Page {{ current_page }}</span>
-              <i class="fa fa-angle-down"></i>
-            </button>
-            <ul class="dropdown-menu open-up ui-page-select-dropdown">
+        &lt;div class="btn-group"&gt;
+          &lt;div class="dropdown ui-page-index-dropdown" data-current-page="{{ current_page }}"&gt;
+            &lt;button class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"&gt;
+              &lt;span class="dropdown-label"&gt;Page {{ current_page }}&lt;/span&gt;
+              &lt;i class="fa fa-angle-down"&gt;&lt;/i&gt;
+            &lt;/button&gt;
+            &lt;ul class="dropdown-menu open-up ui-page-select-dropdown"&gt;
               {{ page_items }}
-            </ul>
-          </div>
-        </div>
+            &lt;/ul&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
 
-        <div class="btn-group">
-          <button type="button" class="btn btn-default btn-sm ui-next-page" {{#if on_last_page }}disabled{{/if}}>
-            <i class="fa fa-chevron-right"></i>
-          </button>
-        </div>
+        &lt;div class="btn-group"&gt;
+          &lt;button type="button" class="btn btn-default btn-sm ui-next-page" {{#if on_last_page }}disabled{{/if}}&gt;
+            &lt;i class="fa fa-chevron-right">&lt;/i&gt;
+          &lt;/button&gt;
+        &lt;/div&gt;
       {{else}}
-        <div class="btn-group btn-sm btn-link">Page {{ current_page }} of {{ last_page }}</div>
+        &lt;div class="btn-group btn-sm btn-link"&gt;Page {{ current_page }} of {{ last_page }}&lt;/div&gt;
       {{/if}}
-    </div>
-  </div>
+    &lt;/div&gt;
+  &lt;/div&gt;
           </code>
         </pre>
       </section>
@@ -520,14 +520,14 @@
         <pre>
           <code>
   <!-- in thead > tr -->
-  <th data-select-all-enabled="true" data-property="id">
-    <input type="checkbox">
-  </th>
+  &lt;th data-select-all-enabled="true" data-property="id"&gt;
+    &lt;input type="checkbox"&gt;
+  &lt;/th&gt;
 
   <!-- in tbody > tr -->
-  <th data-property="id" data-value="1">
-    <input type="checkbox">
-  </th>
+  &lt;th data-property="id" data-value="1"&gt;
+    &lt;input type="checkbox"&gt;
+  &lt;/th&gt;
           </code>
         </pre>
       </section>
