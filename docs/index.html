@@ -21,10 +21,12 @@
         <p class="view"><a href="https://github.com/50onRed/pjax-table">View the Project on GitHub <small>50onRed/pjax-table</small></a>
         </p>
         <p><a href="#base-markup">Base Markup</a></p>
-        <p><a href="#configuration">Configuration</a></p>
+        <p><a href="#configuration">Data Attribute Configuration</a></p>
+        <p><a href="#js-options">JS Options</a></p>
         <p><a href="#pagination">Pagination</a></p>
         <p><a href="#row-selection">Row Selection</a></p>
         <p><a href="#events">Events</a></p>
+        <p><a href="#plugins">Plugins</a></p>
       </header>
       <section>
         <h2><a name="base-markup">Base Markup</a></h2>
@@ -271,7 +273,7 @@
         </table>
       </section>
       <section>
-        <h2>JS options</h2>
+        <h2><a name="js-options">JS options</a></h2>
         <p>
         JS options override data attributes or the defaults.
         </p>
@@ -344,6 +346,19 @@
               <td>string</td>
               <td>q</td>
               <td>the query string key for search</td>
+            </tr>
+            <tr>
+              <td>refreshEvents</td>
+              <td>Array&lt;object&gt;</td>
+              <td><code>[{ eventName: 'click', filter: '.my-class-selector' }]</code>
+              <td>an array of objects that define an event listener and selector to trigger table refresh</td>
+            </tr>
+            <tr>
+              <td>plugins</td>
+              <td>Array&lt;object&gt;</td>
+              <td><code>[{ target: '[data-plugin-element-selector]', constructorName: 'myPlugin'}]</code></td>
+              <td>an array of objects that define a plugin. A target selector and a valid jquery plugin constructor name must be included. Plugins are constructed and initialized on click. The constructor will receive the corresponding row record and the table's current query state.
+              </td>
             </tr>
           </tbody>
         </table>
