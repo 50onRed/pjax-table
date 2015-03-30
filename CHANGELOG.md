@@ -5,6 +5,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased][unreleased]
 - base ajax plugin in consideration
 
+# [1.0.4] - 2015-3-30
+### Added
+- added travis-ci integration, .travis.yml and test script in package.json are now configured to run tests on push
+
+### Changed
+- moved primary docs from the readme to docs/index.html which is the github pages index
+- updated markdown tables to html tables to fix rendering
+
 # [1.0.3] - 2015-3-29
 ### Changed
 - moved standalone index.html page to the standalone directory and adjusted paths
