@@ -1,5 +1,7 @@
 # pjax-table
 
+[![Build Status](https://travis-ci.org/50onRed/pjax-table.svg?branch=master)](https://travis-ci.org/50onRed/pjax-table)
+
 pjax-table is a jQuery plugin that uses [jquery-pjax](https://github.com/defunkt/jquery-pjax) to load server rendered tables and provides table controls for sorting, pagination, row selection, and more.
 
 ## Features
