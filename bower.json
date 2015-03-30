@@ -1,21 +1,22 @@
 {
   "name": "pjax-table",
   "version": "1.0.4",
-  "private": true,
   "main": "dist/js/pjax_table.js",
   "license": "MIT",
   "authors": [
     "Matthew Parke <mparke@50onred.com>"
   ],
-  "homepage": "",
+  "homepage": "http://50onred.github.io/pjax-table/",
   "repository": {
     "type": "git"
   },
   "ignore": [
-    "**/.*",
-    "components",
-    "bower_components",
-    "tests"
+    ".travis.yml",
+    "bower_components/",
+    "node_modules/",
+    "test/",
+    "standalone/",
+    "docs/"
   ],
   "keywords": [
     "table",

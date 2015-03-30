@@ -12,6 +12,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - moved primary docs from the readme to docs/index.html which is the github pages index
 - updated markdown tables to html tables to fix rendering
+- update bower.json for publish
 
 # [1.0.3] - 2015-3-29
 ### Changed
