@@ -15,11 +15,6 @@ pjax-table is a jQuery plugin that uses [jquery-pjax](https://github.com/defunkt
 The documentation for pjax-table is available [through github pages](http://50onred.github.io/pjax-table/) and is available in the docs folder.
 
 
-### Testing
-    // running
-    karma start ./karma.conf.js
-
-
 ### Building
     // install node dependencies, most notably gulp and gulp plugins
     npm install

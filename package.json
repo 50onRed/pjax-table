@@ -28,5 +28,8 @@
     "less": "1.7.5",
     "run-sequence": "1.0.1",
     "uglify-js": "2.4.15"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/karma start ./karma.conf.js"
   }
 }
