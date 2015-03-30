@@ -50,90 +50,390 @@ Example of standard table markup with data attributes:
 ```
 
 ### container data attributes
-data-attribute | type | default | description
-- | - | - | ---
-`data-pjax-table` | `boolean` | `true` | the default selector for initializing tables (only used for init)
-`data-auto-init` | `boolean` | `false` | a flag (only used for init)
-`data-url` | `string` | window.location.href | the url to be used for fetching table markup
-`data-paginated` | `boolean` | `true` | a flag to enable/disable pagination controls
-`data-ajax-only` | `boolean` | `false` | a flag to use ajax instead of pjax
-`data-push-state` | `boolean` | `true` | a flag to pass as the pushState option to pjax
-`data-pjax-container` | `string` | element.id | the container to be used for loading pjax, defaults to the initializing element's id
-`data-search-id` | `string` | | the id selector of a search box to be used
-`data-sort-query-key` | `string` | `order` | the string key to be used in building the search query
-`data-page-query-key` | `string` | `page` | the string key to be used in building the page query
-`data-perpage-query-key` | `string` | `perpage` | the string key to be used in building the perpage query
-`data-search-query-key` | `string` | `q` | the string key to be used in building the search query
+<table>
+  <thead>
+    <tr>
+      <th>data-attribute</th>
+      <th>type</th>
+      <th>default</th>
+      <th>description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>data-pjax-table</td>
+      <td>boolean</td>
+      <td>true</td>
+      <td>the default selector for initializing tables (only used for init)</td>
+    </tr>
+    <tr>
+      <td>data-auto-init</td>
+      <td>boolean</td>
+      <td>false</td>
+      <td>a flag (only used for init)</td>
+    </tr>
+    <tr>
+      <td>data-url</td>
+      <td>string</td>
+      <td>window.location.href</td>
+      <td>the url to be used for fetching table markup</td>
+    </tr>
+    <tr>
+      <td>data-paginated</td>
+      <td>boolean</td>
+      <td>true</td>
+      <td>a flag to enable/disable pagination controls</td>
+    </tr>
+    <tr>
+      <td>data-ajax-only</td>
+      <td>boolean</td>
+      <td>false</td>
+      <td>a flag to use ajax instead of pjax</td>
+    </tr>
+    <tr>
+      <td>data-push-state</td>
+      <td>boolean</td>
+      <td>true</td>
+      <td>a flag to pass as the pushState option to pjax</td>
+    </tr>
+    <tr>
+      <td>data-pjax-container</td>
+      <td>string</td>
+      <td>element.id</td>
+      <td>the container to be used for loading pjax, defaults to the initializing element's id</td>
+    </tr>
+    <tr>
+      <td>data-search-id</td>
+      <td>string</td>
+      <td></td>
+      <td>the id selector of a search box to be used</td>
+    </tr>
+    <tr>
+      <td>data-sort-query-key</td>
+      <td>string</td>
+      <td>order</td>
+      <td>the string key to be used in building the search query</td>
+    </tr>
+    <tr>
+      <td>data-page-query-key</td>
+      <td>string</td>
+      <td>page</td>
+      <td>the string key to be used in building the page query</td>
+    </tr>
+    <tr>
+      <td>data-perpage-query-key</td>
+      <td>string</td>
+      <td>perpage</td>
+      <td>the string key to be used in building the perpage query</td>
+    </tr>
+    <tr>
+      <td>data-search-query-key</td>
+      <td>string</td>
+      <td>q</td>
+      <td>the string key to be used in building the search query</td>
+    </tr>
+  </tbody>
+</table>
 
 
 ### table data attributes
-data-attribute | type | default | options | description
-- | - | - | - | ---
-`data-total-rows` | `number` | `0` | | the total number of rows returned by the server
-`data-current-sort-property` | `string` | | | the current sort property name
-`data-current-sort-order` | `string` | `desc` | `asc` or `desc` | the current sort property order (asc/desc)
+<table>
+  <thead>
+    <tr>
+      <th>data-attribute</th>
+      <th>type</th>
+      <th>default</th>
+      <th>options</th>
+      <th>description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>data-total-rows</td>
+      <td>number</td>
+      <td>0</td>
+      <td></td>
+      <td>the total number of rows returned by the server</td>
+    </tr>
+    <tr>
+      <td>data-total-rows</td>
+      <td>number</td>
+      <td>0</td>
+      <td></td>
+      <td>the total number of rows returned by the server</td>
+    </tr>
+    <tr>
+      <td>data-current-sort-property</td>
+      <td>string</td>
+      <td></td>
+      <td></td>
+      <td>the current sort property name</td>
+    </tr>
+    <tr>
+      <td>data-current-sort-order</td>
+      <td>string</td>
+      <td>desc</td>
+      <td>asc or desc</td>
+      <td>the current sort property order (asc/desc)</td>
+  </tbody>
+</table>
 
 
 ### th data attributes
-data-attribute | type | default | options | description
-- | - | - | - | ---
-`data-sortable` | `boolean` | `true` | | whether or not this column is sortable
-`data-property` | `string` | | | the property name to be used in the sort query
-`data-current-sort-order` | `string` | | `asc` or `desc` | the current sort order of this column
-`data-default-sort-order` | `string` | | `asc` or `desc` | the default sort order of this column
+<table>
+  <thead>
+    <tr>
+      <th>data-attribute</th>
+      <th>type</th>
+      <th>default</th>
+      <th>options</th>
+      <th>description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>data-sortable</td>
+      <td>boolean</td>
+      <td>true</td>
+      <td></td>
+      <td>whether or not this column is sortable</td>
+    </tr>
+    <tr>
+      <td>data-property</td>
+      <td>string</td>
+      <td></td>
+      <td></td>
+      <td>the property name to be used in the sort query</td>
+    </tr>
+    <tr>
+      <td>data-current-sort-order</td>
+      <td>string</td>
+      <td></td>
+      <td>asc or desc</td>
+      <td>the current sort order of this column</td>
+    </tr>
+    <tr>
+      <td>data-default-sort-order</td>
+      <td>string</td>
+      <td></td>
+      <td>asc or desc</td>
+      <td>the default sort order of this column</td>
+    </tr>
+  </tbody>
+</table>
 
 
 ### td data attributes
-data-attribute | type | default | description
-- | - | - | ---
-`data-property` | `string` | | the property name for this cell
-`data-value` | `string` or `number` | | the value for this cell
+<table>
+  <thead>
+    <tr>
+      <th>data-attribute</th>
+      <th>type</th>
+      <th>default</th>
+      <th>description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>data-property</td>
+      <td>string</td>
+      <td></td>
+      <td>the property name for this cell</td>
+    </tr>
+    <tr>
+      <td>data-value</td>
+      <td>string or number</td>
+      <td></td>
+      <td>the value for this cell</td>
+    </tr>
+  </tbody>
+</table>
 
 
 ### js options
 JS options override data attributes or the defaults.
-key | type | default | description
-- | - | - | ---
-`url` | `string` | `data-url` or `window.location.href` | see `data-url` option
-`ajaxOnly` | `boolean` | `data-ajax-only` or `false` | see `data-ajax-only` option
-`pushState` | `boolean` | `data-push-state` or `true` | see `data-push-state` option
-`paginated` | `boolean` | `data-paginated` or `true` | see `data-paginated` option
-`pjaxContainer` | `string` | `data-pjax-container` or element.id | see `data-pjax-container` option
-`noDataTemplate` | `function` | see source | a function returning the default template to use for no data returned
-`sortQueryKey` | `string` | `order` | the query string key for sorting
-`pageQueryKey` | `string` | `page` | the query string key for page
-`perPageQueryKey` | `string` | `perpage` | the query string key for perpage
-`searchQueryKey` | `string` | `q` | the query string key for search
+<table>
+  <thead>
+    <tr>
+      <th>key</th>
+      <th>type</th>
+      <th>default</th>
+      <th>description</th> 
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>url</td>
+      <td>string</td>
+      <td>data-url or window.location.href</td>
+      <td>see data-url option</td>
+    </tr>
+    <tr>
+      <td>ajaxOnly</td>
+      <td>boolean</td>
+      <td>data-ajax-only or false</td>
+      <td>see data-ajax-only option</td>
+    </tr>
+    <tr>
+      <td>pushState</td>
+      <td>boolean</td>
+      <td>data-push-state or true</td>
+      <td>see data-push-state option</td>
+    </tr>
+    <tr>
+      <td>paginated</td>
+      <td>boolean</td>
+      <td>data-paginated or true</td>
+      <td>see data-paginated option</td>
+    </tr>
+    <tr>
+      <td>pjaxContainer</td>
+      <td>string</td>
+      <td>data-pjax-container or element.id</td>
+      <td>see data-pjax-container option</td>
+    </tr>
+    <tr>
+      <td>noDataTemplate</td>
+      <td>function</td>
+      <td>see source</td>
+      <td>a function returning the default template to use for no data returned</td>
+    </tr>
+    <tr>
+      <td>sortQueryKey</td>
+      <td>string</td>
+      <td>order</td>
+      <td>the query string key for sorting</td>
+    </tr>
+    <tr>
+      <td>pageQueryKey</td>
+      <td>string</td>
+      <td>page</td>
+      <td>the query string key for page</td>
+    </tr>
+    <tr>
+      <td>perPageQueryKey</td>
+      <td>string</td>
+      <td>perpage</td>
+      <td>the query string key for perpage</td>
+    </tr>
+    <tr>
+      <td>searchQueryKey</td>
+      <td>string</td>
+      <td>q</td>
+      <td>the query string key for search</td>
+    </tr>
+  </tbody>
+</table>
 
 
 # Pagination
 ### pagination container data attributes
-data-attribute | type | default | description
-- | - | - | ---
-`data-current-page` | `number` | defined by pagination markup | the current page 
-`data-current-perpage` | `number` | defined by pagination markup | the current perpage 
+<table>
+  <thead>
+    <tr>
+      <th>data-attribute</th>
+      <th>type</th>
+      <th>default</th>
+      <th>description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>data-current-page</td>
+      <td>number</td>
+      <td>defined by pagination markup</td>
+      <td>the current page</td>
+    </tr>
+    <tr>
+      <td>data-current-perpage</td>
+      <td>number</td>
+      <td>defined by pagination markup</td>
+      <td>the current perpage</td>
+    </tr>
+  </tbody>
+</table>
 
 
 ### pagination perpage data attributes
-data-attribute | type | default | description
-- | - | - | ---
-`data-value` | `number` | | the number value of records per page
+<table>
+  <thead>
+    <tr>
+      <th>data-attribute</th>
+      <th>type</th>
+      <th>default</th>
+      <th>description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>data-value</td>
+      <td>number</td>
+      <td></td>
+      <td>the number value of records per page</td>
+    </tr>
+  </tbody>
+</table>
 
 
 ### pagination page data attributes
-data-attribute | type | default | description
-- | - | - | ---
-`data-value` | `number` | | the number value of the page
+<table>
+  <thead>
+    <tr>
+      <th>data-attribute</th>
+      <th>type</th>
+      <th>default</th>
+      <th>description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>data-value</td>
+      <td>number</td>
+      <td></td>
+      <td>the number value of the page</td>
+    </tr>
+  </tbody>
+</table>
 
 
 ### required pagination classes
-class | required children | description
-- | - | ---
-`ui-pagination` | n/a | the pagination container with `data-current-page` and `data-current-perpage`
-`ui-perpage-dropdown` | `li` with `data-value` | the list element of perpage options
-`ui-page-select-dropdown` | `li` with `data-value` | the list element of page options
-`ui-prev-page` | n/a | the prev page button
-`ui-next-page` | n/a | the next page button
+<table>
+  <thead>
+    <tr>
+      <th>class</th>
+      <th>required children</th>
+      <th>description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ui-pagination</td>
+      <td>n/a</td>
+      <td>the pagination container with data-current-page and data-current-perpage</td>
+    </tr>
+    <tr>
+      <td>ui-perpage-dropdown</td>
+      <td>li with data-value</td>
+      <td>the list element of perpage options</td>
+    </tr>
+    <tr>
+      <td>ui-page-select-dropdown</td>
+      <td>li with data-value</td>
+      <td>the list element of page options</td>
+    </tr>
+    <tr>
+      <td>ui-prev-page</td>
+      <td>n/a</td>
+      <td>the prev page button</td>
+    </tr>
+    <tr>
+      <td>ui-next-page</td>
+      <td>n/a</td>
+      <td>the next page button</td>      
+    </tr>
+  </tbody>
+</table>
+
 
 ### Example pagination markup
 *The example below uses BS3 classes and markup, but only the classes and structure listed above are required. A base set of styles to make these functional without BS3 may soon be applied. Ideas are welcome.*
@@ -211,23 +511,102 @@ Example table header and body cells which enable row selection:
 ## Events
 Most named events are triggered from the container element, with the exception of any plugins which fire events.
 The search implementation also fires it's own events which are wrapped by the table.
-
-name | type | arguments | trigger
-- | - | - | ---
-`table:load` | | | any time the table has finished loaded, on pjax success for initial load, update, and refresh
-`table:sort` | `object` | `sortQuery` | when a column is sorted, includes direction and property
-`table:page` | `object` | `pageQuery` | when a specific page has been chosen to jump to
-`table:perpage` | `object` | `perPageQuery` | when perpage dropdown selection has changed
-`table:nextpage` | `object` | `nextPageQuery` | when next page in pagination clicked
-`table:prevpage` | `object` | `prevPageQuery` | when prev page in pagination clicked
-`table:search` | `object` | `searchQuery` | when a search query is used to filter the table
-`table:search:clear` | | | when a search query is cleared
-`table:select` | `object` | `record` | when a row is selected, passing the record object
-`table:deselect` | `object` | `record` | when a row is deselected, passing the record object
-`table:select:all` | | | when all records are selected
-`table:deselect:all` | | | when all records are deselected
-`table:error` | | | when a pjax / ajax error occurs
-`table:timeout` | | |  when pjax times out
+<table>
+  <thead>
+    <tr>
+      <th>name</th>
+      <th>type</th>
+      <th>arguments</th>
+      <th>trigger</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>table:load</td>
+      <td></td>
+      <td></td>
+      <td>any time the table has finished loaded, on pjax success for initial load, update, and refresh</td>
+    </tr>
+    <tr>
+      <td>table:sort</td>
+      <td>object</td>
+      <td>sortQuery</td>
+      <td>when a column is sorted, includes direction and property</td>
+    </tr>
+    <tr>
+      <td>table:page</td>
+      <td>object</td>
+      <td>pageQuery</td>
+      <td>when a specific page has been chosen to jump to</td>
+    </tr>
+    <tr>
+      <td>table:perpage</td>
+      <td>object</td>
+      <td>perPageQuery</td>
+      <td>when perpage dropdown selection has changed</td>
+    </tr>
+    <tr>
+      <td>table:nextpage</td>
+      <td>object</td>
+      <td>nextPageQuery</td>
+      <td>when next page in pagination clicked</td>
+    </tr>
+    <tr>
+      <td>table:prevpage</td>
+      <td>object</td>
+      <td>prevPageQuery</td>
+      <td>when prev page in pagination clicked</td>
+    </tr>
+    <tr>
+      <td>table:search</td>
+      <td>object</td>
+      <td>searchQuery</td>
+      <td>when a search query is used to filter the table</td>
+    </tr>
+    <tr>
+      <td>table:search:clear</td>
+      <td></td>
+      <td></td>
+      <td>when a search query is cleared</td>
+    </tr>
+    <tr>
+      <td>table:select</td>
+      <td>object</td>
+      <td>record</td>
+      <td>when a row is selected, passing the record object</td>
+    </tr>
+    <tr>
+      <td>table:deselect</td>
+      <td>object</td>
+      <td>record</td>
+      <td>when a row is deselected, passing the record object</td>
+    </tr>
+    <tr>
+      <td>table:select:all</td>
+      <td></td>
+      <td></td>
+      <td>when all records are selected</td>
+    </tr>
+    <tr>
+      <td>table:deselect:all</td>
+      <td></td>
+      <td></td>
+      <td>when all records are deselected</td>
+    </tr>
+    <tr>
+      <td>table:error</td>
+      <td></td>
+      <td></td>
+      <td>when a pjax / ajax error occurs</td>
+    </tr>
+    <tr>
+      <td>table:timeout</td>
+      <td></td>
+      <td></td>
+      <td>when pjax times out</td>
+    </tr>
+  </tbody>
+</table>
 
 
 ### Dependencies
@@ -235,8 +614,12 @@ name | type | arguments | trigger
   - [jQuery PJAX 1.9.2](https://github.com/defunkt/jquery-pjax)
   - [spin.js 2.0.2](http://fgnass.github.io/spin.js/)
 
+
 ### Testing
-  
+    // running
+    karma start ./karma.conf.js
+
+
 ### Building
     // install node dependencies, most notably gulp and gulp plugins
     npm install
@@ -246,8 +629,4 @@ name | type | arguments | trigger
 
     // (default task) cleans and then builds standalone and distributable versions
     gulp
-
-    // run unit tests against build versions in phantomJS with singleRun=true 
-    // Pro Tip: don’t forget the Nyan Reporter
-    // karma start ./path/to/karma.conf.js
 
