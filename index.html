@@ -44,7 +44,7 @@
               data-current-sort-order="{{ sort_order }}">
             {{ header_value }}
           &lt;/th&gt;
-          <!-- ... -->
+          &lt;!-- ... --&gt;
         &lt;/tr&gt;
       &lt;/thead&gt;
       &lt;tbody&gt;
@@ -53,7 +53,7 @@
               data-value="{{ value }}">
             {{ value }}
           &lt;/td&gt;
-          <!-- ... -->
+          &lt;!-- ... --&gt;
         &lt;/tr&gt;
       &lt;/tbody&gt;
       &lt;tfoot&gt;&lt;/tfoot&gt;
@@ -458,7 +458,7 @@
        data-current-page="{{ current_page }}" 
        data-current-perpage="{{ per_page }}"&gt;
 
-    <!-- per page controls -->
+    &lt;!-- per page controls --&gt;
     &lt;div class="pull-left btn-toolbar"&gt;
       &lt;div class="dropdown btn-group" data-per-page="{{ perpage }}"&gt;
         &lt;button data-toggle="dropdown" class="btn btn-default btn-sm dropdown-toggle"&gt;
@@ -475,7 +475,7 @@
       &lt;div class="btn-group btn-sm btn-link"&gt;From {{ from }} to {{ to }} of {{ total }}&lt;/div&gt;
     &lt;/div&gt;
 
-    <!-- page, next page, prev page controls -->
+    &lt;!-- page, next page, prev page controls --&gt;
     &lt;div class="pull-right btn-toolbar"&gt;
       {{#if on_last_page }}
         &lt;div class="btn-group"&gt;
@@ -519,12 +519,12 @@
         </p>
         <pre>
           <code>
-  <!-- in thead > tr -->
+  &lt;!-- in thead &gt; tr --&gt;
   &lt;th data-select-all-enabled="true" data-property="id"&gt;
     &lt;input type="checkbox"&gt;
   &lt;/th&gt;
 
-  <!-- in tbody > tr -->
+  &lt;!-- in tbody &gt; tr --&gt;
   &lt;th data-property="id" data-value="1"&gt;
     &lt;input type="checkbox"&gt;
   &lt;/th&gt;
