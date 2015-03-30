@@ -30,6 +30,6 @@
     "uglify-js": "2.4.15"
   },
   "scripts": {
-    "test": "./node_modules/.bin/karma start ./karma.conf.js"
+    "test": "./node_modules/karma/bin/karma start ./karma.conf.js"
   }
 }
