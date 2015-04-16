@@ -40,9 +40,9 @@ this["Fifty"]["templates"]["header_cell"] = Handlebars.template({"compiler":[6,"
 
   return "<th class=\"fifty-table-header sortable\" \n  data-sortable=\"true\" \n  data-property=\""
     + alias3(((helper = (helper = helpers.property || (depth0 != null ? depth0.property : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"property","hash":{},"data":data}) : helper)))
-    + "\" \n  data-current-sort-order=\""
+    + "\" \n  data-current-sort-direction=\""
     + alias3(((helper = (helper = helpers.current_sort || (depth0 != null ? depth0.current_sort : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"current_sort","hash":{},"data":data}) : helper)))
-    + "\" \n  data-default-sort-order=\"asc\">\n  "
+    + "\" \n  data-default-sort-direction=\"asc\">\n  "
     + alias3(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"name","hash":{},"data":data}) : helper)))
     + "\n  <span class=\"fifty-table-sort-indicator\">\n    <i class=\"fa fa-caret-"
     + alias3((helpers.sortIcon || (depth0 && depth0.sortIcon) || alias1).call(depth0,(depth0 != null ? depth0.current_sort : depth0),{"name":"sortIcon","hash":{},"data":data}))
@@ -125,7 +125,7 @@ this["Fifty"]["templates"]["table"] = Handlebars.template({"compiler":[6,">= 2.0
     + alias3(((helper = (helper = helpers.total_rows || (depth0 != null ? depth0.total_rows : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"total_rows","hash":{},"data":data}) : helper)))
     + "\"\n    data-current-sort-property=\""
     + alias3(((helper = (helper = helpers.sort_property || (depth0 != null ? depth0.sort_property : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"sort_property","hash":{},"data":data}) : helper)))
-    + "\"\n    data-current-sort-order=\""
+    + "\"\n    data-current-sort-direction=\""
     + alias3(((helper = (helper = helpers.sort_order || (depth0 != null ? depth0.sort_order : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"sort_order","hash":{},"data":data}) : helper)))
     + "\"\n    data-current-search-str=\""
     + alias3(((helper = (helper = helpers.current_search_str || (depth0 != null ? depth0.current_search_str : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"current_search_str","hash":{},"data":data}) : helper)))

@@ -5,6 +5,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased][unreleased]
 - base ajax plugin in consideration
 
+# [1.1.0] - 2015-4-16
+### Changed
+- updated current-sort-order and default-sort-order to use "direction" instead of "order", although technically
+a breaking change, it is a fix to be in line with the current python library
+
 # [1.0.4] - 2015-3-30
 ### Added
 - added travis-ci integration, .travis.yml and test script in package.json are now configured to run tests on push
