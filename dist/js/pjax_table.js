@@ -116,9 +116,9 @@
       ].join('');
     },
 
-    _createSortQuery: function(property, order) {
+    _createSortQuery: function(property, direction) {
       var query = {};
-      query[this._sortQueryKey] = property + '__' + order;
+      query[this._sortQueryKey] = property + '__' + direction;
       return query;
     },
 
@@ -148,8 +148,8 @@
       delete this._queryState[this._searchQueryKey];
     },
 
-    _syncSort: function(property, order) {
-      $.extend(this._queryState, this._createSortQuery(property, order));
+    _syncSort: function(property, direction) {
+      $.extend(this._queryState, this._createSortQuery(property, direction));
     },
 
     _syncPage: function(page) {
@@ -204,7 +204,7 @@
       var page = $pagination.data('current-page');
       var perpage = $pagination.data('current-perpage');
       var sortProperty = $table.data('current-sort-property');
-      var sortOrder = $table.data('current-sort-order');
+      var sortDirection = $table.data('current-sort-direction');
       var searchStr = $table.data('current-search-str');
 
       if (this._paginated) {
@@ -213,7 +213,7 @@
       }
 
       if (sortProperty) {
-        this._syncSort(sortProperty, sortOrder);
+        this._syncSort(sortProperty, sortDirection);
       } else {
         this._desyncSort();
       }
@@ -278,10 +278,10 @@
     _onClickSortable: function (e) {
       var $sortable = $(e.target).closest('th[data-sortable="true"]');
       var property = $sortable.data('property');
-      var order = this._sortMap[$sortable.data('current-sort-order')] || $sortable.data('default-sort-order');
+      var direction = this._sortMap[$sortable.data('current-sort-direction')] || $sortable.data('default-sort-direction');
 
-      this._$el.trigger('table:sort', this._createSortQuery(property, order));
-      this._syncSort(property, order);
+      this._$el.trigger('table:sort', this._createSortQuery(property, direction));
+      this._syncSort(property, direction);
       this._load();
     },
 

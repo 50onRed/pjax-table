@@ -52,12 +52,12 @@
   &lt;div data-pjax-table data-auto-init="true"&gt;
     &lt;table data-total-rows="{{ total_rows }}" 
            data-current-sort-property="{{ current_sort_property }}"
-           data-current-sort-order="{{ current_sort_order }}"&gt;
+           data-current-sort-direction="{{ current_sort_direction }}"&gt;
       &lt;thead&gt;
         &lt;tr&gt;
           &lt;th data-sortable="true"
               data-property="{{ property }}"
-              data-current-sort-order="{{ sort_order }}">
+              data-current-sort-direction="{{ sort_direction }}">
             {{ header_value }}
           &lt;/th&gt;
           &lt;!-- ... --&gt;
@@ -201,11 +201,11 @@
               <td>the current sort property name</td>
             </tr>
             <tr>
-              <td>data-current-sort-order</td>
+              <td>data-current-sort-direction</td>
               <td>string</td>
               <td>desc</td>
               <td>asc or desc</td>
-              <td>the current sort property order (asc/desc)</td>
+              <td>the current sort property direction (asc/desc)</td>
           </tbody>
         </table>
       </section>
@@ -237,18 +237,18 @@
               <td>the property name to be used in the sort query</td>
             </tr>
             <tr>
-              <td>data-current-sort-order</td>
+              <td>data-current-sort-direction</td>
               <td>string</td>
               <td></td>
               <td>asc or desc</td>
-              <td>the current sort order of this column</td>
+              <td>the current sort direction of this column</td>
             </tr>
             <tr>
-              <td>data-default-sort-order</td>
+              <td>data-default-sort-direction</td>
               <td>string</td>
               <td></td>
               <td>asc or desc</td>
-              <td>the default sort order of this column</td>
+              <td>the default sort direction of this column</td>
             </tr>
           </tbody>
         </table>

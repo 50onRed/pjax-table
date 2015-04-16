@@ -27,7 +27,7 @@ describe('pjax table protected methods', function() {
     var table = $table.pjaxTable({});
     expect(typeof table._createSortQuery === 'function').toBe(true);
     expect(typeof table._createSortQuery('test', 'test') === 'object').toBe(true);
-    expect(table._createSortQuery('testProperty', 'testOrder')[table._sortQueryKey]).toEqual('testProperty__testOrder');
+    expect(table._createSortQuery('testProperty', 'testDirection')[table._sortQueryKey]).toEqual('testProperty__testDirection');
     expect(table._createSortQuery('123', '456')[table._sortQueryKey]).toEqual('123__456');
   });
 
@@ -36,8 +36,8 @@ describe('pjax table protected methods', function() {
     expect(typeof table._desyncSort === 'function').toBe(true);
     expect(table._desyncSort()).toBeUndefined();
 
-    $.extend(table._queryState, table._createSortQuery('testProperty', 'testOrder'));
-    expect(table._queryState[table._sortQueryKey]).toEqual('testProperty__testOrder');
+    $.extend(table._queryState, table._createSortQuery('testProperty', 'testDirection'));
+    expect(table._queryState[table._sortQueryKey]).toEqual('testProperty__testDirection');
     
     table._desyncSort();
     expect(table._queryState[table._sortQueryKey]).toBeUndefined();
@@ -88,9 +88,9 @@ describe('pjax table protected methods', function() {
     expect(table._syncSort()).toBeUndefined();
     
     spyOn(table, '_createSortQuery').and.callThrough();
-    table._syncSort('testProp', 'testOrder');
-    expect(table._createSortQuery).toHaveBeenCalledWith('testProp', 'testOrder');
-    expect(table._queryState[table._sortQueryKey]).toEqual('testProp__testOrder');
+    table._syncSort('testProp', 'testDirection');
+    expect(table._createSortQuery).toHaveBeenCalledWith('testProp', 'testDirection');
+    expect(table._queryState[table._sortQueryKey]).toEqual('testProp__testDirection');
   });
 
   it('should sync page', function() {
@@ -194,7 +194,7 @@ describe('pjax table protected methods', function() {
     var $tableEl = table._$el.find('table');
     var $pagination = table._$el.find('.ui-pagination');
     $tableEl.data('current-sort-property', 'testingASortProperty');
-    $tableEl.data('current-sort-order', 'asc');
+    $tableEl.data('current-sort-direction', 'asc');
     $tableEl.data('current-search-str', 'testingASearchStr');
     $pagination.data('current-page', 157);
     $pagination.data('current-perpage', 200);
