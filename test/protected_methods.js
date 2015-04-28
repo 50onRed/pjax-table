@@ -192,12 +192,11 @@ describe('pjax table protected methods', function() {
 
     // set some attributes and test changes via sync query state
     var $tableEl = table._$el.find('table');
-    var $pagination = table._$el.find('.ui-pagination');
     $tableEl.data('current-sort-property', 'testingASortProperty');
     $tableEl.data('current-sort-direction', 'asc');
     $tableEl.data('current-search-str', 'testingASearchStr');
-    $pagination.data('current-page', 157);
-    $pagination.data('current-perpage', 200);
+    $tableEl.data('current-page', 157);
+    $tableEl.data('current-perpage', 200);
     table._syncQueryState();
 
     // check changes

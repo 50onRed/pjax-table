@@ -65,8 +65,6 @@
     }).join('');
     
     var pagination_html = pagination({
-      current_page: 1,
-      current_perpage: table_data.body.length,
       from: 1,
       to: table_data.body.length,
       total: table_data.body.length,
@@ -82,7 +80,9 @@
       total_rows: table_data.body.length,
       sort_property: 'testProp',
       sort_order: 'desc',
-      current_search_str: 'testSearchStr'
+      current_search_str: 'testSearchStr',
+      current_page: 1,
+      current_perpage: table_data.body.length
     });
     return table_html;
   }
