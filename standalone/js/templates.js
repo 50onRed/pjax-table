@@ -87,11 +87,7 @@ this["Fifty"]["templates"]["pagination"] = Handlebars.template({"1":function(dep
 },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
     var stack1, helper, alias1=helpers.helperMissing, alias2="function", alias3=this.escapeExpression;
 
-  return "<div class=\"fifty-table-pagination ui-pagination\" \n  data-current-page=\""
-    + alias3(((helper = (helper = helpers.current_page || (depth0 != null ? depth0.current_page : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"current_page","hash":{},"data":data}) : helper)))
-    + "\"\n  data-current-perpage=\""
-    + alias3(((helper = (helper = helpers.current_perpage || (depth0 != null ? depth0.current_perpage : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"current_perpage","hash":{},"data":data}) : helper)))
-    + "\">\n  <div class=\"pull-left btn-toolbar\">\n    <div class=\"dropdown btn-group\" data-per-page=\""
+  return "<div class=\"fifty-table-pagination ui-pagination\">\n  <div class=\"pull-left btn-toolbar\">\n    <div class=\"dropdown btn-group\" data-per-page=\""
     + alias3(((helper = (helper = helpers.$perpage || (depth0 != null ? depth0.$perpage : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"$perpage","hash":{},"data":data}) : helper)))
     + "\">\n      <button data-toggle=\"dropdown\" class=\"btn btn-default btn-sm dropdown-toggle\">\n        <span class=\"dropdown-label\">Per Page "
     + alias3(((helper = (helper = helpers.current_perpage || (depth0 != null ? depth0.current_perpage : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"current_perpage","hash":{},"data":data}) : helper)))
@@ -129,6 +125,10 @@ this["Fifty"]["templates"]["table"] = Handlebars.template({"compiler":[6,">= 2.0
     + alias3(((helper = (helper = helpers.sort_order || (depth0 != null ? depth0.sort_order : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"sort_order","hash":{},"data":data}) : helper)))
     + "\"\n    data-current-search-str=\""
     + alias3(((helper = (helper = helpers.current_search_str || (depth0 != null ? depth0.current_search_str : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"current_search_str","hash":{},"data":data}) : helper)))
+    + "\"\n    data-current-page=\""
+    + alias3(((helper = (helper = helpers.current_page || (depth0 != null ? depth0.current_page : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"current_page","hash":{},"data":data}) : helper)))
+    + "\"\n    data-current-perpage=\""
+    + alias3(((helper = (helper = helpers.current_perpage || (depth0 != null ? depth0.current_perpage : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"current_perpage","hash":{},"data":data}) : helper)))
     + "\">\n    <thead>\n      "
     + ((stack1 = ((helper = (helper = helpers.header_rows || (depth0 != null ? depth0.header_rows : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"header_rows","hash":{},"data":data}) : helper))) != null ? stack1 : "")
     + "\n    </thead>\n    <tbody>\n      "

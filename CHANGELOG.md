@@ -5,6 +5,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased][unreleased]
 - base ajax plugin in consideration
 
+# [1.2.0] - 2015-4-28
+### Changed
+- updated current-page and current-perpage attribute location to be on the table element, this is an adjustment
+similar to 1.1.0, to be consistent with the python library
+
 # [1.1.0] - 2015-4-16
 ### Changed
 - updated current-sort-order and default-sort-order to use "direction" instead of "order", although technically

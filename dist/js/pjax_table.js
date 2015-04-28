@@ -30,16 +30,18 @@
   *     @param {string} searchQueryKey The key to be used in creating the search query string
   *
   *   Data Attribute Params, parameters expected to be included on the table container element for initialization
-  *   @param {string}  data-url the url to be used for fetching table markup
-  *   @param {string}  data-pjax-container the selector for the container to be passed to pjax requests
+  *   @param {string} data-url the url to be used for fetching table markup
+  *   @param {string} data-pjax-container the selector for the container to be passed to pjax requests
   *   @param {boolean} data-ajax-only whether to not to disable pjax and enable ajax
   *   @param {boolean} data-push-state a flag for whether or not to enable pjax push state
   *   @param {boolean} data-paginated whether or not pagination is enabled
-  *   @param {string}  data-search-id an optional search control element id
-  *   @param {string}  data-sort-query-key the string key to be used in building the search query
-  *   @param {string}  data-page-query-key the string key to be used in building the page query
-  *   @param {string}  data-perpage-query-key the string key to be used in building the perpage query
-  *   @param {string}  data-search-query-key the string key to be used in building the search query
+  *   @param {string} data-search-id an optional search control element id
+  *   @param {string} data-sort-query-key the string key to be used in building the search query
+  *   @param {string} data-page-query-key the string key to be used in building the page query
+  *   @param {string} data-perpage-query-key the string key to be used in building the perpage query
+  *   @param {string} data-search-query-key the string key to be used in building the search query
+  *   @param {number} data-current-page the current page number
+  *   @param {number} data-current-perpage the current perpage number
   *
   *   Notes on search module: 
   *     Events which are registered within the table
@@ -200,9 +202,8 @@
     // Syncs the query state with what's being displayed
     _syncQueryState: function() {
       var $table = this._$el.find('table');
-      var $pagination = this._$el.find('.ui-pagination');
-      var page = $pagination.data('current-page');
-      var perpage = $pagination.data('current-perpage');
+      var page = $table.data('current-page');
+      var perpage = $table.data('current-perpage');
       var sortProperty = $table.data('current-sort-property');
       var sortDirection = $table.data('current-sort-direction');
       var searchStr = $table.data('current-search-str');
@@ -303,7 +304,7 @@
     },
 
     _onPrevPageSelect: function (e) {
-      var pageIndex = parseInt(this._$el.find('.ui-pagination').data('current-page'));
+      var pageIndex = parseInt(this._$el.find('table').data('current-page'));
       var prevPageIndex = Math.max(1, pageIndex - 1);
 
       this._$el.trigger('table:prevpage', this._createPageQuery(prevPageIndex));
@@ -312,7 +313,7 @@
     },
 
     _onNextPageSelect: function (e) {
-      var pageIndex = parseInt(this._$el.find('.ui-pagination').data('current-page'));
+      var pageIndex = parseInt(this._$el.find('table').data('current-page'));
       var nextPageIndex = pageIndex + 1;
 
       this._$el.trigger('table:nextpage', this._createPageQuery(nextPageIndex));

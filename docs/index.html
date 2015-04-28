@@ -52,7 +52,9 @@
   &lt;div data-pjax-table data-auto-init="true"&gt;
     &lt;table data-total-rows="{{ total_rows }}" 
            data-current-sort-property="{{ current_sort_property }}"
-           data-current-sort-direction="{{ current_sort_direction }}"&gt;
+           data-current-sort-direction="{{ current_sort_direction }}"
+           data-current-page="{{ current_page }}"
+           data-current-perpage="{{ current_perpage }}"&gt;
       &lt;thead&gt;
         &lt;tr&gt;
           &lt;th data-sortable="true"
@@ -206,6 +208,21 @@
               <td>desc</td>
               <td>asc or desc</td>
               <td>the current sort property direction (asc/desc)</td>
+            </tr>
+            <tr>
+              <td>data-current-page</td>
+              <td>number</td>
+              <td>1</td>
+              <td></td>
+              <td>the current page index</td>
+            </tr>
+            <tr>
+              <td>data-current-perpage</td>
+              <td>number</td>
+              <td>10</td>
+              <td></td>
+              <td>the current number of records to display per page</td>
+            </tr>
           </tbody>
         </table>
       </section>
