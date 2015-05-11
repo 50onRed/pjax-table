@@ -793,7 +793,7 @@
   */
   function PjaxTableSearch(el, options) {
     this._$el = $(this);
-    this._$searchFilter = $el.find('input[type="search"]');
+    this._$searchFilter = this._$el.find('input[type="search"]');
     
     this._init();
   }
@@ -836,21 +836,25 @@
       // get the current instance or create a new one
       var $el = $(this);
       var widget = $el.data('pjaxTableSearch');
+      var methodReturn;
 
       if (!widget) {
         widget = $el.data('pjaxTableSearch', new PjaxTableSearch(this, options)).data('pjaxTableSearch');
       }
 
       // execute methods and return the method return or this element for chaining
-      if (typeof options == 'string' && widget) {
+      if (typeof options === 'string') {
         // special case for resetting widgets, cleanup and reset
         if (options === 'destroy') {
           if (typeof widget.destroy === 'function') {
             widget.destroy();
           }
-          
-          delete $el.data()[finalName];
-          $el = null;
+          delete $el.data().pjaxTableSearch;
+        } else if (typeof widget[options] === 'function' && options.charAt(0) !== '_') {
+          methodReturn = widget[options].apply(widget, args.slice(1, args.length));
+          values.push(methodReturn);
+        } else {
+          throw new Error('Invalid method: ' + options);
         }
       } else {
         values.push(widget);
@@ -858,12 +862,8 @@
     });
     
     // return only 1 value if possible
-    if (values.length > 1) {
-      return values;
-    } else if (values.length === 1) {
-      return values[0];
-    }
+    return values.length > 1 ? values : values[0];
   };
   
-  $(function() { $('[data-pjax-table-search][data-auto-init]').pjaxTableSearch({}); });
+  $(function() { $('[data-pjax-table-search][data-auto-init="true"]').pjaxTableSearch({}); });
 })(jQuery);
