@@ -792,7 +792,7 @@
   *
   */
   function PjaxTableSearch(el, options) {
-    this._$el = $(this);
+    this._$el = $(el);
     this._$searchFilter = this._$el.find('input[type="search"]');
     
     this._init();

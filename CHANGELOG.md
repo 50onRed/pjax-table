@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased][unreleased]
 - base ajax plugin in consideration
 
+# [1.2.3] - 2015-5-11
+### Changed
+- fix search element reference
+
 # [1.2.2] - 2015-5-11
 ### Changed
 - change keydown to keyup
