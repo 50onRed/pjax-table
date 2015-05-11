@@ -801,15 +801,14 @@
   PjaxTableSearch.prototype._init = function() {
     this._$el.find('.ui-search').click(this._onClickSearch.bind(this));
     this._$el.find('.ui-close').click(this._onClickClose.bind(this));
-    this._$searchFilter.keydown(this._onInputKeydown.bind(this));
+    this._$searchFilter.keyup(this._onInputKeyup.bind(this));
   };
 
   PjaxTableSearch.prototype._onClickSearch = function(e) {
     this._$el.trigger('search:submit', $searchFilter.val());
   };
 
-  PjaxTableSearch.prototype._onInputKeydown = function(e) {
-    e.preventDefault();
+  PjaxTableSearch.prototype._onInputKeyup = function(e) {
     this._$el.find('.ui-close').removeClass('hidden');
     if (e.which === 13) {          //enter / return
       this._$el.trigger('search:submit', $(e.currentTarget).val());

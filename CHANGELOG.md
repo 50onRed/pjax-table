@@ -5,6 +5,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased][unreleased]
 - base ajax plugin in consideration
 
+# [1.2.2] - 2015-5-11
+### Changed
+- change keydown to keyup
+### Removed
+- preventDefault from keydown which was breaking the input
+
 # [1.2.1] - 2015-5-11
 ### Changed
 - fixes a variable reference bug in table search
