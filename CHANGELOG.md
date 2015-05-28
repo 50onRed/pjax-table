@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased][unreleased]
 - base ajax plugin in consideration
 
+# [1.2.4] - 2015-5-28
+### Changed
+- changed the url fallback to be empty string ( the current base url ) which fixes a bug with query arg duplication
+
 # [1.2.3] - 2015-5-11
 ### Changed
 - fix search element reference
