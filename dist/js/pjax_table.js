@@ -70,7 +70,7 @@
     this._$el = $(el);
     this._$tbody = null;
 
-    this._url = this._options.url || this._$el.data('url') || '';
+    this._url = this._options.url || this._$el.data('url') || window.location.pathname;
     
     if (this._options.ajaxOnly !== undefined) {
       this._ajaxOnly = this._options.ajaxOnly;

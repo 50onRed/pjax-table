@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased][unreleased]
 - base ajax plugin in consideration
 
+# [1.2.5] - 2015-5-28
+### Changed
+- changed the url fallback to be window.location.pathname ( the path without the query string ) which fixes a bug with query arg duplication. Bug was not completely addressed in 1.2.4
+
 # [1.2.4] - 2015-5-28
 ### Changed
 - changed the url fallback to be empty string ( the current base url ) which fixes a bug with query arg duplication
