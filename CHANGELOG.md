@@ -5,6 +5,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased][unreleased]
 - base ajax plugin in consideration
 
+# [1.3.0] - 2015-06-04
+### Added
+- a public load method which resembles refresh but accepts load parameters to be used by ajax/pjax
+- the public update method now accepts an additional param which is the load paramaters to be used by ajax/pjax
+
 # [1.2.6] - 2015-06-04
 ### Added
 - Added a queryState option so that you can initialize the table with a state that is separate from / in addition to the state synced from data attributes. The use case is for other
