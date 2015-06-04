@@ -24,10 +24,11 @@
   *       element's id attribute
   *     @param {Function} options.noDataTemplate A function to be used for creating the no data message
   *     @param {string} options.searchId  A selector for a search box to be used with the table.
-  *     @param {string} sortQueryKey The key to be used in creating the sort query string
-  *     @param {string} pageQueryKey The key to be used in creating the page query string
-  *     @param {string} perPageQueryKey The key to be used in creating the per page query string
-  *     @param {string} searchQueryKey The key to be used in creating the search query string
+  *     @param {string} options.sortQueryKey The key to be used in creating the sort query string
+  *     @param {string} options.pageQueryKey The key to be used in creating the page query string
+  *     @param {string} options.perPageQueryKey The key to be used in creating the per page query string
+  *     @param {string} options.searchQueryKey The key to be used in creating the search query string
+  *     @param {object} options.queryState an optional query state to extend with on initialization
   *
   *   Data Attribute Params, parameters expected to be included on the table container element for initialization
   *   @param {string} data-url the url to be used for fetching table markup
@@ -101,7 +102,7 @@
     this._$searchBox = searchId ? $(searchId) : null;
 
     this._sortMap = { asc: 'desc', desc: 'asc' };
-    this._queryState = {};
+    this._queryState = $.extend({}, this._options.queryState);
     
     this._init();
   }
