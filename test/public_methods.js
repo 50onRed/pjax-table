@@ -41,6 +41,21 @@ describe('pjax table public methods', function() {
     expect(table._queryState['testKey']).toEqual('testValue');
   });
 
+  it('should load', function() {
+    var table = $table.pjaxTable({});
+    expect(typeof table.load === 'function').toBe(true);
+
+    spyOn(table, 'load').and.callThrough();
+    spyOn(table, '_load');
+
+    var testLoadParams = { testKey: 'testValue' };
+    var sameRef = $table.pjaxTable('load', testLoadParams);
+    
+    expect(sameRef === table).toBe(true);
+    expect(table.load).toHaveBeenCalledWith(testLoadParams);
+    expect(table._load).toHaveBeenCalledWith(testLoadParams);
+  });
+
   it('should refresh', function() {
     var table = $table.pjaxTable({});
     expect(typeof table.refresh === 'function').toBe(true);

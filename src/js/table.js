@@ -580,11 +580,21 @@
     /**
     *  Updates parameters and triggers a table refresh
     *  @param {Object} key value pairs to update the query state with
+    *  @param {Object} key value pairs to be used by load
     *  @return {Object} _this, the module instance object
     */
-    update: function(data) {
+    update: function(data, loadParams) {
       this.updateParameters(data);
-      this._load();
+      this._load(loadParams);
+      return this;
+    },
+
+    /**
+    *  @param {Object} key value pairs to be used by load
+    *  @return {Object} _this, the module instance object
+    */
+    load: function(loadParams) {
+      this._load(loadParams);
       return this;
     },
 
