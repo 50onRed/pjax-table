@@ -5,40 +5,45 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased][unreleased]
 - base ajax plugin in consideration
 
-# [1.2.5] - 2015-5-28
+# [1.2.6] - 2015-06-04
+### Added
+- Added a queryState option so that you can initialize the table with a state that is separate from / in addition to the state synced from data attributes. The use case is for other
+page components which drive table state but are not tied directly to the table, such as a date picker that provides a date range.
+
+# [1.2.5] - 2015-05-28
 ### Changed
 - changed the url fallback to be window.location.pathname ( the path without the query string ) which fixes a bug with query arg duplication. Bug was not completely addressed in 1.2.4
 
-# [1.2.4] - 2015-5-28
+# [1.2.4] - 2015-05-28
 ### Changed
 - changed the url fallback to be empty string ( the current base url ) which fixes a bug with query arg duplication
 
-# [1.2.3] - 2015-5-11
+# [1.2.3] - 2015-05-11
 ### Changed
 - fix search element reference
 
-# [1.2.2] - 2015-5-11
+# [1.2.2] - 2015-05-11
 ### Changed
 - change keydown to keyup
 ### Removed
 - preventDefault from keydown which was breaking the input
 
-# [1.2.1] - 2015-5-11
+# [1.2.1] - 2015-05-11
 ### Changed
 - fixes a variable reference bug in table search
 - improves the widget constructor for search to match that of pjaxTable
 
-# [1.2.0] - 2015-4-28
+# [1.2.0] - 2015-04-28
 ### Changed
 - updated current-page and current-perpage attribute location to be on the table element, this is an adjustment
 similar to 1.1.0, to be consistent with the python library
 
-# [1.1.0] - 2015-4-16
+# [1.1.0] - 2015-04-16
 ### Changed
 - updated current-sort-order and default-sort-order to use "direction" instead of "order", although technically
 a breaking change, it is a fix to be in line with the current python library
 
-# [1.0.4] - 2015-3-30
+# [1.0.4] - 2015-03-30
 ### Added
 - added travis-ci integration, .travis.yml and test script in package.json are now configured to run tests on push
 
@@ -47,11 +52,11 @@ a breaking change, it is a fix to be in line with the current python library
 - updated markdown tables to html tables to fix rendering
 - update bower.json for publish
 
-# [1.0.3] - 2015-3-29
+# [1.0.3] - 2015-03-29
 ### Changed
 - moved standalone index.html page to the standalone directory and adjusted paths
 
-# [1.0.2] - 2015-3-29
+# [1.0.2] - 2015-03-29
 ### Added
 - undefined reference in closure
 
@@ -60,11 +65,11 @@ a breaking change, it is a fix to be in line with the current python library
 - prevPage handler now prevents negative numbers with Math.max
 - total rows parsing now uses bitwise or
 
-# [1.0.1] - 2015-3-24
+# [1.0.1] - 2015-03-24
 ### Removed
 - remove min-height from table-cell-wrapper class
 
-# [1.0.0] - 2015-3-24
+# [1.0.0] - 2015-03-24
 ### Added
 - pjax table now defines its own plugin code
 - calling methods through jquery, i.e. $el.pjaxTable('update') only allows
@@ -94,12 +99,12 @@ and all data attributes should be defined on the table element.
 script on the 'table:load' event.
 - custom-filters query addition removed, use table:load and updateParameters for customization
 
-# [0.2.0] - 2015-3-10
+# [0.2.0] - 2015-03-10
 ## Added
 - load mask support with spin.js under an enableLoadMask flag
 - loadMaskConfig for spin.js configuration
 
-# [0.1.7] - 2015-3-10
+# [0.1.7] - 2015-03-10
 ## Changed
 - widget upgraded to 1.0.0
 - widget registration requires flag for the revealing module
