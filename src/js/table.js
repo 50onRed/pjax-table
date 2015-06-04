@@ -169,21 +169,21 @@
 
     _load: function(params) {
       if (!this._ajaxOnly) {
-        return $.pjax({
+        return $.pjax($.extend({
           url: this._url,
           data: this._queryState,
           push: this._pushState,
           container: this._pjaxContainer
-        });
+        }, params));
       }
 
       this._addLoadMask();
-      return $.ajax({
+      return $.ajax($.extend({
         type: 'GET',
         url: this._url,
         data: this._queryState,
         context: this
-      })
+      }, params))
       .done(this._onAjaxSuccess)
       .fail(this._onAjaxError);
     },
