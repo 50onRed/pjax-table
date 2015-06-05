@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased][unreleased]
 - base ajax plugin in consideration
 
+# [1.4.0] - 2015-06-05
+### Added
+- auto init tables are now configurable through a global config object window.PjaxTableConfig
+
 # [1.3.0] - 2015-06-04
 ### Added
 - a public load method which resembles refresh but accepts load parameters to be used by ajax/pjax
