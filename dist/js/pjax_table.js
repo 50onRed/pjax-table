@@ -792,7 +792,7 @@
   };
 
   // auto-init tables
-  $(function(){ $('[data-pjax-table][data-auto-init]').pjaxTable({}); });
+  $(function(){ $('[data-pjax-table][data-auto-init]').pjaxTable(window.PjaxTableConfig = window.PjaxTableConfig || {}); });
 })(jQuery, window, undefined);
 
 (function($) {
