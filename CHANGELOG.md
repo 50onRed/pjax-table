@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased][unreleased]
 - base ajax plugin in consideration
 
+# [1.4.1] - 2015-06-08
+### Changed
+- change data('url') to data('pjax-url') fixing a previous break in compatibility with python
+
 # [1.4.0] - 2015-06-05
 ### Added
 - auto init tables are now configurable through a global config object window.PjaxTableConfig
