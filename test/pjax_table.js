@@ -52,7 +52,7 @@ describe('pjax table', function() {
 
     // todo test options reference
 
-    expect(table._url).toEqual('/context.html'); // jasmine/karma default?
+    expect(table._url).toEqual('/context.html'); // jasmine/karma
     expect(table._ajaxOnly).toEqual(false);
     expect(table._pushState).toEqual(true);
     expect(table._paginated).toEqual(true);
