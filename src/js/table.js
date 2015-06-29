@@ -95,7 +95,8 @@
     this._pageQueryKey = this._options.pageQueryKey || this._$el.data('page-query-key') || 'page';
     this._perPageQueryKey = this._options.perPageQueryKey || this._$el.data('perpage-query-key') || 'perpage';
     this._searchQueryKey = this._options.searchQueryKey || this._$el.data('search-query-key') || 'q';
-    
+    this._querySyncFn = this._options.querySyncFn || null;
+
     this._totalRows = null;
     
     var searchId = this._options.searchId || this._$el.data('search-id') || null;
@@ -224,6 +225,10 @@
         this._syncSearch(searchStr);
       } else {
         this._desyncSearch();
+      }
+
+      if (typeof this._querySyncFn === 'function') {
+        $.extend(this._queryState, this._querySyncFn($table))
       }
     },
 
