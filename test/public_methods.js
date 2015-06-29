@@ -76,7 +76,7 @@ describe('pjax table public methods', function() {
     
     spyOn(table, 'getUrl').and.callThrough();
 
-    expect($table.pjaxTable('getUrl')).toEqual('/');
+    expect($table.pjaxTable('getUrl')).toEqual('/context.html'); // jasmine/karma default?
     expect(table.getUrl).toHaveBeenCalled();
   });
 
