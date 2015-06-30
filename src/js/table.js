@@ -425,7 +425,7 @@
     *
     *   @param {Array.<object>}
     *     @param {string} (definition.target) the plugin target selector to be used with find on the row
-    *     @param {string} (definition.costructorName) the name of the plugin constructor
+    *     @param {string} (definition.constructorName) the name of the plugin constructor
     *     @param {object} (definition.options) options to be passed to the plugin (currently is not allowed to override table query state or row record)
     */
     _applyPlugins: function(pluginDefinitions) {
@@ -435,7 +435,8 @@
           if (!$currentTarget.data('plugin-initialized')) {
             $currentTarget[definition.constructorName]($.extend({}, definition.options, {
               queryState: $.extend({}, this._queryState), // copy
-              record: this._getRecord($currentTarget.closest('tr').get(0)) // creates a new object based on DOM attributes
+              record: this._getRecord($currentTarget.closest('tr').get(0)), // creates a new object based on DOM attributes
+              event: e
             }));
             $currentTarget.data('plugin-initialized', true);
           }

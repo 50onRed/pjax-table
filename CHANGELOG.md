@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased][unreleased]
 - base ajax plugin in consideration
 
+# [1.4.3] - 2015-06-30
+### Added
+- added an event object to plugins's `options`
+
 # [1.4.2] - 2015-06-29
 ### Added
 - added an optional function "syncQueryFn" for syncing the query state from attributes not explicit in the table js, e.g. search and filter status
