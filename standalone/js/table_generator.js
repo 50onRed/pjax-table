@@ -1,5 +1,5 @@
-(function(Fifty, data) {
-  var templates = Fifty.templates;
+(function(UI, data) {
+  var templates = UI.templates;
   var body_cell = templates.body_cell;
   var body_checkbox_cell = templates.body_checkbox_cell;
   var body_row = templates.body_row;
@@ -87,8 +87,8 @@
     return table_html;
   }
 
-  Fifty.modules = Fifty.modules || {};
-  Fifty.modules.tableGenerator = {
+  UI.modules = UI.modules || {};
+  UI.modules.tableGenerator = {
     generate: generate
   };
-})(Fifty = Fifty || {}, data);
+})(window.UI = window.UI || {}, data);

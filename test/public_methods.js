@@ -4,7 +4,7 @@ describe('pjax table public methods', function() {
   var $table;
 
   beforeEach(function() {
-    $tableContainer.html(Fifty.modules.tableGenerator.generate());
+    $tableContainer.html(UI.modules.tableGenerator.generate());
     $table = $tableContainer.find('#pjax-table');
   });
 

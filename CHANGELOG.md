@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased][unreleased]
 - base ajax plugin in consideration
 
+# [1.4.4] - 2015-07-01
+### Changed
+- namespace updates to exports and test files
+
 # [1.4.3] - 2015-06-30
 ### Added
 - added an event object to plugins's `options`

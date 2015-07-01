@@ -1,9 +1,9 @@
-this["Fifty"] = this["Fifty"] || {};
-this["Fifty"]["templates"] = this["Fifty"]["templates"] || {};
-this["Fifty"]["templates"]["body_cell"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+this["UI"] = this["UI"] || {};
+this["UI"]["templates"] = this["UI"]["templates"] || {};
+this["UI"]["templates"]["body_cell"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
     var helper, alias1=helpers.helperMissing, alias2="function", alias3=this.escapeExpression;
 
-  return "<td class=\"fifty-table-cell\" data-property=\""
+  return "<td class=\"pjax-table-cell\" data-property=\""
     + alias3(((helper = (helper = helpers.property || (depth0 != null ? depth0.property : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"property","hash":{},"data":data}) : helper)))
     + "\" data-value=\""
     + alias3(((helper = (helper = helpers.value || (depth0 != null ? depth0.value : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"value","hash":{},"data":data}) : helper)))
@@ -11,56 +11,56 @@ this["Fifty"]["templates"]["body_cell"] = Handlebars.template({"compiler":[6,">=
     + alias3(((helper = (helper = helpers.display_value || (depth0 != null ? depth0.display_value : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"display_value","hash":{},"data":data}) : helper)))
     + "</td>";
 },"useData":true});
-this["Fifty"]["templates"]["body_checkbox_cell"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+this["UI"]["templates"]["body_checkbox_cell"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
     var helper;
 
-  return "<td class=\"fifty-table-cell\" data-property=\"id\" data-value=\""
+  return "<td class=\"pjax-table-cell\" data-property=\"id\" data-value=\""
     + this.escapeExpression(((helper = (helper = helpers.value || (depth0 != null ? depth0.value : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"value","hash":{},"data":data}) : helper)))
     + "\">\n  <input type=\"checkbox\">\n</td>";
 },"useData":true});
-this["Fifty"]["templates"]["body_row"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+this["UI"]["templates"]["body_row"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
     var stack1, helper;
 
-  return "<tr class=\"fifty-table-row\">"
+  return "<tr class=\"pjax-table-row\">"
     + ((stack1 = ((helper = (helper = helpers.cells || (depth0 != null ? depth0.cells : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"cells","hash":{},"data":data}) : helper))) != null ? stack1 : "")
     + "</tr>";
 },"useData":true});
-this["Fifty"]["templates"]["footer_cell"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-    return "<td class=\"fifty-table-footer fifty-table-footer-static-content\" colspan=\"7\"></td>";
+this["UI"]["templates"]["footer_cell"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+    return "<td class=\"pjax-table-footer pjax-table-footer-static-content\" colspan=\"7\"></td>";
 },"useData":true});
-this["Fifty"]["templates"]["footer_row"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+this["UI"]["templates"]["footer_row"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
     var stack1, helper;
 
-  return "<tr class=\"fifty-table-footer-row\">"
+  return "<tr class=\"pjax-table-footer-row\">"
     + ((stack1 = ((helper = (helper = helpers.cells || (depth0 != null ? depth0.cells : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"cells","hash":{},"data":data}) : helper))) != null ? stack1 : "")
     + "</tr>";
 },"useData":true});
-this["Fifty"]["templates"]["header_cell"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+this["UI"]["templates"]["header_cell"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
     var helper, alias1=helpers.helperMissing, alias2="function", alias3=this.escapeExpression;
 
-  return "<th class=\"fifty-table-header sortable\" \n  data-sortable=\"true\" \n  data-property=\""
+  return "<th class=\"pjax-table-header sortable\" \n  data-sortable=\"true\" \n  data-property=\""
     + alias3(((helper = (helper = helpers.property || (depth0 != null ? depth0.property : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"property","hash":{},"data":data}) : helper)))
     + "\" \n  data-current-sort-direction=\""
     + alias3(((helper = (helper = helpers.current_sort || (depth0 != null ? depth0.current_sort : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"current_sort","hash":{},"data":data}) : helper)))
     + "\" \n  data-default-sort-direction=\"asc\">\n  "
     + alias3(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"name","hash":{},"data":data}) : helper)))
-    + "\n  <span class=\"fifty-table-sort-indicator\">\n    <i class=\"fa fa-caret-"
+    + "\n  <span class=\"pjax-table-sort-indicator\">\n    <i class=\"fa fa-caret-"
     + alias3((helpers.sortIcon || (depth0 && depth0.sortIcon) || alias1).call(depth0,(depth0 != null ? depth0.current_sort : depth0),{"name":"sortIcon","hash":{},"data":data}))
     + "\"></i>\n  </span>\n</th>\n";
 },"useData":true});
-this["Fifty"]["templates"]["header_checkbox_cell"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-    return "<th class=\"fifty-table-header sortable\" \n  data-property=\"id\" \n  data-select-all-enabled=\"true\">\n  <input type=\"checkbox\">\n  <span class=\"fifty-table-sort-indicator\">\n    <i class=\"fa fa-caret-"
+this["UI"]["templates"]["header_checkbox_cell"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+    return "<th class=\"pjax-table-header sortable\" \n  data-property=\"id\" \n  data-select-all-enabled=\"true\">\n  <input type=\"checkbox\">\n  <span class=\"pjax-table-sort-indicator\">\n    <i class=\"fa fa-caret-"
     + this.escapeExpression((helpers.sortIcon || (depth0 && depth0.sortIcon) || helpers.helperMissing).call(depth0,(depth0 != null ? depth0.current_sort : depth0),{"name":"sortIcon","hash":{},"data":data}))
     + "\"></i>\n  </span>\n</th>\n";
 },"useData":true});
-this["Fifty"]["templates"]["header_row"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+this["UI"]["templates"]["header_row"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
     var stack1, helper;
 
-  return "<tr class=\"fifty-table-header-row\">"
+  return "<tr class=\"pjax-table-header-row\">"
     + ((stack1 = ((helper = (helper = helpers.cells || (depth0 != null ? depth0.cells : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"cells","hash":{},"data":data}) : helper))) != null ? stack1 : "")
     + "</tr>";
 },"useData":true});
-this["Fifty"]["templates"]["pagination"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
+this["UI"]["templates"]["pagination"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
     var stack1, helper, alias1=helpers.helperMissing, alias2="function", alias3=this.escapeExpression;
 
   return "    <div class=\"btn-group\">\n      <button type=\"button\" class=\"btn btn-default btn-sm ui-prev-page\" "
@@ -87,7 +87,7 @@ this["Fifty"]["templates"]["pagination"] = Handlebars.template({"1":function(dep
 },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
     var stack1, helper, alias1=helpers.helperMissing, alias2="function", alias3=this.escapeExpression;
 
-  return "<div class=\"fifty-table-pagination ui-pagination\">\n  <div class=\"pull-left btn-toolbar\">\n    <div class=\"dropdown btn-group\" data-per-page=\""
+  return "<div class=\"pjax-table-pagination ui-pagination\">\n  <div class=\"pull-left btn-toolbar\">\n    <div class=\"dropdown btn-group\" data-per-page=\""
     + alias3(((helper = (helper = helpers.$perpage || (depth0 != null ? depth0.$perpage : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"$perpage","hash":{},"data":data}) : helper)))
     + "\">\n      <button data-toggle=\"dropdown\" class=\"btn btn-default btn-sm dropdown-toggle\">\n        <span class=\"dropdown-label\">Per Page "
     + alias3(((helper = (helper = helpers.current_perpage || (depth0 != null ? depth0.current_perpage : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"current_perpage","hash":{},"data":data}) : helper)))
@@ -101,7 +101,7 @@ this["Fifty"]["templates"]["pagination"] = Handlebars.template({"1":function(dep
     + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.on_last_page : depth0),{"name":"if","hash":{},"fn":this.program(1, data, 0),"inverse":this.program(4, data, 0),"data":data})) != null ? stack1 : "")
     + "  </div>\n</div>\n";
 },"useData":true});
-this["Fifty"]["templates"]["pagination_page_item"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
+this["UI"]["templates"]["pagination_page_item"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
     return " active ";
 },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
     var stack1, helper, alias1=helpers.helperMissing, alias2="function", alias3=this.escapeExpression;
@@ -114,7 +114,7 @@ this["Fifty"]["templates"]["pagination_page_item"] = Handlebars.template({"1":fu
     + alias3(((helper = (helper = helpers.index || (depth0 != null ? depth0.index : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"index","hash":{},"data":data}) : helper)))
     + "</a>\n</li>";
 },"useData":true});
-this["Fifty"]["templates"]["table"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+this["UI"]["templates"]["table"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
     var stack1, helper, alias1=helpers.helperMissing, alias2="function", alias3=this.escapeExpression;
 
   return "<div id=\"pjax-table\"\n  data-pjax-table \n  data-pjax-container=\"#pjax-table\"\n  data-url=\"/\" >\n  <table class=\"table pjax-table\"\n    data-total-rows=\""
