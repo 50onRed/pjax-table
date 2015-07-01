@@ -15,7 +15,7 @@ var runSequence = require('run-sequence');
 
 var pkg = require('./package.json');
 var banner = ['/*!',
-  ' * 50onRed - PJAX Table v<%= pkg.version %> (<%= pkg.homepage %>)',
+  ' * PJAX Table v<%= pkg.version %> (<%= pkg.homepage %>)',
   ' * Copyright ' + (new Date()).getFullYear(),
   ' * <%= pkg.author %>',
   ' */\n'
@@ -69,7 +69,7 @@ gulp.task('templates', function(){
     .pipe(handlebars())
     .pipe(wrap('Handlebars.template(<%= contents %>)'))
     .pipe(declare({
-      namespace: 'Fifty.templates',
+      namespace: 'UI.templates',
       noRedeclare: true, // Avoid duplicate declarations
     }))
     .pipe(concat('templates.js'))

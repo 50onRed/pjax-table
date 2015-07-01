@@ -4,7 +4,7 @@ describe('pjax table protected methods', function() {
   var $table;
 
   beforeEach(function() {
-    $tableContainer.html(Fifty.modules.tableGenerator.generate());
+    $tableContainer.html(UI.modules.tableGenerator.generate());
     $table = $tableContainer.find('#pjax-table');
   });
 
@@ -558,7 +558,6 @@ describe('pjax table protected methods', function() {
 
   //   // define a plugin to be instanitated on click
   //   // the plugin lifecycle should be testable
-  //   // { target: '[data-fifty-editable]', constructorName: 'fiftyEditable' }
   // });
     
   // TODO: consider checks for selectors used
