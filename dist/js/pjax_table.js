@@ -822,7 +822,7 @@
   };
 
   PjaxTableSearch.prototype._onClickSearch = function(e) {
-    this._$el.trigger('search:submit', $searchFilter.val());
+    this._$el.trigger('search:submit', this._$searchFilter.val());
   };
 
   PjaxTableSearch.prototype._onInputKeyup = function(e) {
