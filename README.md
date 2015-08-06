@@ -23,7 +23,11 @@ The documentation for pjax-table is available [through github pages](http://50on
 
     // install client dependencies
     bower install
-
-    // (default task) cleans and then builds standalone and distributable versions
+    
+    // after making changes, bump and appropriate version
+    // see [gulp-bump](https://github.com/stevelacy/gulp-bump) for semver options
+    gulp bump-patch 
+    
+    // (default task) cleans and then builds standalone and distributable versions with the new version
     gulp
 
