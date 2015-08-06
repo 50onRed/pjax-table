@@ -1,8 +1,0 @@
-[11:33:06] Warning: gulp version mismatch:
-[11:33:06] Global gulp is 3.9.0
-[11:33:06] Local gulp is 3.8.11
-[11:33:06] Using gulpfile ~/fifty/pjax-table/gulpfile.js
-[11:33:06] Starting 'bump-patch'...
-[11:33:06] Bumped version to: 1.4.6
-[11:33:06] Bumped version to: 1.4.6
-[11:33:06] Finished 'bump-patch' after 28 ms
