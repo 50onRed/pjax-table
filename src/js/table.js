@@ -278,6 +278,7 @@
 
     _onPjaxError: function (e, xhr, textStatus, error, options) {
       e.stopPropagation();
+      e.preventDefault(); // prevent retry
       this._removeLoadMask();
       this._$el.trigger('table:error');
     },
