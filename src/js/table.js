@@ -459,7 +459,7 @@
       if (this._options.refreshEvents) {
         length = this._options.refreshEvents.length;
         for (var i = 0; i < length; i++) {
-          refreshEvent = options.refreshEvents[i];
+          refreshEvent = this._options.refreshEvents[i];
           if (refreshEvent.filter) {
             this._$el.on(refreshEvent.eventName, refreshEvent.filter, this._onPluginRefreshEvent.bind(this));
           } else {

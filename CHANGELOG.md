@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased][unreleased]
 - base ajax plugin in consideration
 
+# [1.4.6] - 2015-08-14
+### Fixed
+- Fixes incorrect options reference leftover from revealing module
+
 # [1.4.5] - 2015-08-06
 ### Changed
 - Fixes incorrect reference of `$searchFilter` to `this._$searchFilter.val()` in the `PjaxTableSearch._onClickSearch()` method
