@@ -5,9 +5,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased][unreleased]
 - base ajax plugin in consideration
 
-# [1.4.6] - 2015-08-14
+# [1.4.7] - 2015-08-14
 ### Fixed
 - Fixes incorrect options reference leftover from revealing module
+
+# [1.4.6] - 2015-08-10
+### Changed
+- Prevents retry on failed load
 
 # [1.4.5] - 2015-08-06
 ### Changed
