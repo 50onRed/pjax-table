@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased][unreleased]
 - base ajax plugin in consideration
 
+# [1.4.8] - 2015-08-20
+### Changed
+- Reset the page to 1 when changing sort order
+
 # [1.4.7] - 2015-08-14
 ### Fixed
 - Fixes incorrect options reference leftover from revealing module
