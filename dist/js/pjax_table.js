@@ -290,6 +290,7 @@
 
       this._$el.trigger('table:sort', this._createSortQuery(property, direction));
       this._syncSort(property, direction);
+      this._syncPage(1); // reset the page to 1 when changing sort
       this._load();
     },
 
