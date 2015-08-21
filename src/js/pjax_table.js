@@ -1,5 +1,6 @@
 'use strict';
 var PjaxTable = require('./table');
+var slice = Array.prototype.slice;
 
 $.fn.pjaxTable = function(options) {
   var args = slice.call(arguments);
