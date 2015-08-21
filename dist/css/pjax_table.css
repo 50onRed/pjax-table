@@ -1,5 +1,5 @@
 /*!
- * PJAX Table v1.4.8 ()
+ * PJAX Table v1.4.9 ()
  * Copyright 2015
  * 
  */

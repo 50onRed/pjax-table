@@ -1,7 +1,7 @@
 (function ($, window, undefined) {
   'use strict';
   var slice = Array.prototype.slice;
-  
+
   /**
   *   Table implements script controls for pjax table
   *   "_" prefixed methods are considered internal usage only
@@ -44,7 +44,7 @@
   *   @param {number} data-current-page the current page number
   *   @param {number} data-current-perpage the current perpage number
   *
-  *   Notes on search module: 
+  *   Notes on search module:
   *     Events which are registered within the table
   *     search:submit triggers a table search query when triggered by the element specified in options.search_id
   *     search:clear triggers a clearance of the current search query when triggered by the element specified in options.search_id
@@ -72,7 +72,7 @@
     this._$tbody = null;
 
     this._url = this._options.url || this._$el.data('pjax-url') || window.location.pathname;
-    
+
     if (this._options.ajaxOnly !== undefined) {
       this._ajaxOnly = this._options.ajaxOnly;
     } else {
@@ -96,20 +96,21 @@
     this._perPageQueryKey = this._options.perPageQueryKey || this._$el.data('perpage-query-key') || 'perpage';
     this._searchQueryKey = this._options.searchQueryKey || this._$el.data('search-query-key') || 'q';
     this._querySyncFn = this._options.querySyncFn || null;
+    this._loadSyncFn = this._options.loadSyncFn || null;
 
     this._totalRows = null;
-    
+
     var searchId = this._options.searchId || this._$el.data('search-id') || null;
     this._$searchBox = searchId ? $(searchId) : null;
 
     this._sortMap = { asc: 'desc', desc: 'asc' };
     this._queryState = $.extend({}, this._options.queryState);
-    
+
     this._init();
   }
 
   $.extend(PjaxTable.prototype, {
-    
+
     _noDataTemplate: function(numColumns) {
       return [
         '<tr>',
@@ -195,7 +196,7 @@
       this._$el.append($loadMask);
       $loadMask.spin(this._options.loadMaskConfig || 'small');
     },
-    
+
     _removeLoadMask: function() {
       this._$el.find('.ui-load-mask').remove();
       this._$el.css({ position: '' });
@@ -243,6 +244,9 @@
         this._$tbody.html(this._noDataTemplate(this.getNumColumns()));
       }
 
+      if (typeof this._loadSyncFn === 'function') {
+        $.extend(this._queryState, this._loadSyncFn(this._$el.find('table')));
+      }
       this._$el.trigger('table:load');
     },
 
@@ -386,7 +390,7 @@
       var lastSelectedIndex = $allVisibleRows.index($lastSelectedTr);
       var start = Math.min(currentSelectedIndex, lastSelectedIndex);
       var end = Math.max(currentSelectedIndex, lastSelectedIndex);
-      
+
       // if selecting from top down, don't process the first one
       if (lastSelectedIndex < currentSelectedIndex && $lastSelectedTr.hasClass('ui-selected')) {
         ++start;
@@ -471,7 +475,7 @@
     },
 
     /**
-    *  Enable / Disable change handling methods are used by select all to prevent each 
+    *  Enable / Disable change handling methods are used by select all to prevent each
     *  individual row from firing change events
     */
     _enableRowCheckboxChangeHandling: function() {
@@ -487,7 +491,7 @@
     _init: function() {
       this._syncQueryState();
       this._onTableLoaded();
-      
+
       // pjax timing out, we want to cancel the automatic retry
       this._$el.on('pjax:timeout', this._onPjaxTimeout.bind(this));
       this._$el.on('pjax:success', this._onPjaxSuccess.bind(this));
@@ -500,7 +504,7 @@
       this._$el.on('click', '.ui-page-select-dropdown > li', this._onPageSelect.bind(this));
       this._$el.on('click', '.ui-prev-page', this._onPrevPageSelect.bind(this));
       this._$el.on('click', '.ui-next-page', this._onNextPageSelect.bind(this));
-      this._$el.on('change', 
+      this._$el.on('change',
         'th[data-select-all-enabled="true"] input[type="checkbox"]',
         this._onHeaderCheckboxChange.bind(this)
       );
@@ -511,7 +515,7 @@
         this._$searchBox.on('search:submit', this._onSubmitSearch.bind(this));
         this._$searchBox.on('search:clear', this._onClearSearch.bind(this));
       }
-    
+
       this.refreshPlugins();
       this._initPluginRefreshEvents();
     },
@@ -761,7 +765,7 @@
       return this._totalRows;
     }
   });
-    
+
   $.fn.pjaxTable = function(options) {
     var args = slice.call(arguments);
     var values = []; // return values
@@ -794,7 +798,7 @@
         values.push(widget);
       }
     });
-    
+
     // return only 1 value if possible
     return values.length > 1 ? values : values[0];
   };
