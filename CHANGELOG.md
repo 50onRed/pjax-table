@@ -5,6 +5,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased][unreleased]
 - base ajax plugin in consideration
 
+# [1.4.9] - 2015-08-21
+### Added
+- A load sync function. In addition to querySync ( to likely be renamed in the next major release ), the ability to
+specify a function to be called on every load is desired. querySync currently executes once on page load. loadSync 
+applies to every load after that ( or initial page load if table data is lazy-loaded ).
+
 # [1.4.8] - 2015-08-20
 ### Changed
 - Reset the page to 1 when changing sort order
