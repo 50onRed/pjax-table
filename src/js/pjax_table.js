@@ -2,6 +2,7 @@
 var PjaxTable = require('./table');
 var slice = Array.prototype.slice;
 
+// expose as jquery plugin
 $.fn.pjaxTable = function(options) {
   var args = slice.call(arguments);
   var values = []; // return values
@@ -38,6 +39,9 @@ $.fn.pjaxTable = function(options) {
   // return only 1 value if possible
   return values.length > 1 ? values : values[0];
 };
+
+// expose construtor globally
+window.PjaxTable = PjaxTable;
 
 // auto-init tables
 $(function(){ $('[data-pjax-table][data-auto-init]').pjaxTable(window.PjaxTableConfig = window.PjaxTableConfig || {}); });

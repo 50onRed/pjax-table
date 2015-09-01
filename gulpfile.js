@@ -79,8 +79,7 @@ var paths = {
 
 // add custom browserify options here
 var customOpts = {
-  entries: paths.js,
-  standalone: 'PjaxTable'
+  entries: paths.js
 };
 var dev_opts = assign({ debug: true }, watchify.args, customOpts);
 var dev_b = watchify(browserify(dev_opts));
