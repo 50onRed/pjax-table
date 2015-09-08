@@ -1,6 +1,6 @@
 {
   "name": "pjax_table",
-  "version": "1.4.9",
+  "version": "1.4.10",
   "private": true,
   "description": "PJAX Table JS",
   "devDependencies": {
