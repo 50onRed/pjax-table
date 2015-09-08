@@ -760,4 +760,9 @@ $.extend(PjaxTable.prototype, {
   }
 });
 
-module.exports = PjaxTable;
+if (typeof module === 'object') {
+  module.exports = PjaxTable;
+} else if (typeof define === 'function') {
+  define(function() { return PjaxTable; });
+}
+window.extend = extend;
