@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased][unreleased]
 - base ajax plugin in consideration
 
+# [1.4.10] - 2015-09-08
+### Fixed
+- Table cell sizing in broken in firefox by unnecessary vertical align
+
 # [1.4.9] - 2015-08-21
 ### Added
 - A load sync function. In addition to querySync ( to likely be renamed in the next major release ), the ability to
