@@ -1,4 +1,16 @@
 'use strict';
+var widget = require('./util/widget');
+
+// Bundled Plugin Mixins
+var CellPluginMixin = require('./cell_plugins/cell_plugin_mixin');
+var AjaxCellMixin = require('./cell_plugins/ajax_cell_mixin');
+
+// Bundled Plugins, ready for configuration
+var EditableDropdownPlugin = require('./cell_plugins/editable_dropdown');
+var RemoveRowPlugin = require('./cell_plugins/remove_row');
+
+// Not Bundled
+// EditableCellPlugin ( because it includes multiple additional dependencies )
 
 /**
 *   Table implements script controls for pjax table
@@ -765,4 +777,15 @@ if (typeof module === 'object') {
 } else if (typeof define === 'function') {
   define(function() { return PjaxTable; });
 }
-window.extend = extend;
+
+// expose table and plugins so they may be easily extended at will
+window.PjaxTable = PjaxTable;
+window.PjaxTableShared = {
+  CellPluginMixin: CellPluginMixin,
+  AjaxCellMixin: AjaxCellMixin,
+  EditableDropdown: EditableDropdown,
+  RemoveRowPlugin: RemoveRowPlugin
+};
+widget('pjaxTable', PjaxTable);
+// auto init
+$(function(){ $('[data-pjax-table][data-auto-init]').pjaxTable(window.PjaxTableConfig = window.PjaxTableConfig || {}); });

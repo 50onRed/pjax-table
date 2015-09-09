@@ -1,4 +1,5 @@
 'use strict';
+var widget = require('../util/widget');
 
 /**
 *
@@ -39,4 +40,14 @@ SearchBox.prototype._clearSearch = function(e) {
   this._$el.find('.ui-close').addClass('hidden');
 };
 
-module.exports = SearchBox;
+if (typeof module === 'object') {
+  module.exports = SearchBox;
+} else if (typeof define === 'function') {
+  define(function() { return SearchBox; });
+} else {
+  window.PjaxTableSearch = SearchBox;
+}
+
+widget('pjaxTableSearch', SearchBox);
+// auto init search boxes
+$(function() { $('[data-pjax-table-search][data-auto-init="true"]').pjaxTableSearch({}); });

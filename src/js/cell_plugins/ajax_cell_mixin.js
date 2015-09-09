@@ -1,7 +1,7 @@
 'use strict';
 var CellPluginMixin = require('./cell_plugin_mixin');
 
-function AjaxMixin(el, options) {
+function AjaxCellMixin(el, options) {
   CellPluginMixin.call(this, el, options);
 
   this._url = options.url || this._$el.data('url');
@@ -32,4 +32,11 @@ function AjaxMixin(el, options) {
   };
 }
 
-module.exports = AjaxMixin;
+if (typeof module === 'object') {
+  module.exports = AjaxCellMixin;
+} else if (typeof define === 'function') {
+  define(function() { return AjaxCellMixin; });
+} else {
+  window.AjaxCellMixin = AjaxCellMixin;
+}
+

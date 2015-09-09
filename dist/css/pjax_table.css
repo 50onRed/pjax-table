@@ -1,5 +1,5 @@
 /*!
- * PJAX Table v1.4.9 ()
+ * PJAX Table v1.5.0 ()
  * Copyright 2015
  * 
  */
@@ -13,7 +13,6 @@
 .table thead > tr > th {
   padding: 15px 15px;
   border-right: 1px solid #cecece;
-  vertical-align: middle;
 }
 .table .id-header,
 .table .status-header {
@@ -22,7 +21,6 @@
 .table tbody > tr > td {
   border: 1px solid #cecece;
   padding: 25px 15px 20px;
-  vertical-align: top;
 }
 .table tfoot > tr > td {
   border: 1px solid #cecece;

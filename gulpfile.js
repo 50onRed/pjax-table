@@ -53,10 +53,7 @@ var paths = {
     './package.json'
   ],
   js: [
-    './src/js/pjax_table.js',
-    './src/js/external_plugins/search_plugin.js',
-    './src/js/cell_plugins/cell_plugin_mixin.js',
-    './src/js/cell_plugins/ajax_mixin.js'
+    './src/js/pjax_table.js'
   ],
   standalone_vendor_css: [
     './bower_components/fontawesome/css/font-awesome.css'

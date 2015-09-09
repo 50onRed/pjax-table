@@ -87,3 +87,5 @@ function widget(name, widgetConstructor) {
 
   return builder;
 }
+
+module.exports = widget;

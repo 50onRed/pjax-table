@@ -14,4 +14,10 @@ function CellPluginMixin(el, options) {
     return this;
 }
 
-module.exports = CellPluginMixin;
+if (typeof module === 'object') {
+  module.exports = CellPluginMixin;
+} else if (typeof define === 'function') {
+  define(function() { return CellPluginMixin; });
+} else {
+  window.CellPluginMixin = CellPluginMixin;
+}
