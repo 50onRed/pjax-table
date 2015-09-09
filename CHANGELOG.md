@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+# [1.5.1] - 2015-09-09
+### Added
+  - bundle external search plugin as part of default build
+
 # [1.5.0] - 2015-09-09
 ### Added
   - cell plugin mixin, sets default element, record, and option references

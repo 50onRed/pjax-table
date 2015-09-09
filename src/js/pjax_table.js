@@ -5,9 +5,12 @@ var widget = require('./util/widget');
 var CellPluginMixin = require('./cell_plugins/cell_plugin_mixin');
 var AjaxCellMixin = require('./cell_plugins/ajax_cell_mixin');
 
-// Bundled Plugins, ready for configuration
+// Bundled Table Cell Plugins, ready for configuration
 var EditableDropdownPlugin = require('./cell_plugins/editable_dropdown');
 var RemoveRowPlugin = require('./cell_plugins/remove_row');
+
+// Bundled External Plugins
+var SearchBox = require('./external_plugins/search_box');
 
 // Not Bundled
 // EditableCellPlugin ( because it includes multiple additional dependencies )
@@ -784,7 +787,8 @@ window.PjaxTableShared = {
   CellPluginMixin: CellPluginMixin,
   AjaxCellMixin: AjaxCellMixin,
   EditableDropdownPlugin: EditableDropdownPlugin,
-  RemoveRowPlugin: RemoveRowPlugin
+  RemoveRowPlugin: RemoveRowPlugin,
+  SearchBox: SearchBox
 };
 widget('pjaxTable', PjaxTable);
 // auto init
