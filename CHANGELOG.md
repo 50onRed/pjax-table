@@ -3,8 +3,22 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
-- base ajax plugin in consideration
 
+# [1.5.0] - 2015-09-09
+### Added
+  - cell plugin mixin, sets default element, record, and option references
+  - ajax cell mixin, provides an ajax post default with some events
+  - editable dropdown, a plugin which posts information on change of a dropdown in a table cell
+  - remove row, a plugin which posts an id/primary key to remove a row as a record from the data set
+  - editable cell, a wrapper for x-editable to be used inside table cells
+  
+### Changed
+  - project now uses browserify to bundle itself 
+  - separated widget construction into a utility module
+  - search box widget code also separated, broken into new directory as an "external plugin" ( plugin that exists outside of the table )
+  - table constructor is now exposed on window in addition to being a jquery plugin
+  - new cell mixins/plugins are exposed through a PjaxTableShared object on window
+  
 # [1.4.10] - 2015-09-08
 ### Fixed
 - Table cell sizing in broken in firefox by unnecessary vertical align

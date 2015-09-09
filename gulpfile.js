@@ -1,18 +1,37 @@
 var gulp = require('gulp');
-var bump = require('gulp-bump');
-var concat = require('gulp-concat');
+
+// CSS Build
 var less = require('gulp-less');
 var cssmin = require('gulp-cssmin');
+
+// JS Build
+var watchify = require('watchify');
+var browserify = require('browserify');
+var source = require('vinyl-source-stream');
+var buffer = require('vinyl-buffer');
+var uglify = require('gulp-uglify');
+var jshint = require('gulp-jshint');
+
+// Utils
+var gutil = require('gulp-util');
+var del = require('del');
+var runSequence = require('run-sequence');
+var assign = require('lodash.assign');
+
+// Output
 var rename = require('gulp-rename');
 var header = require('gulp-header');
+
+// Standalone Templates
 var handlebars = require('gulp-handlebars');
 var wrap = require('gulp-wrap');
 var declare = require('gulp-declare');
-var jsValidate = require('gulp-jsvalidate');
-var uglify = require('gulp-uglify');
-var del = require('del');
-var runSequence = require('run-sequence');
+var concat = require('gulp-concat');
 
+// Versioning
+var bump = require('gulp-bump');
+
+// Configuration
 var pkg = require('./package.json');
 var banner = ['/*!',
   ' * PJAX Table v<%= pkg.version %> (<%= pkg.homepage %>)',
@@ -30,12 +49,11 @@ var output_names = {
 
 var paths = {
   json: [
-    './bower.json', 
+    './bower.json',
     './package.json'
   ],
   js: [
-    './src/js/table.js', 
-    './src/js/search.js'
+    './src/js/pjax_table.js'
   ],
   standalone_vendor_css: [
     './bower_components/fontawesome/css/font-awesome.css'
@@ -55,6 +73,16 @@ var paths = {
   less: ['./src/less/table.less'],
   templates: ['./src/templates/*.hbs'],
 };
+
+// add custom browserify options here
+var customOpts = {
+  entries: paths.js
+};
+var dev_opts = assign({ debug: true }, watchify.args, customOpts);
+var dev_b = watchify(browserify(dev_opts));
+
+var dist_opts = assign({}, watchify.args, customOpts);
+var dist_b = watchify(browserify(dist_opts));
 
 gulp.task('clean', function(cb) {
   del(['dist/**/*', 'standalone/js/vendor/*', 'standalone/js/templates.js'], cb);
@@ -93,20 +121,22 @@ gulp.task('standalone_vendor_fonts', function() {
 });
 
 gulp.task('js', function() {
-  return gulp.src(paths.js)
-    .pipe(jsValidate())
-    .pipe(concat(output_names.js))
+  return dev_b.bundle()
+    .on('error', gutil.log.bind(gutil, 'Browserify Error'))
+    .pipe(source('pjax_table.js'))
+    .pipe(buffer())
     .pipe(gulp.dest('./dist/js'));
 });
 
 gulp.task('js_min', function() {
-  return gulp.src(paths.js)
-    .pipe(jsValidate())
-    .pipe(concat(output_names.js))
-    .pipe(uglify({ preserveComments: 'some' }))
-    .pipe(header(banner, { pkg: pkg }))
-    .pipe(rename({ suffix: '.min' }))
-    .pipe(gulp.dest('./dist/js'));
+    return dist_b.bundle()
+      .on('error', gutil.log.bind(gutil, 'Browserify Error'))
+      .pipe(source('pjax_table.js'))
+      .pipe(buffer()) // for uglify
+      .pipe(uglify({ preserveComments: 'some' }))
+      .pipe(header(banner, { pkg: pkg }))
+      .pipe(rename({ suffix: '.min' }))
+      .pipe(gulp.dest('./dist/js'));
 });
 
 gulp.task('less', function() {
@@ -132,13 +162,9 @@ gulp.task('less_copy', function() {
 });
 
 gulp.task('default', function(callback){
-  runSequence('clean', [
-    'js', 
-    'js_min',
-    'less',
-    'lessmin',
+  runSequence('clean', 'js', 'js_min', 'less', 'lessmin', [
     'less_copy',
-    'templates', 
+    'templates',
     'standalone_vendor_js',
     'standalone_vendor_css',
     'standalone_vendor_fonts'

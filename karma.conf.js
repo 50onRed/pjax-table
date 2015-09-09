@@ -17,7 +17,7 @@ module.exports = function(config) {
       'standalone/js/templates.js',
       'standalone/js/data.js',
       'standalone/js/table_generator.js',
-      
+
       // test files
       'test/bind_polyfill.js',
       'test/pjax_table.js',
