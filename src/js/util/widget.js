@@ -64,7 +64,7 @@ function widget(name, widgetConstructor) {
           if (typeof widget.destroy === 'function') {
             widget.destroy();
           }
-          delete $el.data().pjaxTable;
+          delete $el.data()[finalName];
         } else if (typeof widget[options] === 'function' && options.charAt(0) !== '_') {
           methodReturn = widget[options].apply(widget, args.slice(1, args.length));
           values.push(methodReturn);
