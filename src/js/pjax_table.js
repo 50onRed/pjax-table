@@ -783,7 +783,7 @@ window.PjaxTable = PjaxTable;
 window.PjaxTableShared = {
   CellPluginMixin: CellPluginMixin,
   AjaxCellMixin: AjaxCellMixin,
-  EditableDropdown: EditableDropdown,
+  EditableDropdownPlugin: EditableDropdownPlugin,
   RemoveRowPlugin: RemoveRowPlugin
 };
 widget('pjaxTable', PjaxTable);
