@@ -78,7 +78,7 @@ var paths = {
 var customOpts = {
   entries: paths.js
 };
-var dev_opts = assign({ debug: true }, watchify.args, customOpts);
+var dev_opts = assign({}, watchify.args, customOpts);
 var dev_b = watchify(browserify(dev_opts));
 
 var dist_opts = assign({}, watchify.args, customOpts);
