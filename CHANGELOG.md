@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+# [1.5.2] - 2015-09-11
+### Removed
+  - debug flag from browserify build, fixes missing semi-colon in non-minified version
+
 # [1.5.1] - 2015-09-09
 ### Added
   - bundle external search plugin as part of default build
