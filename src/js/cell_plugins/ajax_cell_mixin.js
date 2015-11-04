@@ -4,9 +4,13 @@ var CellPluginMixin = require('./cell_plugin_mixin');
 function AjaxCellMixin(el, options) {
   CellPluginMixin.call(this, el, options);
 
+  this._formatter = options.formatter || null;
   this._url = options.url || this._$el.data('url');
 
   this._save = function save(data) {
+    if (typeof this._formatter === 'function') {
+      data = this._formatter(data);
+    }
     this._$el.trigger('plugin:before:save');
 
     return $.ajax({
