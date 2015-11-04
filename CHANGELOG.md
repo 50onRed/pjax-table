@@ -7,6 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 # [1.6.1] - 2015-11-04
 ### Fixed
   - conflicting init method in confirmable mixin
+  - mixin structure was incorrect
 
 # [1.6.0] - 2015-11-04
 ### Added
