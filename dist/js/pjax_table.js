@@ -190,13 +190,9 @@ function RemoveRowPlugin(element, options) {
 
   this._pk = this._$el.data('pk'); // could use this or options.record.id
 
-  this._init();
-}
-
-RemoveRowPlugin.prototype._init = function() {
-  // since click initializes, it is also a trigger. no addition handler is attached
+  this._$el.on('click', this._onClick.bind(this));
   this._onClick();
-};
+}
 
 RemoveRowPlugin.prototype._onClick = function(e) {
   this._save({ pk: this._pk });

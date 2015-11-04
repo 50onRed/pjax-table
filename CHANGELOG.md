@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+# [1.6.2] - 2015-11-04
+### Changed
+  - remove row plugin now registers a click handler in order to work well with confirmable
+
 # [1.6.1] - 2015-11-04
 ### Fixed
   - conflicting init method in confirmable mixin
