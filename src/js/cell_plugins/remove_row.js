@@ -1,6 +1,7 @@
 'use strict';
 var widget = require('../util/widget');
 var AjaxCellMixin = require('./ajax_cell_mixin');
+var ConfirmableMixin = require('./confirmable_mixin');
 
 /**
 *   A simple delete record by click plugin. Uses the row id (pk/primary key)
@@ -8,6 +9,7 @@ var AjaxCellMixin = require('./ajax_cell_mixin');
 */
 function RemoveRowPlugin(element, options) {
   AjaxCellMixin.call(this, element, options)
+  ConfirmableMixin.call(this, element, options);
 
   this._pk = this._$el.data('pk'); // could use this or options.record.id
 

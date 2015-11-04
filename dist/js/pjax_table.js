@@ -69,6 +69,41 @@ if (typeof module === 'object') {
 
 },{}],3:[function(require,module,exports){
 'use strict';
+
+/**
+*   A mixin that provides before and after hooks for ajax calls
+*/
+function ConfirmableMixin(element, options) {
+  this._beforeSave = options.beforeSave || null;
+
+  this._init();
+}
+
+ConfirmableMixin.prototype._init = function() {
+  if (typeof this._save === 'function') {
+    this._save = this._wrapFn(this._save, this._beforeSave, this);
+  }
+};
+
+ConfirmableMixin.prototype._wrapFn = function(fn, beforeFn, context) {
+  return function() {
+    var args = Array.prototype.slice.call(arguments);
+    beforeFn(this._$el, this._record, function() {
+      fn.apply(context, args);
+    });
+  };
+};
+
+if (typeof module === 'object') {
+  module.exports = ConfirmableMixin;
+} else if (typeof define === 'function') {
+  define(function() { return ConfirmableMixin; });
+} else {
+  window.ConfirmableMixin = ConfirmableMixin;
+}
+
+},{}],4:[function(require,module,exports){
+'use strict';
 var AjaxCellMixin = require('./ajax_cell_mixin');
 var widget = require('../util/widget');
 
@@ -143,10 +178,11 @@ if (typeof module === 'object') {
 
 widget('editableDropdownPlugin', EditableDropdownPlugin);
 
-},{"../util/widget":7,"./ajax_cell_mixin":1}],4:[function(require,module,exports){
+},{"../util/widget":8,"./ajax_cell_mixin":1}],5:[function(require,module,exports){
 'use strict';
 var widget = require('../util/widget');
 var AjaxCellMixin = require('./ajax_cell_mixin');
+var ConfirmableMixin = require('./confirmable_mixin');
 
 /**
 *   A simple delete record by click plugin. Uses the row id (pk/primary key)
@@ -154,6 +190,7 @@ var AjaxCellMixin = require('./ajax_cell_mixin');
 */
 function RemoveRowPlugin(element, options) {
   AjaxCellMixin.call(this, element, options)
+  ConfirmableMixin.call(this, element, options);
 
   this._pk = this._$el.data('pk'); // could use this or options.record.id
 
@@ -179,7 +216,7 @@ if (typeof module === 'object') {
 
 widget('removeRowPlugin', RemoveRowPlugin);
 
-},{"../util/widget":7,"./ajax_cell_mixin":1}],5:[function(require,module,exports){
+},{"../util/widget":8,"./ajax_cell_mixin":1,"./confirmable_mixin":3}],6:[function(require,module,exports){
 'use strict';
 var widget = require('../util/widget');
 
@@ -234,13 +271,14 @@ widget('pjaxTableSearch', SearchBox);
 // auto init search boxes
 $(function() { $('[data-pjax-table-search][data-auto-init="true"]').pjaxTableSearch({}); });
 
-},{"../util/widget":7}],6:[function(require,module,exports){
+},{"../util/widget":8}],7:[function(require,module,exports){
 'use strict';
 var widget = require('./util/widget');
 
 // Bundled Plugin Mixins
 var CellPluginMixin = require('./cell_plugins/cell_plugin_mixin');
 var AjaxCellMixin = require('./cell_plugins/ajax_cell_mixin');
+var ConfirmableMixin = require('./cell_plugins/confirmable_mixin');
 
 // Bundled Table Cell Plugins, ready for configuration
 var EditableDropdownPlugin = require('./cell_plugins/editable_dropdown');
@@ -1023,6 +1061,7 @@ window.PjaxTable = PjaxTable;
 window.PjaxTableShared = {
   CellPluginMixin: CellPluginMixin,
   AjaxCellMixin: AjaxCellMixin,
+  ConfirmableMixin: ConfirmableMixin,
   EditableDropdownPlugin: EditableDropdownPlugin,
   RemoveRowPlugin: RemoveRowPlugin,
   SearchBox: SearchBox
@@ -1031,7 +1070,7 @@ widget('pjaxTable', PjaxTable);
 // auto init
 $(function(){ $('[data-pjax-table][data-auto-init]').pjaxTable(window.PjaxTableConfig = window.PjaxTableConfig || {}); });
 
-},{"./cell_plugins/ajax_cell_mixin":1,"./cell_plugins/cell_plugin_mixin":2,"./cell_plugins/editable_dropdown":3,"./cell_plugins/remove_row":4,"./external_plugins/search_box":5,"./util/widget":7}],7:[function(require,module,exports){
+},{"./cell_plugins/ajax_cell_mixin":1,"./cell_plugins/cell_plugin_mixin":2,"./cell_plugins/confirmable_mixin":3,"./cell_plugins/editable_dropdown":4,"./cell_plugins/remove_row":5,"./external_plugins/search_box":6,"./util/widget":8}],8:[function(require,module,exports){
 'use strict';
 var slice = Array.prototype.slice;
 
@@ -1124,4 +1163,4 @@ function widget(name, widgetConstructor) {
 
 module.exports = widget;
 
-},{}]},{},[6]);
+},{}]},{},[7]);

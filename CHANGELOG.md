@@ -4,6 +4,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+# [1.6.0] - 2015-11-04
+### Added
+  - confirmable mixin, works in conjunction with any plugin implementing a _save method
+  
+### Changed
+  - remove row plugin now uses the confirmable mixin, a beforeSave function can be passed into the plugin config
+
 # [1.5.2] - 2015-09-11
 ### Removed
   - debug flag from browserify build, fixes missing semi-colon in non-minified version

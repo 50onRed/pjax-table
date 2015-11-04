@@ -4,6 +4,7 @@ var widget = require('./util/widget');
 // Bundled Plugin Mixins
 var CellPluginMixin = require('./cell_plugins/cell_plugin_mixin');
 var AjaxCellMixin = require('./cell_plugins/ajax_cell_mixin');
+var ConfirmableMixin = require('./cell_plugins/confirmable_mixin');
 
 // Bundled Table Cell Plugins, ready for configuration
 var EditableDropdownPlugin = require('./cell_plugins/editable_dropdown');
@@ -786,6 +787,7 @@ window.PjaxTable = PjaxTable;
 window.PjaxTableShared = {
   CellPluginMixin: CellPluginMixin,
   AjaxCellMixin: AjaxCellMixin,
+  ConfirmableMixin: ConfirmableMixin,
   EditableDropdownPlugin: EditableDropdownPlugin,
   RemoveRowPlugin: RemoveRowPlugin,
   SearchBox: SearchBox
