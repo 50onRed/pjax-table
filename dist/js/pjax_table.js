@@ -76,14 +76,10 @@ if (typeof module === 'object') {
 function ConfirmableMixin(element, options) {
   this._beforeSave = options.beforeSave || null;
 
-  this._init();
-}
-
-ConfirmableMixin.prototype._init = function() {
-  if (typeof this._save === 'function') {
+  if (typeof this._save === 'function' && typeof this._beforeSave === 'function') {
     this._save = this._wrapFn(this._save, this._beforeSave, this);
   }
-};
+}
 
 ConfirmableMixin.prototype._wrapFn = function(fn, beforeFn, context) {
   return function() {

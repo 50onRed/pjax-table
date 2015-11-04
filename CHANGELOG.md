@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+# [1.6.1] - 2015-11-04
+### Fixed
+  - conflicting init method in confirmable mixin
+
 # [1.6.0] - 2015-11-04
 ### Added
   - confirmable mixin, works in conjunction with any plugin implementing a _save method
