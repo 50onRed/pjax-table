@@ -10,7 +10,7 @@ function AjaxCellMixin(el, options) {
 
   this._save = function save(data) {
     if (typeof this._formatter === 'function') {
-      data = this._formatter(data);
+      data = this._formatter(this._$el, this._record, data);
     }
     this._$el.trigger('plugin:before:save');
 
