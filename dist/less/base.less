@@ -3,22 +3,25 @@
 }
 
 .table thead {
-  border: 1px solid @gray-light;
   background: @gray-light;
+}
+
+.table thead,
+.table > thead > tr > th,
+.table > tbody > tr > td,
+.table > tfoot > tr > td {
+  border: 1px solid @gray-light;
 }
 
 .table > thead > tr > th {
   padding: 15px 15px;
-  border: 1px solid @gray-light;
 }
 
 .table > tbody > tr > td {
-  border: 1px solid @gray-light;
   padding: 25px 15px 20px;
 }
 
-.table tfoot > tr > td {
-  border: 1px solid @gray-light;
+.table > tfoot > tr > td {
   background: @gray-light;
 }
 

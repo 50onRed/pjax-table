@@ -8,19 +8,21 @@
   position: relative;
 }
 .table thead {
-  border: 1px solid #cecece;
   background: #cecece;
+}
+.table thead,
+.table > thead > tr > th,
+.table > tbody > tr > td,
+.table > tfoot > tr > td {
+  border: 1px solid #cecece;
 }
 .table > thead > tr > th {
   padding: 15px 15px;
-  border: 1px solid #cecece;
 }
 .table > tbody > tr > td {
-  border: 1px solid #cecece;
   padding: 25px 15px 20px;
 }
-.table tfoot > tr > td {
-  border: 1px solid #cecece;
+.table > tfoot > tr > td {
   background: #cecece;
 }
 .table td .btn-group {
