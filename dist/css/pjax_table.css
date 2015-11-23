@@ -11,11 +11,11 @@
   border: 1px solid #cecece;
   background: #cecece;
 }
-.table thead > tr > th {
+.table > thead > tr > th {
   padding: 15px 15px;
   border: 1px solid #cecece;
 }
-.table tbody > tr > td {
+.table > tbody > tr > td {
   border: 1px solid #cecece;
   padding: 25px 15px 20px;
 }
