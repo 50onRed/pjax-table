@@ -1,5 +1,5 @@
 /*!
- * PJAX Table v1.6.3 ()
+ * PJAX Table v1.6.4 ()
  * Copyright 2015
  * 
  */
@@ -13,11 +13,7 @@
 }
 .table thead > tr > th {
   padding: 15px 15px;
-  border-right: 1px solid #cecece;
-}
-.table .id-header,
-.table .status-header {
-  border-right: 0 none;
+  border: 1px solid #cecece;
 }
 .table tbody > tr > td {
   border: 1px solid #cecece;
