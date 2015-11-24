@@ -1,46 +1,28 @@
-[data-pjax-table] {
-  position: relative;
+.table.pjax-table {
+  table-layout: fixed;
+  width: 100%;
+  white-space: nowrap;
 }
 
-.table thead {
-  background: @gray-light;
-}
-
-.table thead,
-.table > thead > tr > th,
-.table > tbody > tr > td,
-.table > tfoot > tr > td {
+.table.pjax-table thead,
+.table.pjax-table > thead > tr > th,
+.table.pjax-table > tbody > tr > td,
+.table.pjax-table > tfoot > tr > td {
   border: 1px solid @gray-light;
 }
 
-.table.pjax-table thead > tr > th {
+.table.pjax-table thead > tr > th,
+.table.pjax-table tbody > tr > td {
   padding: 10px;
   border-bottom: 1px solid @gray-light;
-}
-
-.table.pjax-table tbody > tr > td {
-  padding: 12px 10px;
 }
 
 .table.pjax-table tfoot > tr > td {
   background: @gray-light;
 }
 
-.table td .btn-group {
-  margin-top: -10px;
-  margin-bottom: -10px;
-}
-
 th[data-sortable="true"] {
   cursor: pointer;
-}
-
-.table-controls .dropdown-menu > li > a {
-  padding: 5px 20px;
-}
-
-.table-controls .btn-toolbar > .btn-group {
-  margin-bottom: 5px;
 }
 
 .pjax-table-footer-static-content {
@@ -48,15 +30,6 @@ th[data-sortable="true"] {
   font-weight: bold;
 }
 
-a.pjax-table-cell-action {
-  color: @gray-light;
-  margin-left: 15px;
-}
-
-.table tbody tr:hover {
+.table.pjax-table tbody tr:hover {
   background: @state-info-bg;
-}
-
-.table tbody tr:hover a.pjax-table-cell-action {
-  color: @link-color;
 }

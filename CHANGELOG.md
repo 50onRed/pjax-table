@@ -4,6 +4,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+# [1.7.0] - 2015-11-24
+### Changed
+- table layout is now fixed by default
+
+### Removed
+- app specific button and dropdown styles
+- app specific link styles
+
 # [1.6.4] - 2015-11-23
 ### Changed
   - Slight adjustments for table header borders, including a fix for 2px borders from bootstrap
