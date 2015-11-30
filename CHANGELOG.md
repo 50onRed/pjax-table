@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+# [1.7.1] - 2015-11-30
+### Removed
+- white-space: nowrap removed as a default
+
 # [1.7.0] - 2015-11-24
 ### Changed
 - table layout is now fixed by default
