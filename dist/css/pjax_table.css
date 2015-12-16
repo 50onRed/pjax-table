@@ -1,5 +1,5 @@
 /*!
- * PJAX Table v1.7.1 ()
+ * PJAX Table v1.7.2 ()
  * Copyright 2015
  * 
  */
@@ -62,4 +62,7 @@ td[data-property="enabled"] {
   left: 0;
   width: 100%;
   height: 100%;
+}
+.table.pjax-table td .dropdown-toggle-icon-label-only .dropdown-display-text {
+  display: none;
 }

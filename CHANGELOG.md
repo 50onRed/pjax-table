@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+# [1.7.2] - 2015-12-15
+### Fixed
+- lost plugin style which hides icon dropdown text labels, occurred after a move from styleguide
+
 # [1.7.1] - 2015-11-30
 ### Removed
 - white-space: nowrap removed as a default
