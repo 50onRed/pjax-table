@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+# [1.7.3] - 2015-01-06
+### Added
+- EditableDropdownPlugin is now also Confirmable
+
 # [1.7.2] - 2015-12-15
 ### Fixed
 - lost plugin style which hides icon dropdown text labels, occurred after a move from styleguide

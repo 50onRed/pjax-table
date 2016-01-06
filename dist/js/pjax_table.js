@@ -105,6 +105,7 @@ if (typeof module === 'object') {
 },{}],4:[function(require,module,exports){
 'use strict';
 var AjaxCellMixin = require('./ajax_cell_mixin');
+var ConfirmableMixin = require('./confirmable_mixin');
 var widget = require('../util/widget');
 
 /**
@@ -113,6 +114,8 @@ var widget = require('../util/widget');
 function EditableDropdownPlugin(element, options) {
   options.url = $(element).find('.ui-select-dropdown').data('url');
   AjaxCellMixin.call(this, element, options);
+  ConfirmableMixin.call(this, element, options);
+
   this._record = options.record;
   this._requiredFields = this._$el.data('required-fields') ? this._$el.data('required-fields').split(',') : [];
 
@@ -178,7 +181,7 @@ if (typeof module === 'object') {
 
 widget('editableDropdownPlugin', EditableDropdownPlugin);
 
-},{"../util/widget":8,"./ajax_cell_mixin":1}],5:[function(require,module,exports){
+},{"../util/widget":8,"./ajax_cell_mixin":1,"./confirmable_mixin":3}],5:[function(require,module,exports){
 'use strict';
 var widget = require('../util/widget');
 var AjaxCellMixin = require('./ajax_cell_mixin');
