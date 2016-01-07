@@ -9,6 +9,13 @@ var widget = require('../util/widget');
 function EditableDropdownPlugin(element, options) {
   options.url = $(element).find('.ui-select-dropdown').data('url');
   AjaxCellMixin.call(this, element, options);
+
+  var ajaxSave = this._save;
+  this._save = function($selectedItem, record) {
+    this._updateLabel($selectedItem);
+    ajaxSave.call(this, record);
+  };
+
   ConfirmableMixin.call(this, element, options);
 
   this._record = options.record;
@@ -43,13 +50,8 @@ EditableDropdownPlugin.prototype._createOnDropdownItemClick = function (e) {
   this._$el.trigger('dropdown:changed', payload);
 
   if (!payload.cancel) {
-    this._saveChanges($item, record);
+    this._save($item, record);
   }
-};
-
-EditableDropdownPlugin.prototype._saveChanges = function($selectedItem, record) {
-  this._updateLabel($selectedItem);
-  this._save(record);
 };
 
 EditableDropdownPlugin.prototype._updateLabel = function($selectedItem) {

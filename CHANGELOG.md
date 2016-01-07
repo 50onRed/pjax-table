@@ -4,7 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
-# [1.7.3] - 2015-01-06
+# [1.7.4] - 2016-01-06
+### Fixed
+- EditableDropdownPlugin no longer updates the label if confirmation fails
+
+# [1.7.3] - 2016-01-06
 ### Added
 - EditableDropdownPlugin is now also Confirmable
 
