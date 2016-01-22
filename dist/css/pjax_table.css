@@ -1,5 +1,5 @@
 /*!
- * PJAX Table v1.7.4 ()
+ * PJAX Table v2.0.0 ()
  * Copyright 2016
  * 
  */
@@ -55,7 +55,7 @@ td[data-property="enabled"] {
 }
 .ui-load-mask {
   z-index: 2000;
-  background-color: #cecece;
+  background-color: #fafafa;
   opacity: 0.5;
   position: absolute;
   top: 0;

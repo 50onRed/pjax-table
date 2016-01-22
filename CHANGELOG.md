@@ -4,6 +4,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+# [2.0.0] - 2016-01-22
+### Changed
+- default load mask background color
+### Removed
+- support for no data template, js will no longer replace the body of the table for any case
+
 # [1.7.4] - 2016-01-06
 ### Fixed
 - EditableDropdownPlugin no longer updates the label if confirmation fails
