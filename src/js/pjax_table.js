@@ -36,7 +36,6 @@ var SearchBox = require('./external_plugins/search_box');
 *     @param {boolean} options.paginated Flag for pagination ( enabled by default )
 *     @param {string} options.pjaxContainer ID Selector for the pjax container, defaults to the initializing
 *       element's id attribute
-*     @param {Function} options.noDataTemplate A function to be used for creating the no data message
 *     @param {string} options.searchId  A selector for a search box to be used with the table.
 *     @param {string} options.sortQueryKey The key to be used in creating the sort query string
 *     @param {string} options.pageQueryKey The key to be used in creating the page query string
@@ -104,7 +103,6 @@ function PjaxTable(el, options) {
   }
 
   this._pjaxContainer = this._options.pjaxContainer || this._$el.data('pjax-container') || this._$el.attr('id');
-  this._noDataTemplate = this._options.noDataTemplate || this._noDataTemplate;
   this._sortQueryKey = this._options.sortQueryKey || this._$el.data('sort-query-key') || 'order';
   this._pageQueryKey = this._options.pageQueryKey || this._$el.data('page-query-key') || 'page';
   this._perPageQueryKey = this._options.perPageQueryKey || this._$el.data('perpage-query-key') || 'perpage';
@@ -123,16 +121,6 @@ function PjaxTable(el, options) {
 }
 
 $.extend(PjaxTable.prototype, {
-
-  _noDataTemplate: function(numColumns) {
-    return [
-      '<tr>',
-        '<td class="empty-table-content" colspan="' + numColumns + '">',
-          'Whoops! Looks like there\'s nothing in this table!',
-        '</td>',
-      '</tr>'
-    ].join('');
-  },
 
   _createSortQuery: function(property, direction) {
     var query = {};
@@ -252,11 +240,6 @@ $.extend(PjaxTable.prototype, {
 
     var totalRows = this._$el.find('table').data('total-rows');
     this._totalRows = totalRows | 0;
-
-    if (this._totalRows === 0) {
-      this._$tbody.html(this._noDataTemplate(this.getNumColumns()));
-    }
-
     this._$el.trigger('table:load');
   },
 
