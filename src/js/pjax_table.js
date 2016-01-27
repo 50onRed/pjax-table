@@ -294,6 +294,11 @@ $.extend(PjaxTable.prototype, {
     e.stopPropagation();
     e.preventDefault(); // prevent retry
     this._removeLoadMask();
+
+    if (error === 'abort') {
+      return this._$el.trigger('table:cancelled');
+    }
+
     this._$el.trigger('table:error');
   },
 
