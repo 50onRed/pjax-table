@@ -4,6 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+# [1.8.0] - 2016-01-27
+### Changed
+- aborted xhr will now trigger a cancelled event instead of error, existing error handlers should continue to 
+behave as expected
+
 # [1.7.4] - 2016-01-06
 ### Fixed
 - EditableDropdownPlugin no longer updates the label if confirmation fails
