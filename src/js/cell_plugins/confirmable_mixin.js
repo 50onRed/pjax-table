@@ -7,10 +7,9 @@ function ConfirmableMixin(element, options) {
   this._beforeSave = options.beforeSave || null;
 
   function wrapFn(fn, beforeFn, context) {
-    return function() {
-      var args = Array.prototype.slice.call(arguments);
-      beforeFn(this._$el, this._record, function() {
-        fn.apply(context, args);
+    return function(data) {
+      beforeFn(data, this._$el, this._record, function() {
+        fn.apply(context, data);
       });
     };
   }

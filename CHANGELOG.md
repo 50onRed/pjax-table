@@ -4,6 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+# [2.0.0] - 2016-01-29
+### Changed
+- change the arguments accepted by plugins who implement ConfirmableMixin ( breaking change ). The wrapped ajax save
+method shall always have the data to be saved as a first param.
+
 # [1.8.0] - 2016-01-27
 ### Changed
 - aborted xhr will now trigger a cancelled event instead of error, existing error handlers should continue to 
