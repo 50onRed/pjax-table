@@ -9,13 +9,6 @@ var widget = require('../util/widget');
 function EditableDropdownPlugin(element, options) {
   options.url = $(element).find('.ui-select-dropdown').data('url');
   AjaxCellMixin.call(this, element, options);
-
-  var ajaxSave = this._save;
-  this._save = function($selectedItem, record) {
-    this._updateLabel($selectedItem);
-    ajaxSave.call(this, record);
-  };
-
   ConfirmableMixin.call(this, element, options);
 
   this._record = options.record;
@@ -47,24 +40,21 @@ EditableDropdownPlugin.prototype._createOnDropdownItemClick = function (e) {
     record: record
   };
 
+  this._labelToBeUpdated = $item.find('a').html();
   this._$el.trigger('dropdown:changed', payload);
 
   if (!payload.cancel) {
-    this._save($item, record);
+    this._save(record);
   }
 };
 
-EditableDropdownPlugin.prototype._updateLabel = function($selectedItem) {
-  var $label = this._$el.find('.dropdown-label');
-  var newSelection = $selectedItem.find('a').html();
-  $label.html(newSelection);
-};
-
 EditableDropdownPlugin.prototype._onPluginSaveSuccess = function(e, data) {
+  this._$el.find('.dropdown-label').html(this._labelToBeUpdated);
   this._$el.trigger('message', { status: 'success', message: data.message });
 };
 
 EditableDropdownPlugin.prototype._onPluginSaveError = function(e, data) {
+  this._labelToBeUpdated = null;
   this._$el.trigger('message', { status: 'error', message: data.message });
 };
 
