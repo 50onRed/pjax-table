@@ -8,9 +8,8 @@ function ConfirmableMixin(element, options) {
 
   function wrapFn(fn, beforeFn, context) {
     return function(data) {
-      var rawData = data;
-      beforeFn(rawData, this._$el, this._record, function() {
-        fn.apply(context, rawData);
+      beforeFn(data, this._$el, this._record, function() {
+        fn.call(context, data);
       });
     };
   }
