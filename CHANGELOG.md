@@ -4,11 +4,21 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
-# [2.0.0] - 2016-01-22
+# [2.1.0] - 2016-03-29
 ### Changed
 - default load mask background color
 ### Removed
-- support for no data template, js will no longer replace the body of the table for any case
+- support for no data template
+
+# [2.0.0] - 2016-01-29
+### Changed
+- change the arguments accepted by plugins who implement ConfirmableMixin ( breaking change ). The wrapped ajax save
+method shall always have the data to be saved as a first param.
+
+# [1.8.0] - 2016-01-27
+### Changed
+- aborted xhr will now trigger a cancelled event instead of error, existing error handlers should continue to 
+behave as expected
 
 # [1.7.4] - 2016-01-06
 ### Fixed
