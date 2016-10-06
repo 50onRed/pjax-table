@@ -7,22 +7,7 @@ describe('pjax table protected methods', function() {
     $tableContainer.html(UI.modules.tableGenerator.generate());
     $table = $tableContainer.find('#pjax-table');
   });
-
-  it('should have a default no data template', function() {
-    var table = $table.pjaxTable({});
-    // test that it exists and returns a string
-    expect(typeof table._noDataTemplate === 'function').toBe(true);
-    expect(typeof table._noDataTemplate() === 'string').toBe(true);
-
-    // test that the template contains the elements we expect
-    expect($(table._noDataTemplate()).prop('tagName')).toEqual('TR');
-    expect($(table._noDataTemplate()).find('td').length).toEqual(1);
-
-    // test that colspan gets set correctly
-    expect($(table._noDataTemplate(1)).find('td').attr('colspan')).toEqual("1");
-    expect($(table._noDataTemplate(15)).find('td').attr('colspan')).toEqual("15");
-  });
-
+  
   it('should create a sort query', function() {
     var table = $table.pjaxTable({});
     expect(typeof table._createSortQuery === 'function').toBe(true);

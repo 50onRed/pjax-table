@@ -88,7 +88,6 @@ describe('pjax table', function() {
     expect(table._pushState).toEqual(false);
     expect(table._paginated).toEqual(true);
     expect(table._pjaxContainer).toEqual('#my-test-id');
-    expect(table._noDataTemplate()).toEqual('test template');
     expect(table._sortQueryKey).toEqual('test sort key');
     expect(table._pageQueryKey).toEqual('test page key');
     expect(table._perPageQueryKey).toEqual('test per page key');
