@@ -171,7 +171,7 @@ $.extend(PjaxTable.prototype, {
   },
 
   _load: function(params) {
-    if (!this._ajaxOnly) {
+    if (!this._ajaxOnly && $.support.pjax) {
       return $.pjax($.extend({
         url: this._url,
         data: this._queryState,

@@ -4,7 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
-# [2.1.0] - 2016-03-29
+# [2.1.1] - 2016-10-13
+### Changed
+- fallback to ajax if pjax not supported, prevents infinite refresh and still loads
+
+# [2.1.0] - 2016-10-11
 ### Changed
 - default load mask background color
 ### Removed
