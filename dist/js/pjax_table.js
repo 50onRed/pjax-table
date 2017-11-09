@@ -231,7 +231,7 @@ SearchBox.prototype._onClickSearch = function(e) {
 };
 
 SearchBox.prototype._onInputKeyup = function(e) {
-  this._$el.find('.ui-close').removeClass('hidden');
+  this._$el.find('.ui-close').removeClass('hidden').removeAttr('hidden');
   if (e.which === 13) {          //enter / return
     this._$el.trigger('search:submit', $(e.currentTarget).val());
   } else if (e.which == 27) {    //escape
@@ -246,7 +246,7 @@ SearchBox.prototype._onClickClose = function(e) {
 SearchBox.prototype._clearSearch = function(e) {
   this._$searchFilter.val('');
   this._$el.trigger('search:clear');
-  this._$el.find('.ui-close').addClass('hidden');
+  this._$el.find('.ui-close').addClass('hidden').attr('hidden', 'hidden');
 };
 
 if (typeof module === 'object') {
