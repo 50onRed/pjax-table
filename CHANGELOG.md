@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+# [2.1.3] - 2017-11-13
+### Added
+- editable_cell.js (and editable_cell.min.js) are now separate build artifacts
+
 # [2.1.2] - 2017-11-09
 ### Changed
 - Searchbox fix for Bootstrap v4 `hidden` changes
