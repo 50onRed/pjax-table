@@ -201,8 +201,8 @@ if (typeof module === 'object') {
   module.exports = EditableCellPlugin;
 } else if (typeof define === 'function') {
   define(function() { return EditableCellPlugin; });
-} else {
-  window.EditableCellPlugin = EditableCellPlugin;
 }
+
+window.EditableCellPlugin = EditableCellPlugin;
 
 widget('editableCellPlugin', EditableCellPlugin);
