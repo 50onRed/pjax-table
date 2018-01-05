@@ -73,7 +73,7 @@ this["UI"]["templates"]["pagination"] = Handlebars.template({"1":function(depth0
     + ((stack1 = ((helper = (helper = helpers.page_items || (depth0 != null ? depth0.page_items : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"page_items","hash":{},"data":data}) : helper))) != null ? stack1 : "")
     + "\n        </ul>\n      </div>\n    </div>\n\n    <div class=\"btn-group\">\n      <button type=\"button\" class=\"btn btn-default btn-sm ui-next-page\" "
     + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.on_last_page : depth0),{"name":"if","hash":{},"fn":this.program(2, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
-    + ">\n        <i class=\"fa fa-chevron-right\"></i>\n      </button>\n    </div>\n";
+    + ">\n        <i class=\"fa fa-fw fa-chevron-right\"></i>\n      </button>\n    </div>\n";
 },"2":function(depth0,helpers,partials,data) {
     return "disabled";
 },"4":function(depth0,helpers,partials,data) {
@@ -91,7 +91,7 @@ this["UI"]["templates"]["pagination"] = Handlebars.template({"1":function(depth0
     + alias3(((helper = (helper = helpers.$perpage || (depth0 != null ? depth0.$perpage : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"$perpage","hash":{},"data":data}) : helper)))
     + "\">\n      <button data-toggle=\"dropdown\" class=\"btn btn-default btn-sm dropdown-toggle\">\n        <span class=\"dropdown-label\">Per Page "
     + alias3(((helper = (helper = helpers.current_perpage || (depth0 != null ? depth0.current_perpage : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"current_perpage","hash":{},"data":data}) : helper)))
-    + "</span>\n        <span class=\"fa fa-angle-down\"></span>\n      </button>\n      <ul class=\"dropdown-menu open-up ui-perpage-dropdown\">\n        <li data-value=\"10\"><a>10</a></li>\n        <li data-value=\"20\"><a>20</a></li>\n        <li data-value=\"50\"><a>50</a></li>\n        <li data-value=\"100\"><a>100</a></li>\n      </ul>\n    </div>\n    <div class=\"btn-group btn-sm btn-link\">From "
+    + "</span>\n        <i class=\"fa fa-fw fa-angle-down\"></i>\n      </button>\n      <ul class=\"dropdown-menu open-up ui-perpage-dropdown\">\n        <li class=\"dropdown-item\" data-value=\"10\"><a>10</a></li>\n        <li class=\"dropdown-item\" data-value=\"20\"><a>20</a></li>\n        <li class=\"dropdown-item\" data-value=\"50\"><a>50</a></li>\n        <li class=\"dropdown-item\" data-value=\"100\"><a>100</a></li>\n      </ul>\n    </div>\n    <div class=\"btn-group btn-sm btn-link\">From "
     + alias3(((helper = (helper = helpers.from || (depth0 != null ? depth0.from : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"from","hash":{},"data":data}) : helper)))
     + " to "
     + alias3(((helper = (helper = helpers.to || (depth0 != null ? depth0.to : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"to","hash":{},"data":data}) : helper)))
@@ -106,7 +106,7 @@ this["UI"]["templates"]["pagination_page_item"] = Handlebars.template({"1":funct
 },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
     var stack1, helper, alias1=helpers.helperMissing, alias2="function", alias3=this.escapeExpression;
 
-  return "<li data-value=\""
+  return "<li class=\"dropdown-item\" data-value=\""
     + alias3(((helper = (helper = helpers.index || (depth0 != null ? depth0.index : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"index","hash":{},"data":data}) : helper)))
     + "\">\n  <a class=\"item "
     + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.active : depth0),{"name":"if","hash":{},"fn":this.program(1, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
