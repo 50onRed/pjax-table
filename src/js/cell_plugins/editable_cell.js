@@ -110,7 +110,7 @@ EditableCellPlugin.prototype._onShown = function(e, editable) {
   // editable hooks to the form element submit and stops propagation, so we must hook to the button click
   // *** NOTE: this is triggering for both enter press, and button click
   editable.container.$form.find('.editable-submit').click(function (e) {
-    return $input.parsley().validate();
+    return $input.parsley().validate() === true;
   }.bind(this));
 
   this._$el.trigger('editable:open', { name: this.name });
