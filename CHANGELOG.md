@@ -4,6 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+# [2.1.2] - 2017-11-09
+### Changed
+- Searchbox fix for Bootstrap v4 `hidden` changes
+- Bump copyright year
+
 # [2.1.1] - 2016-10-13
 ### Changed
 - fallback to ajax if pjax not supported, prevents infinite refresh and still loads
