@@ -4,6 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+# [2.1.3] - 2018-01-05
+### Changed
+- Fix for pagination dropdown
+- Update FA icon class for fixed-width
+
 # [2.1.2] - 2017-11-09
 ### Changed
 - Searchbox fix for Bootstrap v4 `hidden` changes
@@ -26,7 +31,7 @@ method shall always have the data to be saved as a first param.
 
 # [1.8.0] - 2016-01-27
 ### Changed
-- aborted xhr will now trigger a cancelled event instead of error, existing error handlers should continue to 
+- aborted xhr will now trigger a cancelled event instead of error, existing error handlers should continue to
 behave as expected
 
 # [1.7.4] - 2016-01-06
@@ -73,7 +78,7 @@ behave as expected
 # [1.6.0] - 2015-11-04
 ### Added
   - confirmable mixin, works in conjunction with any plugin implementing a _save method
-  
+
 ### Changed
   - remove row plugin now uses the confirmable mixin, a beforeSave function can be passed into the plugin config
 
@@ -92,14 +97,14 @@ behave as expected
   - editable dropdown, a plugin which posts information on change of a dropdown in a table cell
   - remove row, a plugin which posts an id/primary key to remove a row as a record from the data set
   - editable cell, a wrapper for x-editable to be used inside table cells
-  
+
 ### Changed
-  - project now uses browserify to bundle itself 
+  - project now uses browserify to bundle itself
   - separated widget construction into a utility module
   - search box widget code also separated, broken into new directory as an "external plugin" ( plugin that exists outside of the table )
   - table constructor is now exposed on window in addition to being a jquery plugin
   - new cell mixins/plugins are exposed through a PjaxTableShared object on window
-  
+
 # [1.4.10] - 2015-09-08
 ### Fixed
 - Table cell sizing in broken in firefox by unnecessary vertical align
@@ -107,7 +112,7 @@ behave as expected
 # [1.4.9] - 2015-08-21
 ### Added
 - A load sync function. In addition to querySync ( to likely be renamed in the next major release ), the ability to
-specify a function to be called on every load is desired. querySync currently executes once on page load. loadSync 
+specify a function to be called on every load is desired. querySync currently executes once on page load. loadSync
 applies to every load after that ( or initial page load if table data is lazy-loaded ).
 
 # [1.4.8] - 2015-08-20
@@ -219,7 +224,7 @@ a breaking change, it is a fix to be in line with the current python library
 ### Added
 - pjax table now defines its own plugin code
 - calling methods through jquery, i.e. $el.pjaxTable('update') only allows
-methods defined in the allowedMethods array. All method calls can otherwise 
+methods defined in the allowedMethods array. All method calls can otherwise
 be accessed by referencing the instance directly.
 
 ### Changed

@@ -1,6 +1,6 @@
 {
   "name": "pjax-table",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "main": "dist/js/pjax_table.js",
   "license": "MIT",
   "authors": [

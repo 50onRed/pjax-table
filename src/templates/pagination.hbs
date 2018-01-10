@@ -3,13 +3,13 @@
     <div class="dropdown btn-group" data-per-page="{{ $perpage }}">
       <button data-toggle="dropdown" class="btn btn-default btn-sm dropdown-toggle">
         <span class="dropdown-label">Per Page {{ current_perpage }}</span>
-        <span class="fa fa-angle-down"></span>
+        <i class="fa fa-fw fa-angle-down"></i>
       </button>
       <ul class="dropdown-menu open-up ui-perpage-dropdown">
-        <li data-value="10"><a>10</a></li>
-        <li data-value="20"><a>20</a></li>
-        <li data-value="50"><a>50</a></li>
-        <li data-value="100"><a>100</a></li>
+        <li class="dropdown-item" data-value="10"><a>10</a></li>
+        <li class="dropdown-item" data-value="20"><a>20</a></li>
+        <li class="dropdown-item" data-value="50"><a>50</a></li>
+        <li class="dropdown-item" data-value="100"><a>100</a></li>
       </ul>
     </div>
     <div class="btn-group btn-sm btn-link">From {{ from }} to {{ to }} of {{ total }}</div>
@@ -37,7 +37,7 @@
 
     <div class="btn-group">
       <button type="button" class="btn btn-default btn-sm ui-next-page" {{#if on_last_page }}disabled{{/if}}>
-        <i class="fa fa-chevron-right"></i>
+        <i class="fa fa-fw fa-chevron-right"></i>
       </button>
     </div>
     {{else}}

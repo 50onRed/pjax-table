@@ -1,6 +1,6 @@
 /*!
- * PJAX Table v2.1.2 ()
- * Copyright 2017
+ * PJAX Table v2.1.3 ()
+ * Copyright 2018
  * 
  */
 
@@ -52,6 +52,9 @@ td[data-property="enabled"] {
 }
 .pjax-table-pagination:after {
   clear: both;
+}
+.pjax-table-pagination .dropdown-item {
+  cursor: pointer;
 }
 .ui-load-mask {
   z-index: 2000;
