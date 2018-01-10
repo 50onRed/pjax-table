@@ -109,7 +109,7 @@ EditableCellPlugin.prototype._onShown = function(e, editable) {
   // prevent default editable action if parsley validate fails
   // editable hooks to the form element submit and stops propagation, so we must hook to the button click
   // *** NOTE: this is triggering for both enter press, and button click
-  editable.container.$form.find('.ui-editable-submit').click(function (e) {
+  editable.container.$form.find('.editable-submit').click(function (e) {
     return $input.parsley().validate();
   }.bind(this));
 
