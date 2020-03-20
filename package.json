@@ -4,7 +4,7 @@
   "private": true,
   "description": "PJAX Table JS",
   "devDependencies": {
-    "bower": "~1.4.1",
+    "bower": "~1.8.8",
     "browserify": "~11.0.1",
     "del": "~1.2.1",
     "gulp": "~3.9.0",
