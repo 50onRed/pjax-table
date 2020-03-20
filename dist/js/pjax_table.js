@@ -1046,7 +1046,7 @@ window.PjaxTableShared = {
 };
 widget('pjaxTable', PjaxTable);
 // auto init
-$(function(){ $('[data-pjax-table][data-auto-init]').pjaxTable(window.PjaxTableConfig = window.PjaxTableConfig || {}); });
+$(function(){ $('[data-pjax-table][data-auto-init=true]').pjaxTable(window.PjaxTableConfig = window.PjaxTableConfig || {}); });
 
 },{"./cell_plugins/ajax_cell_mixin":1,"./cell_plugins/cell_plugin_mixin":2,"./cell_plugins/confirmable_mixin":3,"./cell_plugins/editable_dropdown":4,"./cell_plugins/remove_row":5,"./external_plugins/search_box":6,"./util/widget":8}],8:[function(require,module,exports){
 'use strict';

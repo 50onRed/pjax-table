@@ -782,4 +782,4 @@ window.PjaxTableShared = {
 };
 widget('pjaxTable', PjaxTable);
 // auto init
-$(function(){ $('[data-pjax-table][data-auto-init]').pjaxTable(window.PjaxTableConfig = window.PjaxTableConfig || {}); });
+$(function(){ $('[data-pjax-table][data-auto-init=true]').pjaxTable(window.PjaxTableConfig = window.PjaxTableConfig || {}); });
