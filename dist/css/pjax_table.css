@@ -1,6 +1,6 @@
 /*!
- * PJAX Table v2.1.4 ()
- * Copyright 2019
+ * PJAX Table v2.1.5 ()
+ * Copyright 2020
  * 
  */
 
