@@ -608,7 +608,7 @@ $.extend(PjaxTable.prototype, {
         $rowCheckbox.prop('checked', true);
         $rowCheckbox.closest('tr').addClass('ui-selected');
       });
-      this._$el.trigger('table.select_all');
+      this._$el.trigger('table:select:all');
     } else {
       this._$el.find('td[data-property=' + property + '] input[type="checkbox"]').prop('checked', false);
       this._$tbody.find('tr').removeClass('ui-selected');
