@@ -338,8 +338,12 @@ $.extend(PjaxTable.prototype, {
     this._disableRowCheckboxChangeHandling();
 
     if ($checkbox.prop('checked')) {
-      this._$el.find('td[data-property=' + property + '] input[type="checkbox"]').prop('checked', true);
-      this._$tbody.find('tr').addClass('ui-selected');
+      var $checkboxes = this._$el.find('td[data-property=' + property + '] input[type="checkbox"]:enabled');
+      $checkboxes.each(function () {
+        var $rowCheckbox = $(this);
+        $rowCheckbox.prop('checked', true);
+        $rowCheckbox.closest('tr').addClass('ui-selected');
+      });
       this._$el.trigger('table:select:all');
     } else {
       this._$el.find('td[data-property=' + property + '] input[type="checkbox"]').prop('checked', false);
