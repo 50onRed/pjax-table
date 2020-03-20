@@ -4,6 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+# [2.1.4] - 2018-01-10
+### Changed
+- Fixed editable action suppression for invalid fields
+- editable_cell.js (and editable_cell.min.js) are now separate build artifacts
+
 # [2.1.3] - 2018-01-05
 ### Changed
 - Fix for pagination dropdown

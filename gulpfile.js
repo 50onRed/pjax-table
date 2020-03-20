@@ -84,6 +84,13 @@ var dev_b = watchify(browserify(dev_opts));
 var dist_opts = assign({}, watchify.args, customOpts);
 var dist_b = watchify(browserify(dist_opts));
 
+var editableCellOpts = {
+  entries: ['./src/js/cell_plugins/editable_cell.js']
+}
+
+var dist_editable_cell_opts = assign({}, watchify.args, editableCellOpts)
+var dist_editable_cell = watchify(browserify(dist_editable_cell_opts))
+
 gulp.task('clean', function(cb) {
   del(['dist/**/*', 'standalone/js/vendor/*', 'standalone/js/templates.js'], cb);
 });
@@ -139,6 +146,25 @@ gulp.task('js_min', function() {
       .pipe(gulp.dest('./dist/js'));
 });
 
+gulp.task('editable_cell_js', function() {
+  return dist_editable_cell.bundle()
+    .on('error', gutil.log.bind(gutil, 'Browserify Error'))
+    .pipe(source('cell_plugins/editable_cell.js'))
+    .pipe(buffer())
+    .pipe(gulp.dest('./dist/js'));
+});
+
+gulp.task('editable_cell_js_min', function() {
+  return dist_editable_cell.bundle()
+    .on('error', gutil.log.bind(gutil, 'Browserify Error'))
+    .pipe(source('cell_plugins/editable_cell.js'))
+    .pipe(buffer()) // for uglify
+    .pipe(uglify({ preserveComments: 'some' }))
+    .pipe(header(banner, { pkg: pkg }))
+    .pipe(rename({ suffix: '.min' }))
+    .pipe(gulp.dest('./dist/js'));
+});
+
 gulp.task('less', function() {
   return gulp.src(paths.less)
     .pipe(less({ strictMath: true }))
@@ -162,7 +188,7 @@ gulp.task('less_copy', function() {
 });
 
 gulp.task('default', function(callback){
-  runSequence('clean', 'js', 'js_min', 'less', 'lessmin', [
+  runSequence('clean', 'js', 'js_min', 'editable_cell_js', 'editable_cell_js_min', 'less', 'lessmin', [
     'less_copy',
     'templates',
     'standalone_vendor_js',
