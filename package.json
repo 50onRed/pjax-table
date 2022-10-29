@@ -24,7 +24,7 @@
     "gulp-wrap": "~0.11.0",
     "jasmine-core": "^2.3.4",
     "jshint-stylish": "~2.0.1",
-    "karma": "^0.13.9",
+    "karma": "^6.4.1",
     "karma-jasmine": "^0.3.6",
     "karma-nyan-reporter": "~0.2.2",
     "karma-phantomjs-launcher": "~0.2.1",
